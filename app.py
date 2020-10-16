@@ -12,7 +12,7 @@ def index():
 
 @app.route("/search", methods=["POST"])
 def search():
-    ingred = request.form.get("a", 0, type=str)
+    ingred = request.form.get("search", 0, type=str)
     ingreds = get_similar_ingreds_np(ingred)[:100]
     result = ''
     for ingred in ingreds:
