@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+  <title>eat</title>
+  <link rel="stylesheet" href="static/style.css">
+
+  <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+  <div class="content">
+    <header>
+      <h1>foodwise dot com</h1>
+    </header>
+    <h3>what is this thing</h3>
+    <main>
+      <article>
+        <p>
+          Howdy pardner!
+          <br>
+          This here's a world wide-web-app that tells you what's what when it comes to ingreident pairings.
+          Just try typin' in yer favorite ingredient and hittin that there GET
+        </p>
+        <form id="calc">
+          <label>what goes good with... <input name="a" value="avocado"></label>
+          <input type="submit" value="GET">
+        </form>
+        <span><span id="result"></span></span>
+      </article>
+      <h3>
+        coming soon
+      </h3>
+      <li>* not ugly!</li>
+      <li>* multi-ingredient search!</li>
+      <li>* recipes from serious eats that feature the ingredients!</li>
+      <li>* like us on <a
+          href="https://www.google.com/search?client=firefox-b-1-d&q=hi+jane+hehe+%3Bpp">facebook!</a>!!!
+      </li>
+    </main>
+
+    <footer>
+      <p>data from serious eats. made with computer. copyright josh</p>
+    </footer>
+
+  </div>
+
+  {% block script %}{% endblock %}
+</body>
+
+</html>
