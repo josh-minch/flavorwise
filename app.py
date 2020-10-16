@@ -10,8 +10,8 @@ def index():
     return render_template('main.html')
 
 
-@app.route("/add", methods=["POST"])
-def add():
+@app.route("/search", methods=["POST"])
+def search():
     ingred = request.form.get("a", 0, type=str)
     ingreds = get_similar_ingreds_np(ingred)[:100]
     result = ''
