@@ -9,14 +9,17 @@ app.config.from_object('config')
 
 @app.route("/")
 def index():
-    cur_ingreds = session['cur_ingreds']
-    r_ingreds, recipes = matrix.search(cur_ingreds)
+    r_ingreds = recipes = cur_ingreds = None
+    if 'cur_ingreds' in session:
+        cur_ingreds = session['cur_ingreds']
+        r_ingreds, recipes = matrix.search(cur_ingreds)
     return render_template('index.html',
         r_ingreds=r_ingreds, recipes=recipes, cur_ingreds=cur_ingreds)
 
 
 @app.route("/search", methods=["POST"])
 def search():
+    # TODO: Verify input
     input_ingred = request.form.get("search", 0, type=str).strip()
     cur_ingreds = update_session(input_ingred)
     r_ingreds, recipes = matrix.search(cur_ingreds)
