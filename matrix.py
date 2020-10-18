@@ -1,45 +1,66 @@
-import json
-import collections
-
 import numpy as np
-import pandas as pd
 
 from helper import get_json, write_json
 
-def get_ranked_ingreds(ingreds):
-    """Return ingreds from recipes in order of occurence with input ingreds."""
+'''2D matrix whose rows are ingredients and cols are recipes.
+A 1 denotes the occurence of an ingredient in a given recipe.'''
+RECIPE_MATRIX = np.array(get_json('recipe_matrix.json'))
 
-    '''2D matrix whose rows are ingredientss and cols are recipes titles.
-    A 1 denotes the occurence of an ingredient in a given recipe.'''
-    recipe_matrix = np.array(get_json('recipe_matrix.json'))
+ALL_INGREDS = get_json('all_ingreds_filtered.json')
+INGRED_TO_IX = {k: i for i, k in enumerate(ALL_INGREDS)}
+IX_TO_INGRED = {i: k for i, k in enumerate(ALL_INGREDS)}
 
-    all_ingreds = get_json('all_ingreds_filtered.json')
-    ingred_to_ix = {k: v for v, k in enumerate(all_ingreds)}
-    ix_to_ingred = {v: k for v, k in enumerate(all_ingreds)}
+RECIPE_DATA = get_json('recipe_data.json')
+IX_TO_RECIPE = {i: (r['title'], r['url']) for i, r in enumerate(RECIPE_DATA)}
 
-    ixs = [ingred_to_ix[ingred] for ingred in ingreds]
 
-    # Get only rows for our ingreds
-    ingred_rows = recipe_matrix[ixs]
-    # for each recipe, sum occurences of all ingreds.
-    ingred_sum = np.sum(ingred_rows, 0)
-    # check where this sum equals the len of our ingred list.
-    # This ensures we only get recipes that contain all our ingreds.
-    match_recipe_ixs = np.argwhere(ingred_sum == len(ixs))
-    match_recipes_m = recipe_matrix[:, match_recipe_ixs.flatten()]
-
-    # Then sum total occurences of each ingredient for each recipe.
-    ingred_sum = np.sum(match_recipes_m, 1)
-
-    ranked_ixs = np.flip(np.argsort(ingred_sum))
-    ranked_ingreds = [ix_to_ingred[ix] for ix in ranked_ixs]
-
-    ranked_ingreds = [
-        ingred for ingred in ranked_ingreds if ingred not in ingreds]
+def get_ranked_ingreds(ranked_ixs, match_ingred_sum):
+    """Return dict of ingred and how often they coocurr."""
+    ranked_ingreds = {}
+    for ranked_ix in ranked_ixs:
+        cooccurrences = match_ingred_sum[ranked_ix]
+        if cooccurrences == 0:
+            break
+        ranked_ingreds[IX_TO_INGRED[ranked_ix]] = cooccurrences
     return ranked_ingreds
 
 
-def make_recipe_matrix():
+def get_match_recipes(match_recipe_ixs):
+    return [IX_TO_RECIPE[ix] for ix in match_recipe_ixs]
+
+
+def search(ingreds):
+    """Return co-ocurring ranked ingreds and the recipes they occur in."""
+
+    if isinstance(ingreds, str):
+        ingreds = [ingreds]
+    ixs = [INGRED_TO_IX[ingred] for ingred in ingreds]
+
+    # Get only rows for our ingreds
+    ingred_rows = RECIPE_MATRIX[ixs]
+    # for each recipe, sum occurences of all our ingred.
+    ingred_sum = np.sum(ingred_rows, 0)
+    # Check where this sum equals the len of our ingred list.
+    # This ensures we only get recipes that contain all our ingreds.
+    match_recipe_ixs = np.argwhere(ingred_sum == len(ixs))
+    match_recipes_m = RECIPE_MATRIX[:, match_recipe_ixs.flatten()]
+
+    # Then sum total occurences of each ingredient for each recipe.
+    match_ingred_sum = np.sum(match_recipes_m, 1)
+
+    # Get list of matched ingred indices in descending order
+    ranked_ixs = np.flip(np.argsort(match_ingred_sum))
+
+    ranked_ingreds = get_ranked_ingreds(ranked_ixs, match_ingred_sum)
+    match_recipes = get_match_recipes(match_recipe_ixs.flatten())
+
+    return ranked_ingreds, match_recipes
+
+# TODO: Duplicates in recipes in recipe_data_filtered causes recipe matrix to
+# have elements that equal 2, causing ranking functions to misbehave.
+def get_recipe_matrix():
+    '''2D matrix whose rows are ingredients and cols are recipes.
+    A 1 denotes the occurence of an ingredient in a given recipe.'''
     ingreds = get_json('all_ingreds_filtered.json')
     recipes = get_json('recipe_data_filtered.json')
 
@@ -67,34 +88,31 @@ def get_cooc(df):
     np.fill_diagonal(m, 0)
     return m
 
-def get_similar_ingreds(ingred):
-    df = pd.read_json(get_json('cooc_pd.json'))
-    df = df[ingred].sort_values(ascending=False)
-    return df
 
-
-def get_similar_ingreds_np(ingred):
+def get_ranked_ingreds_from_cooc(ingred):
     ingreds = get_json('all_ingreds_filtered.json')
-    if ingred not in ingreds:
-        return ['''my apologies, but we do not seem to have this'''
-        '''particular ingredient in our databses at this time''']
     ingred_to_ix = {k: v for v, k in enumerate(ingreds)}
     ix_to_ingred = {v: k for v, k in enumerate(ingreds)}
 
     cooc = np.array(get_json('cooc.json'))
 
-    ix = ingred_to_ix[ingred]
-    ranked_ixs = np.argsort(cooc[ix])
+    ingred_ix = ingred_to_ix[ingred]
+    ranked_ixs = np.argsort(cooc[ingred_ix])
     ranked_ixs = np.flip(ranked_ixs)
 
-    ingreds = [ix_to_ingred[ix] for ix in ranked_ixs]
+    ranked_ingreds = {}
+    for ranked_ix in ranked_ixs:
+        cooccurrences = cooc[ingred_ix, ranked_ix]
+        if cooccurrences == 0:
+            break
+        ranked_ingreds[ix_to_ingred[ranked_ix]] = cooccurrences
 
-    return ingreds
+    return ranked_ingreds
+
 
 def main():
-    ingreds = ['bacon']
-    print(get_ranked_ingreds(ingreds))
-
+    pass
 
 if __name__ == "__main__":
     main()
+
