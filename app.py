@@ -9,8 +9,10 @@ app.config.from_object('config')
 
 @app.route("/")
 def index():
-    session.clear()
-    return render_template('index.html')
+    cur_ingreds = session['cur_ingreds']
+    r_ingreds, recipes = matrix.search(cur_ingreds)
+    return render_template('index.html',
+        r_ingreds=r_ingreds, recipes=recipes, cur_ingreds=cur_ingreds)
 
 
 @app.route("/search", methods=["POST"])

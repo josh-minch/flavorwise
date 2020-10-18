@@ -34,16 +34,16 @@
           <form id="calc">
             what goes good with...
             <input id="search-bar" name="search" value="avocado">
-            <input type="submit" value="GET">
+            <input type="submit" value="Add">
           </form>
         </p>
         <p>
-          What goes good with... <div id="cur_ingreds"></div>
+          What goes good with... <div id="cur_ingreds">{{ session['cur_ingreds'] }}</div>
         </p>
         </p>
-        <p id="r_ingreds">
+        <p id="r_ingreds"> {{ r_ingreds }}
         </p>
-        <p id="recipes">
+        <p id="recipes"> {{ recipes }}
         </p>
 
       </article>
