@@ -7,6 +7,13 @@ app = Flask(__name__)
 app.config.from_object('config')
 N_RECIPES = 20
 
+# TODO: Move session storage from flask session to .js SessionStorage
+#       Try render_template instead of js stuff? Just use js for fetch?
+# Or even move that straight to html with method="POST" action="/search"?
+#       Pagination of results
+#       Verify input, allow multiple inputs, dropdown search menu
+#       Click to add ingreds
+
 @app.route("/")
 def index():
     r_ingreds = recipes = cur_ingreds = None

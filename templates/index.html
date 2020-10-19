@@ -34,8 +34,8 @@
                     {% if cur_ingreds %}
                     {% for cur_ingred in cur_ingreds %}
                     <div>
-                        <label for="{{cur_ingred}}">{{cur_ingred}}</label>
                         <input type="checkbox" id="{{cur_ingred}}" name="{{cur_ingred}}">
+                        <label for="{{cur_ingred}}"> {{cur_ingred}}</label>
                     </div>
                     {% endfor %}
                     <input type="submit" value="Remove" id="remove-button">

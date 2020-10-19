@@ -43,9 +43,9 @@ function createCurIngreds(cur_ingreds) {
         const div = document.createElement('div');
         const input = createInput(element);
         const label = createLabel(element);
-        div.appendChild(label);
-        div.appendChild(input);
         cur_ingreds_sec.appendChild(div);
+        div.appendChild(label);
+        label.prepend(input);
     });
     const btn = createRemoveBtn();
     cur_ingreds_sec.appendChild(btn)
@@ -67,7 +67,7 @@ function createInput(element) {
 function createLabel(element) {
     const label = document.createElement('label');
     label.setAttribute('for', element);
-    label.innerText = element;
+    label.innerText = ` ${element}`;
     return label;
 }
 
