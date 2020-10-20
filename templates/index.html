@@ -48,8 +48,8 @@
             </div>
             <div class="col-sm">
                 <div id="recipes">
-                    <span class="title">There are {{ recipes|length }} recipes with {{ cur_ingreds }}</span>
                     {% if recipes %}
+                    <span class="title">There are {{ recipes|length }} recipes with {{ cur_ingreds }}</span>
                     {% for recipe in recipes %}
                     <a href="{{recipe.1}}">{{ recipe.0 }}</a>
                     {% endfor %}
