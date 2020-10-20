@@ -13,6 +13,7 @@ N_RECIPES = 20
 #       Pagination of results
 #       Verify input, allow multiple inputs, dropdown search menu
 #       Click to add ingreds
+#       Emojis, anyone?
 
 @app.route("/")
 def index():

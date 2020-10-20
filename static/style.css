@@ -1,9 +1,13 @@
 .container {
-  max-width: 600px;
+  /* max-width: 1200px; */
 }
 
+.title {
+  font-family: 'DM Serif Text', serif;
+}
+
+
 h1 {
-  font-family: serif;
   font-size: 3em;
 }
 
