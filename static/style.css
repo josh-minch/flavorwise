@@ -1,18 +1,37 @@
-.container {
-  /* max-width: 1200px; */
-}
+/* .serif {
+  font-family: Times, serif;
+} */
 
 .title {
-  font-family: 'DM Serif Text', serif;
-}
-
-
-h1 {
   font-size: 3em;
 }
 
-h3 {
-  font-family: serif;
+#cur-ingreds {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.recipe-title {
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.bold-ingred {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.italic {
+  font-style: italic
+}
+
+h1 {
+  font-size: 3em;
 }
 
 li {
