@@ -1,11 +1,12 @@
 from flask import Flask, jsonify, render_template, request, session
 
 import matrix
-
+from helper import get_json
 
 app = Flask(__name__)
 app.config.from_object('config')
-N_RECIPES = 20
+N_RECIPES = 500
+ALL_INGREDS = get_json('all_ingreds_filtered.json')
 
 # TODO: Move session storage from flask session to .js SessionStorage
 #       Try render_template instead of js stuff? Just use js for fetch?
@@ -13,7 +14,9 @@ N_RECIPES = 20
 #       Pagination of results
 #       Verify input, allow multiple inputs, dropdown search menu
 #       Click to add ingreds
+#       Fix js polyfill 404 (check browser console on load)
 #       Emojis, anyone?
+
 
 @app.route("/")
 def index():
@@ -25,7 +28,7 @@ def index():
         r_ingreds = {k: r_ingreds[k] for k in list(r_ingreds)[:N_RECIPES]}
         recipes = recipes[:N_RECIPES]
 
-    return render_template('index.html',
+    return render_template('index.html', all_ingreds=ALL_INGREDS,
         r_ingreds = r_ingreds, recipes = recipes, cur_ingreds = cur_ingreds)
 
 
@@ -44,11 +47,8 @@ def remove():
 
 def get_matrix_search(cur_ingreds):
     r_ingreds, recipes = matrix.search(cur_ingreds)
-    result = ''
-    for ingred in r_ingreds:
-        result += '{} {}, '.format(ingred, r_ingreds[ingred])
 
-    return jsonify(cur_ingreds=cur_ingreds, r_ingreds=result, recipes=recipes[:N_RECIPES])
+    return jsonify(cur_ingreds=cur_ingreds, r_ingreds=list(r_ingreds), recipes=recipes[:N_RECIPES])
 
 def remove_session(ingreds):
     for ingred in ingreds:
