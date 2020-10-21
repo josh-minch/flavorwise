@@ -1,6 +1,6 @@
 var search = document.getElementById('search');
 search.addEventListener('submit', searchSubmit);
-var remove = document.getElementById('cur_ingreds')
+var remove = document.getElementById('cur-ingreds')
 remove.addEventListener('submit', removeIngred);
 
 
@@ -29,33 +29,29 @@ function parseJSON(response) {
 }
 
 function updateDisplay(json_data) {
-    removeAllChild(document.getElementById('cur_ingreds'))
+    removeAllChild(document.getElementById('cur-ingreds'));
+    removeAllChild(document.getElementById('r_ingreds'));
+    removeAllChild(document.getElementById('recipes'));
     createCurIngreds(json_data.cur_ingreds);
-    var r_ingreds = document.getElementById('r_ingreds');
-    var recipes = document.getElementById('recipes');
-    r_ingreds.innerText = json_data.r_ingreds;
-    recipes.innerText = json_data.recipes;
+    createRankedIngreds(json_data.r_ingreds);
+    createRecipes(json_data.recipes, json_data.cur_ingreds);
 }
 
 function createCurIngreds(cur_ingreds) {
-    const cur_ingreds_sec = document.querySelector('#cur_ingreds');
+    const curIngredsDiv = document.querySelector('#cur-ingreds');
+
     cur_ingreds.forEach(element => {
-        const div = document.createElement('div');
-        const input = createInput(element);
+        const ingred = document.createElement('span');
+        const box = createInput(element);
         const label = createLabel(element);
-        cur_ingreds_sec.appendChild(div);
-        div.appendChild(label);
-        label.prepend(input);
+        curIngredsDiv.appendChild(ingred);
+        ingred.appendChild(label);
+        label.prepend(box);
     });
     const btn = createRemoveBtn();
-    cur_ingreds_sec.appendChild(btn)
+    curIngredsDiv.appendChild(btn);
 }
 
-function removeAllChild(node) {
-    while (node.firstChild) {
-        node.removeChild(node.firstChild);
-    }
-}
 function createInput(element) {
     const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
@@ -79,9 +75,71 @@ function createRemoveBtn() {
     return btn;
 }
 
-/* var node = document.createElement("LI");
-var textnode = document.createTextNode("Water");
-node.appendChild(textnode); */
+function createRankedIngreds(rankedIngreds) {
+    const rankedIngredsSec = document.querySelector('#r_ingreds');
+    const rankedIngredsText = rankedIngreds.join(", ");
+    rankedIngredsSec.innerText = rankedIngredsText
+}
+
+function createRecipes(recipes, cur_ingreds) {
+    const recipesSec = document.querySelector('#recipes');
+    const recipesTitleDiv = createRecipesTitle(recipes, cur_ingreds);
+    const recipesBodyDiv = createRecipesBody(recipes);
+
+    recipesSec.appendChild(recipesTitleDiv);
+    recipesSec.appendChild(recipesBodyDiv);
+}
+
+function createRecipesTitle(recipes, curIngreds) {
+    const div = document.createElement('div');
+    div.setAttribute('class', 'recipe-title');
+    if (curIngreds.length == 0) {
+        div.innerText = 'Recipes'
+    } else if (curIngreds.length > 0 && recipes.length == 1) {
+        div.innerText = `${recipes.length} recipe with `;
+    } else if (curIngreds.length > 0 && recipes.length > 1) {
+        div.innerText = `${recipes.length} recipes with `;
+    }
+
+    const curIngredsText = curIngreds.join(", ");
+    const span = document.createElement('span');
+    span.setAttribute('class', 'bold-ingred');
+    span.innerText = curIngredsText;
+    div.appendChild(span);
+
+    return div
+}
+
+function createRecipesBody(recipes) {
+    const recipesBody = document.createElement('div');
+
+    for (let i = 0; i < recipes.length; i++) {
+        const recipe = document.createElement('div');
+
+        const link = document.createElement('a');
+        recipe.appendChild(link)
+        link.setAttribute('href', recipes[i][1]);
+        link.innerText = recipes[i][0];
+        recipe.appendChild(link)
+
+        if (i < recipes.length - 1) {
+            const span = document.createElement('span');
+            span.innerText = ', '
+            recipe.appendChild(span)
+        }
+
+        recipesBody.appendChild(recipe)
+    }
+
+    return recipesBody
+}
+
+
+function removeAllChild(node) {
+    while (node.firstChild) {
+        node.removeChild(node.firstChild);
+    }
+}
 
 
 
