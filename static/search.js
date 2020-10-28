@@ -11,7 +11,8 @@ function searchSubmit(ev) {
         body: new FormData(this)
     })
         .then(parseJSON)
-        .then(updateDisplay);
+        .then(updateDisplay)
+        .then(document.getElementById('search').reset());
 }
 
 function removeIngred(ev) {
