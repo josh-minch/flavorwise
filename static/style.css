@@ -2,10 +2,6 @@
   font-family: Times, serif;
 } */
 
-.title {
-  font-size: 3em;
-}
-
 #cur-ingreds {
   margin-top: 15px;
   margin-bottom: 10px;
@@ -28,12 +24,4 @@
 
 .italic {
   font-style: italic
-}
-
-h1 {
-  font-size: 3em;
-}
-
-li {
-  list-style: none;
 }
