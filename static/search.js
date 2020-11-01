@@ -12,7 +12,7 @@ function searchSubmit(ev) {
     })
         .then(parseJSON)
         .then(updateDisplay)
-        .then(document.getElementById('search').reset());
+    document.getElementById('search').reset();
 }
 
 function removeIngred(ev) {
@@ -27,6 +27,10 @@ function removeIngred(ev) {
 
 function parseJSON(response) {
     return response.json();
+}
+
+function validateInput(response) {
+
 }
 
 function updateDisplay(json_data) {
