@@ -5,21 +5,19 @@ remove.addEventListener('submit', removeIngred);
 
 
 function searchSubmit(ev) {
-    ev.preventDefault();
-    fetch('/search', {
-        method: 'POST',
-        body: new FormData(this)
-    })
-        .then(parseJSON)
-        .then(updateDisplay)
-    document.getElementById('search').reset();
+    fetchPathEvent(this, ev, '/search')
+    this.reset();
 }
 
 function removeIngred(ev) {
+    fetchPathEvent(this, ev, '/remove')
+}
+
+function fetchPathEvent(form, ev, path) {
     ev.preventDefault();
-    fetch('/remove', {
+    fetch(path, {
         method: 'POST',
-        body: new FormData(this)
+        body: new FormData(form)
     })
         .then(parseJSON)
         .then(updateDisplay);
@@ -29,9 +27,6 @@ function parseJSON(response) {
     return response.json();
 }
 
-function validateInput(response) {
-
-}
 
 function updateDisplay(json_data) {
     removeAllChild(document.getElementById('cur-ingreds'));
