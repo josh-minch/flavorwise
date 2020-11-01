@@ -23,7 +23,15 @@
             <div class="col-sm">
                 <span class="">What goes with...</span>
                 <form id="search">
-                    <input list="all_ingreds" autocomplete="off" name="search" placeholder="bell pepper" autofocus="true" required>
+                    <input list="all_ingreds"
+                                name="search"
+                                autofocus="true"
+                                placeholder="{{ random_ingred }}"
+                                autocomplete="off"
+                                title="Select an ingredient"
+
+                                pattern="{{ pattern }}"
+                                required>
                     <datalist id="all_ingreds">
                         {% for ingred in all_ingreds %}<option value="{{ ingred }}"></option>{% endfor %}
                     </datalist>

@@ -1,3 +1,6 @@
+import http
+import random
+
 from flask import Flask, jsonify, render_template, request, session
 
 import matrix
@@ -6,7 +9,7 @@ from helper import get_json
 app = Flask(__name__)
 app.config.from_object('config')
 N_RECIPES = 500
-ALL_INGREDS = get_json('all_ingreds_filtered.json')
+ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_filtered.json')]
 
 # TODO: Move session storage from flask session to .js SessionStorage
 #       Try render_template instead of js stuff? Just use js for fetch?
@@ -28,14 +31,18 @@ def index():
         r_ingreds = {k: r_ingreds[k] for k in list(r_ingreds)[:N_RECIPES]}
         recipes = recipes[:N_RECIPES]
 
-    return render_template('index.html', all_ingreds=ALL_INGREDS,
-        r_ingreds = r_ingreds, recipes = recipes, cur_ingreds = cur_ingreds)
+    random_ingred = random.choice(ALL_INGREDS)
+    pattern = create_search_pattern()
+    return render_template('index.html', all_ingreds=ALL_INGREDS, random_ingred=random_ingred, pattern=pattern,
+        r_ingreds=r_ingreds, recipes=recipes, cur_ingreds=cur_ingreds)
 
 
 @app.route("/search", methods=["POST"])
 def search():
     # TODO: Verify input
     input_ingred = request.form.get('search', 0, type=str).strip()
+    if not valid_input(input_ingred):
+        return '', http.HTTPStatus.NO_CONTENT
     cur_ingreds = append_session(input_ingred)
     return get_matrix_search(cur_ingreds)
 
@@ -44,6 +51,25 @@ def remove():
     ingreds_to_remove = request.form.keys()
     cur_ingreds = remove_session(ingreds_to_remove)
     return get_matrix_search(cur_ingreds)
+
+
+def valid_input(input_ingred):
+    if input_ingred.lower() in ALL_INGREDS:
+        return True
+    else:
+        return False
+
+
+def create_search_pattern():
+    """ Return regex search string that matches any ingredient. """
+    ingreds_regex = []
+    for ingred in ALL_INGREDS:
+        ingred_regex = ''.join(['[{}{}]'.format(c.upper(), c.lower()) for c in ingred])
+        ingreds_regex.append(ingred_regex)
+
+    pattern = '|'.join(ingreds_regex)
+    return pattern
+
 
 def get_matrix_search(cur_ingreds):
     r_ingreds, recipes = matrix.search(cur_ingreds)
