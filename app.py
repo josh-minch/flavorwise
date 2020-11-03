@@ -15,8 +15,7 @@ ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_filtered.json'
 #       Try render_template instead of js stuff? Just use js for fetch?
 # Or even move that straight to html with method="POST" action="/search"?
 #       Pagination of results
-#       Verify input, allow multiple inputs, dropdown search menu
-#       Click to add ingreds
+#       allow multiple inputs,
 #       Fix js polyfill 404 (check browser console on load)
 #       Emojis, anyone?
 
@@ -39,7 +38,6 @@ def index():
 
 @app.route("/search", methods=["POST"])
 def search():
-    # TODO: Verify input
     input_ingred = request.form.get('search', 0, type=str).strip()
     if not valid_input(input_ingred):
         return '', http.HTTPStatus.NO_CONTENT
