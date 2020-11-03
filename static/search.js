@@ -100,7 +100,7 @@ function createRelatedIngreds(rankedIngreds) {
     rankedIngreds.forEach(element => {
         const ingred = document.createElement('button');
         ingred.setAttribute('type', 'button');
-        ingred.setAttribute('class', 'btn btn-outline-primary');
+        ingred.setAttribute('class', 'btn btn-outline-primary btn-sm');
         ingred.setAttribute('value', element);
         ingred.innerText = element
         rankedIngredsDiv.appendChild(ingred)
