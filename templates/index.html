@@ -29,7 +29,6 @@
                                 placeholder="{{ random_ingred }}"
                                 autocomplete="off"
                                 title="Select an ingredient"
-
                                 pattern="{{ pattern }}"
                                 required>
                     <datalist id="all_ingreds">
@@ -51,7 +50,7 @@
                 <div id="r_ingreds">
                     {% if r_ingreds %}
                     {% for r_ingred in r_ingreds %}
-                    {{ r_ingred }}{{ ", " if not loop.last }}
+                        <button type="button" class="btn btn-outline-primary" name="r_ingred" value="{{r_ingred}}">{{ r_ingred }}</button>
                     {% endfor %}
                     {% endif %}
                 </div>

@@ -1,23 +1,37 @@
 var search = document.getElementById('search');
-search.addEventListener('submit', searchSubmit);
-var remove = document.getElementById('cur-ingreds')
+search.addEventListener('submit', searchAddIngred);
+var relatedIngreds = document.getElementById('r_ingreds');
+relatedIngreds.addEventListener('click', addRelatedIngred);
+var remove = document.getElementById('cur-ingreds');
 remove.addEventListener('submit', removeIngred);
 
 
-function searchSubmit(ev) {
-    fetchPathEvent(this, ev, '/search')
+function searchAddIngred(ev) {
+    fetchPathEvent(new FormData(this), ev, '/search')
     this.reset();
 }
 
-function removeIngred(ev) {
-    fetchPathEvent(this, ev, '/remove')
+
+function addRelatedIngred(ev) {
+    const isButton = ev.target.nodeName === 'BUTTON';
+    if (!isButton) {
+        return;
+    }
+    var formData = new FormData();
+    formData.append('search', String(ev.target.value))
+    fetchPathEvent(formData, ev, '/search');
 }
 
-function fetchPathEvent(form, ev, path) {
+
+function removeIngred(ev) {
+    fetchPathEvent(new FormData(this), ev, '/remove')
+}
+
+function fetchPathEvent(formData, ev, path) {
     ev.preventDefault();
     fetch(path, {
         method: 'POST',
-        body: new FormData(form)
+        body: formData
     })
         .then(parseJSON)
         .then(updateDisplay);
@@ -27,14 +41,19 @@ function parseJSON(response) {
     return response.json();
 }
 
-
 function updateDisplay(json_data) {
     removeAllChild(document.getElementById('cur-ingreds'));
     removeAllChild(document.getElementById('r_ingreds'));
     removeAllChild(document.getElementById('recipes'));
     createCurIngreds(json_data.cur_ingreds);
-    createRankedIngreds(json_data.r_ingreds);
+    createRelatedIngreds(json_data.r_ingreds);
     createRecipes(json_data.recipes, json_data.cur_ingreds);
+}
+
+function removeAllChild(node) {
+    while (node.firstChild) {
+        node.removeChild(node.firstChild);
+    }
 }
 
 function createCurIngreds(cur_ingreds) {
@@ -69,16 +88,23 @@ function createLabel(element) {
 
 function createRemoveBtn() {
     const btn = document.createElement('input');
-    btn.setAttribute('type', "submit");
-    btn.setAttribute('value', "Remove");
-    btn.setAttribute('id', "remove-button");
+    btn.setAttribute('type', 'submit');
+    btn.setAttribute('value', 'Remove');
+    btn.setAttribute('id', 'remove-button');
     return btn;
 }
 
-function createRankedIngreds(rankedIngreds) {
-    const rankedIngredsSec = document.querySelector('#r_ingreds');
-    const rankedIngredsText = rankedIngreds.join(", ");
-    rankedIngredsSec.innerText = rankedIngredsText
+function createRelatedIngreds(rankedIngreds) {
+    const rankedIngredsDiv = document.querySelector('#r_ingreds');
+
+    rankedIngreds.forEach(element => {
+        const ingred = document.createElement('button');
+        ingred.setAttribute('type', 'button');
+        ingred.setAttribute('class', 'btn btn-outline-primary');
+        ingred.setAttribute('value', element);
+        ingred.innerText = element
+        rankedIngredsDiv.appendChild(ingred)
+    });
 }
 
 function createRecipes(recipes, cur_ingreds) {
@@ -101,7 +127,7 @@ function createRecipesTitle(recipes, curIngreds) {
         div.innerText = `${recipes.length} recipes with `;
     }
 
-    const curIngredsText = curIngreds.join(", ");
+    const curIngredsText = curIngreds.join(', ');
     const span = document.createElement('span');
     span.setAttribute('class', 'bold-ingred');
     span.innerText = curIngredsText;
@@ -133,13 +159,5 @@ function createRecipesBody(recipes) {
 
     return recipesBody
 }
-
-
-function removeAllChild(node) {
-    while (node.firstChild) {
-        node.removeChild(node.firstChild);
-    }
-}
-
 
 
