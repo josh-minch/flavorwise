@@ -9,7 +9,7 @@ import spacy
 import requests
 from bs4 import BeautifulSoup, SoupStrainer
 
-
+import helper
 
 
 def get_soup_local(path, strainer):
@@ -163,7 +163,7 @@ def create_filter_prog(ingred_filter):
     which looks for any exact match of an ingredient (which we enforce
     through checking at word boundaries with \b), or that same match
     ending in an 's' """
-    pattern = [r'\b{}s?\b'.format(ingred) for ingred in ingred_filter]
+    pattern = [r'\b{}s?(es)?\b'.format(ingred) for ingred in ingred_filter]
     pattern = '|'.join(pattern)
     pattern = '(?:{})'.format(pattern)
     return re.compile(pattern)
@@ -228,31 +228,35 @@ def filter_regex(ingredients):
     return ingred_stripped
 
 
-def write_recipe_data_filtered(datafile):
-    data = json.load(datafile)
+def write_recipe_data_filtered(recipe_file_name, filtered_file_name):
+    """Save json of filtered recipes in recipe_file_name to filtered_file_name."""
+    data = helper.get_json(recipe_file_name)
     ingred_filters = create_ingred_filters()
+
+    # Remove duplicate recipes
+    df = pd.DataFrame(data)
+    df_unique = df[~df['title'].duplicated()]
+    data = df_unique.to_dict('records')
 
     for recipe in data:
         filtered_ingreds = filter_naive(recipe['ingreds'], ingred_filters)
         recipe['ingreds'] = filtered_ingreds
 
-    with open('recipe_data_filtered.json', 'w', encoding='utf8') as f:
-        json.dump(data, f)
+    helper.write_json(data, filtered_file_name, 'w')
 
 
-def save_all_ingreds(recipe_file):
-    with open(recipe_file, encoding='utf8') as f:
-        data = json.load(f)
+def write_all_ingreds(recipe_file_name, ingred_file_name):
+    """Save json of all recipes in recipe_file_name to ingred_file_name."""
+    data = helper.get_json(recipe_file_name)
 
     ingreds = []
     for recipe in data:
         ingreds.append(recipe['ingreds'])
-
     ingreds = [ingred for sublist in ingreds for ingred in sublist]
+    ingreds = list(set(ingreds))
+    ingreds.sort()
 
-    with open('all_ingreds.json', 'w', encoding='utf8') as f:
-        json.dump(ingreds, f)
-
+    helper.write_json(ingreds, ingred_file_name, 'w')
     return ingreds
 
 def find_unrecognized_ingreds(ingreds):
@@ -271,24 +275,11 @@ def find_unrecognized_ingreds(ingreds):
                 recipe_writer.writerow([ingred])
 
 def main():
-    """
-    with open('ingreds_stripped.json', encoding='utf8') as f:
-        ingreds_stripped = json.load(f)
-    find_unrecognized_ingreds(ingreds_stripped)
-    """
 
-    with open('recipe_data.json', encoding='utf8') as f:
-        write_recipe_data_filtered(f)
-    """
-    ingred_filters = create_ingred_filters()
-    with open('all_ingreds_stripped.json', encoding='utf8') as f:
-        ingreds = json.load(f)
-        ingreds = list(set(ingreds))
-        filtered_ingreds = filter_naive(ingreds, ingred_filters)
-        filtered_ingreds.sort()
+    write_recipe_data_filtered('recipe_data.json', 'recipe_data_filtered.json')
+    write_all_ingreds('recipe_data_filtered.json', 'all_ingreds_filtered.json')
 
-    with open('all_ingreds_filtered.json', 'w', encoding='utf8') as f:
-        json.dump(filtered_ingreds, f)
-    """
 if __name__ == "__main__":
     main()
+
+
