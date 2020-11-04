@@ -8,7 +8,8 @@ from helper import get_json
 
 app = Flask(__name__)
 app.config.from_object('config')
-N_RECIPES = 500
+N_RECIPES = 50
+N_R_INGREDS = 100
 ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_filtered.json')]
 
 # TODO: Move session storage from flask session to .js SessionStorage
@@ -22,18 +23,19 @@ ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_filtered.json'
 
 @app.route("/")
 def index():
-    r_ingreds = recipes = cur_ingreds = None
-    if 'cur_ingreds' in session:
+    if 'cur_ingreds' not in session:
+        cur_ingreds = []
+    else:
         cur_ingreds = session['cur_ingreds']
-        r_ingreds, recipes = matrix.search(cur_ingreds)
 
-        r_ingreds = {k: r_ingreds[k] for k in list(r_ingreds)[:N_RECIPES]}
-        recipes = recipes[:N_RECIPES]
+    r_ingreds, recipes = matrix.search(cur_ingreds)
+    r_ingreds = list(r_ingreds.keys())[:N_R_INGREDS]
 
     random_ingred = random.choice(ALL_INGREDS)
     pattern = create_search_pattern()
-    return render_template('index.html', all_ingreds=ALL_INGREDS, random_ingred=random_ingred, pattern=pattern,
-        r_ingreds=r_ingreds, recipes=recipes, cur_ingreds=cur_ingreds)
+    return render_template('index.html', all_ingreds=ALL_INGREDS,
+                        random_ingred=random_ingred, pattern=pattern,
+                        r_ingreds=r_ingreds, recipes=recipes[:N_RECIPES], cur_ingreds=cur_ingreds)
 
 
 @app.route("/search", methods=["POST"])
@@ -72,7 +74,7 @@ def create_search_pattern():
 def get_matrix_search(cur_ingreds):
     r_ingreds, recipes = matrix.search(cur_ingreds)
 
-    return jsonify(cur_ingreds=cur_ingreds, r_ingreds=list(r_ingreds), recipes=recipes[:N_RECIPES])
+    return jsonify(cur_ingreds=cur_ingreds, r_ingreds=list(r_ingreds)[:N_R_INGREDS], recipes=recipes[:N_RECIPES])
 
 def remove_session(ingreds):
     for ingred in ingreds:
