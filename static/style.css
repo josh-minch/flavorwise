@@ -1,21 +1,30 @@
-/* .serif {
-  font-family: Times, serif;
-} */
-
+.serif {
+  font-family: 'Lora', serif;
+}
+/*
 #cur-ingreds {
   margin-top: 15px;
   margin-bottom: 10px;
   display: flex;
 }
-
-.recipe-title {
-  font-size: 1.3rem;
+ */
+.recipe-intro {
+  font-size: 1.4rem;
   font-weight: 400;
+  font-family: 'Lora', serif;
 }
 
-.bold-ingred {
-  font-size: 1.3rem;
+.recipe-prep {
+  font-size: 1.4rem;
+  font-weight: 400;
+  font-family: 'Lora', serif;
+  font-style: italic
+}
+
+.recipe-ingred {
+  font-size: 1.4rem;
   font-weight: 600;
+  font-family: 'Lora', serif;
 }
 
 .bold {

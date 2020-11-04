@@ -118,7 +118,7 @@ function createRecipes(recipes, cur_ingreds) {
 
 function createRecipesTitle(recipes, curIngreds) {
     const div = document.createElement('div');
-    div.setAttribute('class', 'recipe-title');
+    div.setAttribute('class', 'recipe-intro');
     if (curIngreds.length == 0) {
         div.innerText = 'Recipes'
     } else if (curIngreds.length > 0 && recipes.length == 1) {
@@ -129,7 +129,7 @@ function createRecipesTitle(recipes, curIngreds) {
 
     const curIngredsText = curIngreds.join(', ');
     const span = document.createElement('span');
-    span.setAttribute('class', 'bold-ingred');
+    span.setAttribute('class', 'recipe-ingred');
     span.innerText = curIngredsText;
     div.appendChild(span);
 
@@ -147,12 +147,6 @@ function createRecipesBody(recipes) {
         link.setAttribute('href', recipes[i][1]);
         link.innerText = recipes[i][0];
         recipe.appendChild(link)
-
-        if (i < recipes.length - 1) {
-            const span = document.createElement('span');
-            span.innerText = ', '
-            recipe.appendChild(span)
-        }
 
         recipesBody.appendChild(recipe)
     }
