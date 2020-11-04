@@ -86,7 +86,7 @@ def get_recipe_matrix():
 
 def get_cooc():
     df = get_recipe_matrix()
-    m = m.dot(m.transpose())
+    m = df.dot(df.transpose())
     np.fill_diagonal(m, 0)
     return m
 
