@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 from helper import get_json, write_json
 
@@ -10,7 +11,7 @@ ALL_INGREDS = get_json('all_ingreds_filtered.json')
 INGRED_TO_IX = {k: i for i, k in enumerate(ALL_INGREDS)}
 IX_TO_INGRED = {i: k for i, k in enumerate(ALL_INGREDS)}
 
-RECIPE_DATA = get_json('recipe_data.json')
+RECIPE_DATA = get_json('recipe_data_filtered.json')
 IX_TO_RECIPE = {i: (r['title'], r['url']) for i, r in enumerate(RECIPE_DATA)}
 
 
@@ -29,20 +30,20 @@ def get_match_recipes(match_recipe_ixs):
     return [IX_TO_RECIPE[ix] for ix in match_recipe_ixs]
 
 
-def search(ingreds):
+def search(input_ingreds):
     """Return co-ocurring ranked ingreds and the recipes they occur in."""
 
-    if isinstance(ingreds, str):
-        ingreds = [ingreds]
-    ixs = [INGRED_TO_IX[ingred] for ingred in ingreds]
+    if isinstance(input_ingreds, str):
+        input_ingreds = [input_ingreds]
+    input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
 
     # Get only rows for our ingreds
-    ingred_rows = RECIPE_MATRIX[ixs]
+    ingred_rows = RECIPE_MATRIX[input_ixs]
     # for each recipe, sum occurences of all our ingred.
     ingred_sum = np.sum(ingred_rows, 0)
     # Check where this sum equals the len of our ingred list.
     # This ensures we only get recipes that contain all our ingreds.
-    match_recipe_ixs = np.argwhere(ingred_sum == len(ixs))
+    match_recipe_ixs = np.argwhere(ingred_sum == len(input_ixs))
     match_recipes_m = RECIPE_MATRIX[:, match_recipe_ixs.flatten()]
 
     # Then sum total occurences of each ingredient for each recipe.
@@ -51,13 +52,16 @@ def search(ingreds):
     # Get list of matched ingred indices in descending order
     ranked_ixs = np.flip(np.argsort(match_ingred_sum))
 
+    # Remove indices of input_ingreds from our ranked_ixs
+    ix_to_remove = set(input_ixs)
+    ranked_ixs = (ix for ix in ranked_ixs if ix not in ix_to_remove)
+
     ranked_ingreds = get_ranked_ingreds(ranked_ixs, match_ingred_sum)
     match_recipes = get_match_recipes(match_recipe_ixs.flatten())
 
     return ranked_ingreds, match_recipes
 
-# TODO: Duplicates in recipes in recipe_data_filtered causes recipe matrix to
-# have elements that equal 2, causing ranking functions to misbehave.
+
 def get_recipe_matrix():
     '''2D matrix whose rows are ingredients and cols are recipes.
     A 1 denotes the occurence of an ingredient in a given recipe.'''
@@ -75,15 +79,13 @@ def get_recipe_matrix():
         recipe_ingreds = set(recipe['ingreds'])
         matches = recipe_ingreds & ingreds
         if len(matches) > 0:
-            df.loc[list(matches), recipe['title']] += 1
+            df.loc[list(matches), recipe['title']] = 1
 
-    return df.to_numpy()
+    return df
 
 
-def get_cooc(df):
-    df = make_recipe_matrix()
-
-    m = df.to_numpy()
+def get_cooc():
+    df = get_recipe_matrix()
     m = m.dot(m.transpose())
     np.fill_diagonal(m, 0)
     return m
@@ -111,7 +113,11 @@ def get_ranked_ingreds_from_cooc(ingred):
 
 
 def main():
-    pass
+    df = get_recipe_matrix()
+    data = df.to_numpy()
+    data = data.tolist()
+    write_json(data, 'recipe_matrix.json', 'w')
+
 
 if __name__ == "__main__":
     main()
