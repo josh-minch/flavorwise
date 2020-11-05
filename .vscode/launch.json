@@ -19,10 +19,11 @@
             "env": {
                 "FLASK_APP": "app.py",
                 "FLASK_ENV": "development",
-                "DEBUG": "True"
+                "DEBUG": "False"
             },
             "args": [
                 "run",
+                "--no-debugger"
             ],
             "jinja": true
         }
