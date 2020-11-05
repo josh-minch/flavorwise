@@ -9,6 +9,7 @@ from helper import get_json
 app = Flask(__name__)
 app.config.from_object('config')
 
+VERSION_STR = '?v=0.1'
 ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_filtered.json')]
 N_RECIPES = 99
 N_R_INGREDS = 120
@@ -36,7 +37,7 @@ def index():
     random_ingred = random.choice(ALL_INGREDS)
     pattern = create_search_pattern()
 
-    return render_template('index.html', all_ingreds=ALL_INGREDS,
+    return render_template('index.html', version_str=VERSION_STR, all_ingreds=ALL_INGREDS,
                         random_ingred=random_ingred, pattern=pattern,
                         r_ingreds=r_ingreds, recipes=recipes[:N_RECIPES], cur_ingreds=cur_ingreds)
 
