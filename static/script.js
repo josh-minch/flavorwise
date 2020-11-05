@@ -129,19 +129,30 @@ function createRecipesTitle(recipes, curIngreds) {
 
     if (curIngreds.length == 0) {
         introSpan.innerText = 'Recipes'
+
     } else if (curIngreds.length > 0 && recipes.length == 1) {
         introSpan.innerText = `${recipes.length} recipe `;
         introSpan.append(prepSpan);
-    } else if (curIngreds.length > 0 && recipes.length > 1) {
+
+    } else if (curIngreds.length > 0 && recipes.length != 1) {
         introSpan.innerText = `${recipes.length} recipes `;
         introSpan.append(prepSpan);
+
     }
 
     const curIngredsText = curIngreds.join(', ');
-    const recipeSpan = document.createElement('span');
-    recipeSpan.setAttribute('class', 'recipe-ingred');
-    recipeSpan.innerText = curIngredsText;
-    introSpan.appendChild(recipeSpan);
+    const ingredSpan = document.createElement('span');
+    ingredSpan.setAttribute('class', 'recipe-ingred');
+    ingredSpan.innerText = curIngredsText;
+
+    if (recipes.length == 0) {
+        const noRecipesSpan = document.createElement('span');
+        noRecipesSpan.setAttribute('class', 'recipe-prep');
+        noRecipesSpan.innerText = '. Bummer dude!'
+        ingredSpan.append(noRecipesSpan)
+    }
+
+    introSpan.appendChild(ingredSpan);
 
     return introSpan
 }

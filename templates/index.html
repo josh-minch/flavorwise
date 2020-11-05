@@ -65,7 +65,7 @@
             </div>
             <div class="col-md" id="recipes">
                 {%- if cur_ingreds -%}
-                <span class="recipe-intro">{{ recipes|length }} recipe{{ "s" if recipes|length > 1 }} </span><span class="recipe-prep">with </span>
+                <span class="recipe-intro">{{ recipes|length }} recipe{{ "s" if recipes|length != 1 }} </span><span class="recipe-prep">with </span>
                 {%- for cur_ingred in cur_ingreds -%}
                 <span class="recipe-ingred">{{- cur_ingred -}}{{- ", " if not loop.last-}}</span>
                 {%- endfor -%}
