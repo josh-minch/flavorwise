@@ -4,6 +4,7 @@ import re
 import csv
 import time
 
+import numpy as np
 import pandas as pd
 import spacy
 import requests
@@ -215,11 +216,12 @@ def filter_regex(ingredients):
     # For numerals, decimals, fractions
     reg_quantity = r'([-]?[0-9]+[,.]?[0-9]*([\/][0-9]+[,.]?[0-9]*)*)'
 
-    units = ['oz', 'ounce', 'lb', 'pound', 'g', 'grams', 'kg', 'kilogram', 'teaspoon', 'tablespoon', 'cup']
+    units = ['oz', 'ounce', 'lb', 'pound', 'g', 'grams',
+             'kg', 'kilogram', 'teaspoon', 'tablespoon', 'cup']
     units = ['{}s?'.format(unit) for unit in units]
     reg_units = r'\b(?:' + '|'.join(units) + r')\b'
 
-    prog = re.compile(reg_parentheses +'|'+ reg_quantity +'|'+ reg_units)
+    prog = re.compile(reg_parentheses + '|' + reg_quantity + '|' + reg_units)
 
     ingred_stripped = []
     for ingred in ingredients:
@@ -259,6 +261,7 @@ def write_all_ingreds(recipe_file_name, ingred_file_name):
     helper.write_json(ingreds, ingred_file_name, 'w')
     return ingreds
 
+
 def find_unrecognized_ingreds(ingreds):
     """Write ingredients not found by ingred_filters to csv"""
     open('unrecognized_ingreds.csv', 'w').close()
@@ -274,12 +277,36 @@ def find_unrecognized_ingreds(ingreds):
                 recipe_writer = csv.writer(outfile)
                 recipe_writer.writerow([ingred])
 
+def write_recipe_matrix(outfile='recipe_matrix.json'):
+    '''2D matrix whose rows are ingredients and cols are recipes.
+    A 1 denotes the occurence of an ingredient in a given recipe.'''
+    ingreds = helper.get_json('all_ingreds_filtered.json')
+    recipes = helper.get_json('recipe_data_filtered.json')
+
+    titles = []
+    for recipe in recipes:
+        titles.append(recipe['title'])
+
+    df = pd.DataFrame(0, ingreds, titles)
+
+    ingreds = set(ingreds)
+    for recipe in recipes:
+        recipe_ingreds = set(recipe['ingreds'])
+        matches = recipe_ingreds & ingreds
+        if len(matches) > 0:
+            df.loc[list(matches), recipe['title']] = 1
+
+    data = df.to_numpy()
+    data = data.tolist()
+    helper.write_json(data, outfile, 'w')
+
+
 def main():
 
     write_recipe_data_filtered('recipe_data.json', 'recipe_data_filtered.json')
     write_all_ingreds('recipe_data_filtered.json', 'all_ingreds_filtered.json')
+    write_recipe_matrix()
+
 
 if __name__ == "__main__":
     main()
-
-

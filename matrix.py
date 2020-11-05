@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 
 from helper import get_json, write_json
 
@@ -62,28 +61,6 @@ def search(input_ingreds):
     return ranked_ingreds, match_recipes
 
 
-def get_recipe_matrix():
-    '''2D matrix whose rows are ingredients and cols are recipes.
-    A 1 denotes the occurence of an ingredient in a given recipe.'''
-    ingreds = get_json('all_ingreds_filtered.json')
-    recipes = get_json('recipe_data_filtered.json')
-
-    titles = []
-    for recipe in recipes:
-        titles.append(recipe['title'])
-
-    df = pd.DataFrame(0, ingreds, titles)
-
-    ingreds = set(ingreds)
-    for recipe in recipes:
-        recipe_ingreds = set(recipe['ingreds'])
-        matches = recipe_ingreds & ingreds
-        if len(matches) > 0:
-            df.loc[list(matches), recipe['title']] = 1
-
-    return df
-
-
 def get_cooc():
     df = get_recipe_matrix()
     m = df.dot(df.transpose())
@@ -113,10 +90,7 @@ def get_ranked_ingreds_from_cooc(ingred):
 
 
 def main():
-    df = get_recipe_matrix()
-    data = df.to_numpy()
-    data = data.tolist()
-    write_json(data, 'recipe_matrix.json', 'w')
+    write_recipe_matrix()
 
 
 if __name__ == "__main__":
