@@ -27,16 +27,18 @@
     <div class="container">
         <h2 class="serif">foodwise</h2>
         <div class="row">
-            <div class="col-sm">
+            <div class="col-md">
                 <form id="search">
-                    <input list="all_ingreds"
-                                name="search"
-                                autofocus="true"
-                                placeholder="{{ random_ingred }}"
-                                autocomplete="off"
-                                title="Select an ingredient"
-                                pattern="{{ pattern }}"
-                                required>
+                    <span class="intro-text">What pairs with...</span>
+                    <input name="search"
+                                            id="search-input"
+                                            placeholder="{{ random_ingred }}"
+                                            title="Select an ingredient"
+                                            list="all_ingreds"
+                                            pattern="{{ pattern }}"
+                                            autocomplete="off"
+                                            autofocus="true"
+                                            required>
                     <datalist id="all_ingreds">
                         {%-for ingred in all_ingreds -%}<option value="{{ ingred }}"></option>{%-endfor -%}
                     </datalist>
@@ -50,7 +52,7 @@
                         <label for="{{cur_ingred}}">{{ cur_ingred }}</label>
                     </span>
                     {%- endfor -%}
-                    <input type="submit" value="Remove" id="remove-button">
+                    <input type="submit" class="" value="Remove" id="remove-button">
                     {%- endif -%}
                 </form>
                 <div id="r-ingreds">
@@ -61,7 +63,7 @@
                     {%- endif -%}
                 </div>
             </div>
-            <div class="col-sm" id="recipes">
+            <div class="col-md" id="recipes">
                 {%- if cur_ingreds -%}
                 <span class="recipe-intro">{{ recipes|length }} recipe{{ "s" if recipes|length > 1 }} </span><span class="recipe-prep">with </span>
                 {%- for cur_ingred in cur_ingreds -%}

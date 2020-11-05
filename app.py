@@ -10,8 +10,8 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_filtered.json')]
-N_RECIPES = 50
-N_R_INGREDS = 100
+N_RECIPES = 142
+N_R_INGREDS = 60
 
 # TODO: Move session storage from flask session to .js SessionStorage
 #       Try render_template instead of js stuff? Just use js for fetch?

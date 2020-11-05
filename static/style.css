@@ -10,13 +10,38 @@
   font-style: italic
 }
 
+.container {
+  margin-top: 0.5rem;
+}
+
+.intro-text {
+
+}
+
+#search {
+  margin-top: .44rem;
+}
+
+#search-input {
+  width: 9rem;
+}
+
+#cur-ingreds {
+  margin-top: .45rem;
+  margin-bottom: .45rem;
+}
+
 .cur-ingred {
-  margin-right: 7px;
+  margin-right: 0.4rem;
 }
 
 .r-ingred {
-  margin: 3px;
-  margin-left: 0px;
+  margin-top: 0rem;
+  margin-bottom: .5rem;
+  margin-right: .5rem;
+  margin-left: 0;
+  font-size: 1rem;
+  padding: 0.15rem .5rem;
 }
 
 .recipe-intro {
