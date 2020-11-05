@@ -101,8 +101,11 @@ def add_session_ingreds(new_ingreds):
 def remove_session_ingreds(ingreds_to_remove):
     for ingred in ingreds_to_remove:
         if ingred in session['cur_ingreds']:
+            print(session['cur_ingreds'])
+            print('removing ' + ingred)
             session['cur_ingreds'].remove(ingred)
             session.modified = True
+            print(session['cur_ingreds'])
     return session['cur_ingreds']
 
 
