@@ -7,7 +7,6 @@
 
     <title>foodwise</title>
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
@@ -39,48 +38,51 @@
                                 pattern="{{ pattern }}"
                                 required>
                     <datalist id="all_ingreds">
-                        {% for ingred in all_ingreds %}<option value="{{ ingred }}"></option>{% endfor %}
+                        {%-for ingred in all_ingreds -%}<option value="{{ ingred }}"></option>{%-endfor -%}
                     </datalist>
                     <input type="submit" value="Add">
                 </form>
                 <form id="cur-ingreds">
-                    {% if cur_ingreds %}
-                    {% for cur_ingred in cur_ingreds %}
-                    <span>
+                    {%- if cur_ingreds -%}
+                    {%- for cur_ingred in cur_ingreds -%}
+                    <span class='cur-ingred'>
                         <input type="checkbox" id="{{cur_ingred}}" name="{{cur_ingred}}">
-                        <label for="{{cur_ingred}}">{{cur_ingred}}</label>
+                        <label for="{{cur_ingred}}">{{ cur_ingred }}</label>
                     </span>
-                    {% endfor %}
+                    {%- endfor -%}
                     <input type="submit" value="Remove" id="remove-button">
-                    {% endif %}
+                    {%- endif -%}
                 </form>
                 <div id="r-ingreds">
-                    {% if r_ingreds %}
-                    {% for r_ingred in r_ingreds %}
-                        <button type="button" class="btn btn-outline-primary btn-sm" name="r_ingred" value="{{r_ingred}}">{{ r_ingred }}</button>
-                    {% endfor %}
-                    {% endif %}
+                    {%- if r_ingreds -%}
+                    {%- for r_ingred in r_ingreds -%}
+                        <button type="button" class="r-ingred btn btn-outline-primary btn-sm" name="r_ingred" value="{{r_ingred}}">{{ r_ingred }}</button>
+                    {%- endfor -%}
+                    {%- endif -%}
                 </div>
             </div>
             <div class="col-sm" id="recipes">
-                {% if recipes %}
-                <span class="recipe-intro">{{ recipes|length }} recipe{{ "s" if recipes|length > 1 }}</span><span class="recipe-prep"> with</span>
-                {% for cur_ingred in cur_ingreds %}
-                    <span class="recipe-ingred">{{ cur_ingred }}{{ ", " if not loop.last }}</span>
-                {% endfor %}
-                {% for recipe in recipes %}
+                {%- if cur_ingreds -%}
+                <span class="recipe-intro">{{ recipes|length }} recipe{{ "s" if recipes|length > 1 }} </span><span class="recipe-prep">with </span>
+                {%- for cur_ingred in cur_ingreds -%}
+                <span class="recipe-ingred">{{- cur_ingred -}}{{- ", " if not loop.last-}}</span>
+                {%- endfor -%}
+                {%- else -%}
+                <span class="recipe-intro">Recipes</span>
+                {%- endif -%}
+                {%- for recipe in recipes -%}
                 <div>
                     <a href="{{recipe.1}}">{{ recipe.0 }}</a>
                 </div>
-                {% endfor %}
-                {% endif %}
+                {%- endfor -%}
+
             </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/promise-polyfill@7.1.2/dist/polyfill.min.js"></script>
     <script src="https://unpkg.com/whatwg-fetch@2.0.4/fetch.js"></script>
-    <script src='static/search.js'></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 
 </html>
