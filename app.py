@@ -33,6 +33,7 @@ def index():
 
     for ingred in cur_ingreds:
         if not valid_input(ingred):
+            print(ingred)
             remove_session_ingreds(ingred)
 
     r_ingreds, recipes = matrix.search(cur_ingreds)
