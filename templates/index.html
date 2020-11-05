@@ -54,7 +54,7 @@
                     <input type="submit" value="Remove" id="remove-button">
                     {% endif %}
                 </form>
-                <div id="r_ingreds">
+                <div id="r-ingreds">
                     {% if r_ingreds %}
                     {% for r_ingred in r_ingreds %}
                         <button type="button" class="btn btn-outline-primary btn-sm" name="r_ingred" value="{{r_ingred}}">{{ r_ingred }}</button>
@@ -63,7 +63,6 @@
                 </div>
             </div>
             <div class="col-sm" id="recipes">
-
                 {% if recipes %}
                 <span class="recipe-intro">{{ recipes|length }} recipe{{ "s" if recipes|length > 1 }}</span><span class="recipe-prep"> with</span>
                 {% for cur_ingred in cur_ingreds %}

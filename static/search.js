@@ -1,6 +1,6 @@
 var search = document.getElementById('search');
 search.addEventListener('submit', searchAddIngred);
-var relatedIngreds = document.getElementById('r_ingreds');
+var relatedIngreds = document.getElementById('r-ingreds');
 relatedIngreds.addEventListener('click', addRelatedIngred);
 var remove = document.getElementById('cur-ingreds');
 remove.addEventListener('submit', removeIngred);
@@ -41,13 +41,13 @@ function parseJSON(response) {
     return response.json();
 }
 
-function updateDisplay(json_data) {
+function updateDisplay(jsonData) {
     removeAllChild(document.getElementById('cur-ingreds'));
-    removeAllChild(document.getElementById('r_ingreds'));
+    removeAllChild(document.getElementById('r-ingreds'));
     removeAllChild(document.getElementById('recipes'));
-    createCurIngreds(json_data.cur_ingreds);
-    createRelatedIngreds(json_data.r_ingreds);
-    createRecipes(json_data.recipes, json_data.cur_ingreds);
+    createCurIngreds(jsonData.cur_ingreds);
+    createRelatedIngreds(jsonData.r_ingreds);
+    createRecipes(jsonData.recipes, jsonData.cur_ingreds);
 }
 
 function removeAllChild(node) {
@@ -56,26 +56,28 @@ function removeAllChild(node) {
     }
 }
 
-function createCurIngreds(cur_ingreds) {
+function createCurIngreds(curIngreds) {
     const curIngredsDiv = document.querySelector('#cur-ingreds');
 
-    cur_ingreds.forEach(element => {
-        const ingred = document.createElement('span');
-        const box = createInput(element);
-        const label = createLabel(element);
-        curIngredsDiv.appendChild(ingred);
-        ingred.appendChild(label);
+    curIngreds.forEach(ingred => {
+        const ingredSpan = document.createElement('span');
+        const box = createInput(ingred);
+        const label = createLabel(ingred);
+        curIngredsDiv.appendChild(ingredSpan);
+        ingredSpan.appendChild(label);
         label.prepend(box);
     });
-    const btn = createRemoveBtn();
-    curIngredsDiv.appendChild(btn);
+    if (curIngreds.length > 0) {
+        const btn = createRemoveBtn();
+        curIngredsDiv.appendChild(btn);
+    }
 }
 
-function createInput(element) {
+function createInput(ingred) {
     const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
-    input.setAttribute('id', element);
-    input.setAttribute('name', element);
+    input.setAttribute('id', ingred);
+    input.setAttribute('name', ingred);
     return input;
 }
 
@@ -95,21 +97,21 @@ function createRemoveBtn() {
 }
 
 function createRelatedIngreds(rankedIngreds) {
-    const rankedIngredsDiv = document.querySelector('#r_ingreds');
+    const rankedIngredsDiv = document.querySelector('#r-ingreds');
 
-    rankedIngreds.forEach(element => {
-        const ingred = document.createElement('button');
-        ingred.setAttribute('type', 'button');
-        ingred.setAttribute('class', 'btn btn-outline-primary btn-sm');
-        ingred.setAttribute('value', element);
-        ingred.innerText = element
-        rankedIngredsDiv.appendChild(ingred)
+    rankedIngreds.forEach(ingred => {
+        const btn = document.createElement('button');
+        btn.setAttribute('type', 'button');
+        btn.setAttribute('class', 'btn btn-outline-primary btn-sm');
+        btn.setAttribute('value', ingred);
+        btn.innerText = ingred;
+        rankedIngredsDiv.appendChild(btn)
     });
 }
 
-function createRecipes(recipes, cur_ingreds) {
+function createRecipes(recipes, curIngreds) {
     const recipesSec = document.querySelector('#recipes');
-    const recipesTitleDiv = createRecipesTitle(recipes, cur_ingreds);
+    const recipesTitleDiv = createRecipesTitle(recipes, curIngreds);
     const recipesBodyDiv = createRecipesBody(recipes);
 
     recipesSec.appendChild(recipesTitleDiv);
