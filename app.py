@@ -100,8 +100,11 @@ def add_session_ingreds(new_ingreds):
 
 def remove_session_ingreds(ingreds_to_remove):
     """ Remove ingreds_to_remove from session cookie. """
+
+    # Change argument to list if its a str
     if isinstance(ingreds_to_remove, str):
-        input_ingreds = [input_ingreds]
+        ingreds_to_remove = [ingreds_to_remove]
+
     for ingred in ingreds_to_remove:
         if ingred in session['cur_ingreds']:
             print(session['cur_ingreds'])
