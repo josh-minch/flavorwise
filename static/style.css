@@ -1,13 +1,24 @@
 .serif {
   font-family: 'Lora', serif;
 }
-/*
-#cur-ingreds {
-  margin-top: 15px;
-  margin-bottom: 10px;
-  display: flex;
+
+.bold {
+  font-weight: 700;
 }
- */
+
+.italic {
+  font-style: italic
+}
+
+.cur-ingred {
+  margin-right: 7px;
+}
+
+.r-ingred {
+  margin: 3px;
+  margin-left: 0px;
+}
+
 .recipe-intro {
   font-size: 1.4rem;
   font-weight: 400;
@@ -25,12 +36,4 @@
   font-size: 1.4rem;
   font-weight: 600;
   font-family: 'Lora', serif;
-}
-
-.bold {
-  font-weight: 700;
-}
-
-.italic {
-  font-style: italic
 }
