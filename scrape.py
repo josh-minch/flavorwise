@@ -277,6 +277,7 @@ def find_unrecognized_ingreds(ingreds):
                 recipe_writer = csv.writer(outfile)
                 recipe_writer.writerow([ingred])
 
+
 def write_recipe_matrix(outfile='recipe_matrix.json'):
     '''2D matrix whose rows are ingredients and cols are recipes.
     A 1 denotes the occurence of an ingredient in a given recipe.'''
@@ -300,6 +301,12 @@ def write_recipe_matrix(outfile='recipe_matrix.json'):
     data = data.tolist()
     helper.write_json(data, outfile, 'w')
 
+
+def get_cooc():
+    df = pd.DataFrame(helper.get_json('recipe_matrix.json'))
+    m = df.dot(df.transpose())
+    np.fill_diagonal(m, 0)
+    return m
 
 def main():
 

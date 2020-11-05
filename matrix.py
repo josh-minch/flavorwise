@@ -61,13 +61,6 @@ def search(input_ingreds):
     return ranked_ingreds, match_recipes
 
 
-def get_cooc():
-    df = get_recipe_matrix()
-    m = df.dot(df.transpose())
-    np.fill_diagonal(m, 0)
-    return m
-
-
 def get_ranked_ingreds_from_cooc(ingred):
     ingreds = get_json('all_ingreds_filtered.json')
     ingred_to_ix = {k: v for v, k in enumerate(ingreds)}
@@ -90,8 +83,7 @@ def get_ranked_ingreds_from_cooc(ingred):
 
 
 def main():
-    write_recipe_matrix()
-
+    pass
 
 if __name__ == "__main__":
     main()
