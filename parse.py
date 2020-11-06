@@ -62,15 +62,20 @@ def lemmatize(ingred):
     # Get rid of '-' in low-fat, mahi-mahi, etc
     ingred = ingred.replace('-', ' ')
     split_ingred = ingred.split()
-    final_word = split_ingred[-1]
 
-    # Handle chiles, chilis, chillies, chilly, etc
-    if final_word[:4] == 'chil':
-        split_ingred[-1] = 'chile'
-        return ' '.join(split_ingred)
-    elif final_word == 'leaves':
-        split_ingred[-1] = 'leaf'
-        return ' '.join(split_ingred)
+    for word in split_ingred:
+        word_lemma = word
+        # Handle chiles, chilis, chillies, chilly, etcs
+        if word[:4] == 'chil':
+            word_lemma = 'chile'
+        elif word == 'leaves':
+            word_lemma = 'leaf'
+        elif word == 'jalapeno':
+            word_lemma = 'jalapeño'
+
+        split_ingred[split_ingred.index(word)] = word_lemma
+
+    ingred = ' '.join(split_ingred)
 
     if ingred[-2:] == 'ss':
         pass
