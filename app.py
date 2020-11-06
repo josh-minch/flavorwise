@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 VERSION_STR = '?v=0.1'
-ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_filtered.json')]
+ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_lemma.json')]
 N_RECIPES = 99
 N_R_INGREDS = 120
 
@@ -24,16 +24,8 @@ N_R_INGREDS = 120
 
 @app.route("/")
 def index():
-    if 'cur_ingreds' not in session:
-        cur_ingreds = []
-    elif len(session['cur_ingreds']) == 0:
-        cur_ingreds = []
-    else:
-        cur_ingreds = session['cur_ingreds']
-
-    for ingred in cur_ingreds:
-        if not valid_input(ingred):
-            remove_session_ingreds(ingred)
+    remove_invalid_session_ingreds()
+    cur_ingreds = get_cur_ingreds_from_session()
 
     r_ingreds, recipes = matrix.search(cur_ingreds)
     r_ingreds = list(r_ingreds.keys())[:N_R_INGREDS]
@@ -50,7 +42,7 @@ def index():
 def search():
     new_ingreds = request.form.get('search', 0, type=str).strip()
 
-    if not valid_input(new_ingreds):
+    if not validate_ingred(new_ingreds):
         return '', http.HTTPStatus.NO_CONTENT
 
     cur_ingreds = add_session_ingreds(new_ingreds)
@@ -70,8 +62,8 @@ def update_front_end(cur_ingreds):
                    r_ingreds=list(r_ingreds)[:N_R_INGREDS],
                    recipes=recipes[:N_RECIPES])
 
-def valid_input(input_ingred):
-    if input_ingred.lower() in ALL_INGREDS:
+def validate_ingred(ingred):
+    if ingred.lower() in ALL_INGREDS:
         return True
     else:
         return False
@@ -87,6 +79,23 @@ def create_search_pattern():
     pattern = '|'.join(ingreds_regex)
     return pattern
 
+
+def remove_invalid_session_ingreds():
+    if 'cur_ingreds' not in session:
+        return
+    # Create a copy, otherwise removing elements in a loop will skip elements
+    session_ingreds = session['cur_ingreds'].copy()
+    for ingred in session_ingreds:
+        if not validate_ingred(ingred):
+            session['cur_ingreds'].remove(ingred)
+            session.modified = True
+
+def get_cur_ingreds_from_session():
+    if 'cur_ingreds' not in session or len(session['cur_ingreds']) == 0:
+        cur_ingreds = []
+    else:
+        cur_ingreds = session['cur_ingreds']
+    return cur_ingreds
 
 def add_session_ingreds(new_ingreds):
     if 'cur_ingreds' not in session or session['cur_ingreds'] is None:
