@@ -63,6 +63,8 @@ def lemmatize(ingred):
         ingred = ingred[:-3] + 'y'
     elif ingred[-3:] == 'oes':
         ingred = ingred[:-2]
+    elif ingred[-3:] == 'ves':
+        ingred = ingred[:-3] + 'f'
     elif ingred[-1:] == 's':
         ingred = ingred[:-1]
 

@@ -42,6 +42,7 @@ class TestScrape(unittest.TestCase):
         self.assertEqual(lemmatize('onions'), 'onion')
         self.assertEqual(lemmatize('apples'), 'apple')
         self.assertEqual(lemmatize('tomatoes'), 'tomato')
+        self.assertEqual(lemmatize('bay leaves'), 'bay leaf')
         self.assertEqual(lemmatize('anchovies'), 'anchovy')
 
         self.assertEqual(lemmatize('chiles'), 'chile')
