@@ -19,7 +19,8 @@ def filter_naive(ingreds, ingred_filters):
     g_prog = create_filter_prog(ingred_filters['general'])
 
     for ingred in ingreds:
-
+        ingred = ingred.replace(',', '')
+        ingred = ingred.replace('-', ' ')
         '''First check if ingred is found in list of special foods. These foods contain
         substrings found in more general food strings. For example, if ingred is
         'sour cream', we must check for 'sour cream' before 'cream', otherwise the filter
@@ -60,7 +61,6 @@ def check_ingred(ingred_to_check, prog):
 
 def lemmatize(ingred):
     # Get rid of '-' in low-fat, mahi-mahi, etc
-    ingred = ingred.replace('-', ' ')
     split_ingred = ingred.split()
 
     for word in split_ingred:

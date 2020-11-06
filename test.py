@@ -25,6 +25,9 @@ class TestScrape(unittest.TestCase):
             'apple sauce', self.s_prog), 'apple sauce')
         self.assertEqual(check_ingred('apple', self.s_prog), None)
 
+        self.assertEqual(check_ingred(
+            '1 1/2 jalapenos, seeded, stemmed and diced', self.g_prog), 'jalapeño')
+
         self.assertEqual(check_ingred('no ingredients', self.s_prog), None)
 
     def test_filter_naive(self):
@@ -37,7 +40,7 @@ class TestScrape(unittest.TestCase):
         self.assertCountEqual(filtered_ingreds, ['apple sauce', 'apple'])
 
         filtered_ingreds = filter_naive(
-            ['jalapeno', 'jalapeño'], self.filters)
+            ['jalapenos', 'jalapeño'], self.filters)
         self.assertCountEqual(filtered_ingreds, ['jalapeño'])
 
         filtered_ingreds = filter_naive([''], self.filters)
