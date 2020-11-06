@@ -57,7 +57,5 @@ class TestScrape(unittest.TestCase):
         self.assertEqual(lemmatize('red chillies'), 'red chile')
 
 
-
-
 if __name__ == '__main__':
     unittest.main()
