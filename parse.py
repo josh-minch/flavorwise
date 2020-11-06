@@ -71,7 +71,9 @@ def lemmatize(ingred):
         split_ingred[-1] = 'leaf'
         return ' '.join(split_ingred)
 
-    if ingred[-3:] == 'ies':
+    if ingred[-2:] == 'ss':
+        pass
+    elif ingred[-3:] == 'ies':
         ingred = ingred[:-3] + 'y'
     elif ingred[-3:] == 'oes':
         ingred = ingred[:-2]
