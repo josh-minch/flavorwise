@@ -70,7 +70,7 @@ def lemmatize(ingred):
             word_lemma = 'chile'
         elif word == 'leaves':
             word_lemma = 'leaf'
-        elif word == 'jalapeno':
+        elif 'jalapeno' in word:
             word_lemma = 'jalapeño'
 
         split_ingred[split_ingred.index(word)] = word_lemma
