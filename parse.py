@@ -59,21 +59,26 @@ def check_ingred(ingred_to_check, prog):
 
 
 def lemmatize(ingred):
+
+    split_ingred = ingred.split()
+    final_word = split_ingred[-1]
+
+    # Handle chiles, chilis, chillies, chilly, etc
+    if final_word[:4] == 'chil':
+        split_ingred[-1] = 'chile'
+        return ' '.join(split_ingred)
+    elif final_word == 'leaves':
+        split_ingred[-1] = 'leaf'
+        return ' '.join(split_ingred)
+
     if ingred[-3:] == 'ies':
         ingred = ingred[:-3] + 'y'
     elif ingred[-3:] == 'oes':
         ingred = ingred[:-2]
-    elif ingred[-3:] == 'ves':
-        ingred = ingred[:-3] + 'f'
+    elif ingred[-4:] == 'shes':
+        ingred = ingred[:-2]
     elif ingred[-1:] == 's':
         ingred = ingred[:-1]
-
-    # Handle chiles, chilis, chillies, chilly, etc
-    split_ingred = ingred.split()
-    final_word = split_ingred[-1]
-    if final_word[:4] == 'chil':
-        split_ingred[-1] = 'chile'
-    ingred = ' '.join(split_ingred)
 
     return ingred
     """

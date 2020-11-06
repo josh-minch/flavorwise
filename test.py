@@ -39,6 +39,7 @@ class TestScrape(unittest.TestCase):
         self.assertCountEqual(filtered_ingreds, [])
 
     def test_lemmatize(self):
+        self.assertEqual(lemmatize('prune'), 'prune')
         self.assertEqual(lemmatize('onions'), 'onion')
         self.assertEqual(lemmatize('apples'), 'apple')
         self.assertEqual(lemmatize('tomatoes'), 'tomato')
@@ -51,7 +52,8 @@ class TestScrape(unittest.TestCase):
         self.assertEqual(lemmatize('chillies'), 'chile')
 
         self.assertEqual(lemmatize('white onions'), 'white onion')
-        self.assertEqual(lemmatize('green apples'), 'green apple')
+        self.assertEqual(lemmatize('acorn squashes'), 'acorn squash')
+        self.assertEqual(lemmatize('sweet potatoes'), 'sweet potato')
         self.assertEqual(lemmatize('red chillies'), 'red chile')
 
 
