@@ -7,8 +7,10 @@ from spacy.lemmatizer import NOUN
 
 import helper
 
+"""
 nlp = spacy.load('en_core_web_lg', disable=['parser', 'ner'])
 lemmatizer = nlp.vocab.morphology.lemmatizer
+"""
 
 
 def filter_naive(ingreds, ingred_filters):
