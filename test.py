@@ -43,8 +43,8 @@ class TestScrape(unittest.TestCase):
         self.assertEqual(lemmatize('onions'), 'onion')
         self.assertEqual(lemmatize('apples'), 'apple')
         self.assertEqual(lemmatize('tomatoes'), 'tomato')
-
         self.assertEqual(lemmatize('anchovies'), 'anchovy')
+        self.assertEqual(lemmatize('squashes'), 'squash')
 
         self.assertEqual(lemmatize('chiles'), 'chile')
         self.assertEqual(lemmatize('chilis'), 'chile')
@@ -59,6 +59,10 @@ class TestScrape(unittest.TestCase):
         self.assertEqual(lemmatize('bay leaves'), 'bay leaf')
         self.assertEqual(lemmatize('lemongrass'), 'lemongrass')
 
+        self.assertEqual(lemmatize('extra-virgin olive oil'),
+                         'extra virgin olive oil')
+        self.assertEqual(lemmatize('low-fat milk'), 'low fat milk')
+        self.assertEqual(lemmatize('mahi-mahi'), 'mahi mahi')
 
 
 if __name__ == '__main__':

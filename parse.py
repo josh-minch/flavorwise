@@ -59,7 +59,8 @@ def check_ingred(ingred_to_check, prog):
 
 
 def lemmatize(ingred):
-
+    # Get rid of '-' in low-fat, mahi-mahi, etc
+    ingred = ingred.replace('-', ' ')
     split_ingred = ingred.split()
     final_word = split_ingred[-1]
 
