@@ -26,7 +26,7 @@ class TestScrape(unittest.TestCase):
         self.assertEqual(check_ingred('apple', self.s_prog), None)
 
         self.assertEqual(check_ingred(
-            '1 1/2 jalapenos, seeded, stemmed and diced', self.g_prog), 'jalapeño')
+            'jalapenos, seeded, stemmed and diced', self.g_prog), 'jalapeño')
 
         self.assertEqual(check_ingred('no ingredients', self.s_prog), None)
 
@@ -42,6 +42,11 @@ class TestScrape(unittest.TestCase):
         filtered_ingreds = filter_naive(
             ['jalapenos', 'jalapeño'], self.filters)
         self.assertCountEqual(filtered_ingreds, ['jalapeño'])
+
+        filtered_ingreds = filter_naive(
+            ['extra-virgin olive oil', 'mahi-mahi'], self.filters)
+        self.assertCountEqual(
+            filtered_ingreds, ['extra virgin olive oil', 'mahi mahi'])
 
         filtered_ingreds = filter_naive([''], self.filters)
         self.assertCountEqual(filtered_ingreds, [])
@@ -66,11 +71,7 @@ class TestScrape(unittest.TestCase):
 
         self.assertEqual(lemmatize('bay leaves'), 'bay leaf')
         self.assertEqual(lemmatize('lemongrass'), 'lemongrass')
-
-        self.assertEqual(lemmatize('extra-virgin olive oil'),
-                         'extra virgin olive oil')
-        self.assertEqual(lemmatize('low-fat milk'), 'low fat milk')
-        self.assertEqual(lemmatize('mahi-mahi'), 'mahi mahi')
+        self.assertEqual(lemmatize('asparagus'), 'asparagus')
 
         self.assertEqual(lemmatize('jalapeno'), 'jalapeño')
         self.assertEqual(lemmatize('jalapeño'), 'jalapeño')
