@@ -9,7 +9,7 @@ from helper import get_json
 app = Flask(__name__)
 app.config.from_object('config')
 
-VERSION_STR = '?v=0.2'
+VERSION_STR = '?v=0.3'
 ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_lemma.json')]
 N_R_INGREDS = 90
 N_RECIPES = 40
