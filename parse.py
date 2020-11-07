@@ -1,9 +1,9 @@
 import re
+import csv
 
 import numpy as np
 import pandas as pd
 import spacy
-from spacy.lemmatizer import NOUN
 
 import helper
 
@@ -23,10 +23,11 @@ def filter_naive(ingreds, ingred_filters):
     for ingred in ingreds:
         ingred = ingred.replace(',', '')
         ingred = ingred.replace('-', ' ')
-        '''First check if ingred is found in list of special foods. These foods contain
-        substrings found in more general food strings. For example, if ingred is
-        'sour cream', we must check for 'sour cream' before 'cream', otherwise the filter
-        will incorrectly add 'cream' to filtered_ingreds.'''
+        '''First check if ingred is found in list of special foods.
+        These foods contain substrings found in more general food strings.
+        For example, if ingred is 'sour cream', we must check for 'sour cream'
+        before 'cream', otherwise the filter will incorrectly add 'cream' to
+        filtered_ingreds.'''
         found_spec_ingred = check_ingred(ingred, s_prog)
         if found_spec_ingred:
             filtered_ingreds.add(found_spec_ingred)
@@ -53,7 +54,7 @@ def create_filter_prog(ingred_filter):
 
 
 def check_ingred(ingred_to_check, prog):
-    """Return lemmatized ingredient from prog filter if one matches ingred_to_check."""
+    """Return lemmatized ingred_to_check if it matches prog."""
     match = prog.search(ingred_to_check.lower())
     if match:
         ingred = match.group(0)
@@ -62,7 +63,6 @@ def check_ingred(ingred_to_check, prog):
 
 
 def lemmatize(ingred):
-    # Get rid of '-' in low-fat, mahi-mahi, etc
     split_ingred = ingred.split()
 
     for word in split_ingred:
@@ -79,13 +79,13 @@ def lemmatize(ingred):
 
     ingred = ' '.join(split_ingred)
 
-    if ingred[-2:] == 'ss':
+    if ingred[-2:] == 'ss' or ingred[-2:] == 'us':
         pass
     elif ingred[-3:] == 'ies':
         ingred = ingred[:-3] + 'y'
     elif ingred[-3:] == 'oes':
         ingred = ingred[:-2]
-    elif ingred[-4:] == 'shes':
+    elif ingred[-4:] == 'shes' or ingred[-4:] == 'ches':
         ingred = ingred[:-2]
     elif ingred[-1:] == 's':
         ingred = ingred[:-1]
@@ -158,9 +158,9 @@ def filter_regex(ingredients):
     return ingred_stripped
 
 
-def write_recipe_data_filtered(recipe_file_name, filtered_file_name):
-    """Save json of filtered recipes in recipe_file_name to filtered_file_name."""
-    data = helper.get_json(recipe_file_name)
+def write_recipe_data_filtered(infile, outfile):
+    """Filter recipes from infile and save to outfile as json."""
+    data = helper.get_json(infile)
     ingred_filters = create_ingred_filters()
 
     # Remove duplicate recipes
@@ -172,7 +172,7 @@ def write_recipe_data_filtered(recipe_file_name, filtered_file_name):
         filtered_ingreds = filter_naive(recipe['ingreds'], ingred_filters)
         recipe['ingreds'] = filtered_ingreds
 
-    helper.write_json(data, filtered_file_name, 'w')
+    helper.write_json(data, outfile, 'w')
 
 
 def write_all_ingreds(recipe_file_name, ingred_file_name):
@@ -209,7 +209,8 @@ def find_unrecognized_ingreds(ingreds):
         found_gen_ingred = check_ingred(ingred, ingred_filters['general'])
 
         if not (found_spec_ingred or found_gen_ingred):
-            with open('unrecognized_ingreds.csv', 'a', encoding='utf8', newline='') as outfile:
+            with open('unrecognized_ingreds.csv', 'a',
+                      encoding='utf8', newline='') as outfile:
                 recipe_writer = csv.writer(outfile)
                 recipe_writer.writerow([ingred])
 
