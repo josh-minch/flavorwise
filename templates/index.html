@@ -30,15 +30,16 @@
             <div class="col-md">
                 <form id="search">
                     <span class="intro-text">What pairs with...</span>
-                    <input name="search"
-                                            id="search-input"
-                                            placeholder="{{ random_ingred }}"
-                                            title="Select an ingredient"
-                                            list="all_ingreds"
-                                            pattern="{{ pattern }}"
-                                            autocomplete="off"
-                                            autofocus="true"
-                                            required>
+                    <input
+                            name="search"
+                            id="search-input"
+                            placeholder="{{ random_ingred }}"
+                            title="Select an ingredient"
+                            list="all_ingreds"
+                            pattern="{{ pattern }}"
+                            autocomplete="off"
+                            autofocus="true"
+                            required>
                     <datalist id="all_ingreds">
                         {%-for ingred in all_ingreds -%}<option value="{{ ingred }}"></option>{%-endfor -%}
                     </datalist>
@@ -65,12 +66,18 @@
             </div>
             <div class="col-md" id="recipes">
                 {%- if cur_ingreds -%}
-                <span class="recipe-intro">{{ recipes|length }} recipe{{ "s" if recipes|length != 1 }} </span><span class="recipe-prep">with </span>
-                {%- for cur_ingred in cur_ingreds -%}
-                <span class="recipe-ingred">{{- cur_ingred -}}{{- ", " if not loop.last-}}</span>
-                {%- endfor -%}
+                    <span class="recipe-intro">{{ recipes|length }} recipe{{ "s" if recipes|length != 1 }} </span><span class="recipe-prep">with </span>
+                    {%- for cur_ingred in cur_ingreds -%}
+                    {%- if cur_ingreds|length == 1 -%}
+                    <span class="recipe-ingred">{{- cur_ingred -}}</span>
+                    {%- elif cur_ingreds|length == 2 -%}
+                    <span class="recipe-prep">{{- "& " if loop.last -}}</span><span class="recipe-ingred">{{- cur_ingred -}}</span>
+                    {% else %}
+                    <span class="recipe-prep">{{- "& " if loop.last -}}</span><span class="recipe-ingred">{{- cur_ingred -}}{{- ", " if not loop.last -}}</span>
+                    {% endif %}
+                    {%- endfor -%}
                 {%- else -%}
-                <span class="recipe-intro">Recipes</span>
+                    <span class="recipe-intro">Recipes</span>
                 {%- endif -%}
                 {%- for recipe in recipes -%}
                 <div>

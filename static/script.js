@@ -1,5 +1,6 @@
 var search = document.getElementById('search');
 search.addEventListener('submit', searchAddIngred);
+search.addEventListener('change', searchAddIngred);
 var relatedIngreds = document.getElementById('r-ingreds');
 relatedIngreds.addEventListener('click', addRelatedIngred);
 var remove = document.getElementById('cur-ingreds');
@@ -120,41 +121,71 @@ function createRecipes(recipes, curIngreds) {
 }
 
 function createRecipesTitle(recipes, curIngreds) {
+    const titleSpan = document.createElement('span');
+
+    createRecipesTitleIntro(titleSpan, recipes, curIngreds);
+    createRecipesTitleIngreds(titleSpan, recipes, curIngreds);
+
+    return titleSpan
+}
+
+function createRecipesTitleIntro(titleSpan, recipes, curIngreds) {
+    /* Append title intro text to titleSpan of the form 'Recipes' or
+    '1 recipe with ' or '5 recipes with 'depending on length of input arrays. */
     const introSpan = document.createElement('span');
     introSpan.setAttribute('class', 'recipe-intro');
+    titleSpan.append(introSpan);
 
-    const prepSpan = document.createElement('span');
-    prepSpan.setAttribute('class', 'recipe-prep');
-    prepSpan.innerText = 'with '
+    const withSpan = document.createElement('span');
+    withSpan.setAttribute('class', 'recipe-prep');
+    withSpan.innerText = 'with '
 
     if (curIngreds.length == 0) {
         introSpan.innerText = 'Recipes'
-
     } else if (curIngreds.length > 0 && recipes.length == 1) {
         introSpan.innerText = `${recipes.length} recipe `;
-        introSpan.append(prepSpan);
-
+        titleSpan.insertBefore(withSpan, introSpan.nextSibling);
     } else if (curIngreds.length > 0 && recipes.length != 1) {
         introSpan.innerText = `${recipes.length} recipes `;
-        introSpan.append(prepSpan);
-
+        titleSpan.insertBefore(withSpan, introSpan.nextSibling);
     }
+}
 
-    const curIngredsText = curIngreds.join(', ');
+function createRecipesTitleIngreds(titleSpan, recipes, curIngreds){
+    /* Append ingred text to titleSpan of the form 'butter' or
+    'butter & garlic' or 'butter, garlic, & lemon' depending on
+    length of input arrays. */
     const ingredSpan = document.createElement('span');
     ingredSpan.setAttribute('class', 'recipe-ingred');
-    ingredSpan.innerText = curIngredsText;
+    titleSpan.appendChild(ingredSpan);
 
-    if (recipes.length == 0) {
-        const noRecipesSpan = document.createElement('span');
-        noRecipesSpan.setAttribute('class', 'recipe-prep');
-        noRecipesSpan.innerText = '. Bummer dude!'
-        ingredSpan.append(noRecipesSpan)
+    if (curIngreds.length == 1) {
+        ingredSpan.innerText = curIngreds;
+    } else {
+        const ampersandSpan = document.createElement('span');
+        ampersandSpan.setAttribute('class', 'recipe-prep');
+        const finalIngredSpan = document.createElement('span');
+        finalIngredSpan.setAttribute('class', 'recipe-ingred');
+
+        // Get all but last ingred and separate with commas
+        ingredSpan.innerText = curIngreds.slice(0, curIngreds.length - 1).join(', ');
+        if (curIngreds.length == 2) {
+            ampersandSpan.innerText = ' & ';
+        } else {
+            ampersandSpan.innerText = ', & ';
+        }
+        finalIngredSpan.innerText = curIngreds.slice(curIngreds.length - 1);
+
+        titleSpan.insertBefore(ampersandSpan, ingredSpan.nextSibling);
+        titleSpan.insertBefore(finalIngredSpan, ampersandSpan.nextSibling);
+
+        if (recipes.length == 0) {
+            const noRecipesSpan = document.createElement('span');
+            noRecipesSpan.setAttribute('class', 'recipe-prep');
+            noRecipesSpan.innerText = '. Bummer dude!'
+            titleSpan.insertBefore(noRecipesSpan, finalIngredSpan.nextSibling);
+        }
     }
-
-    introSpan.appendChild(ingredSpan);
-
-    return introSpan
 }
 
 function createRecipesBody(recipes) {
@@ -171,7 +202,6 @@ function createRecipesBody(recipes) {
 
         recipesBody.appendChild(recipe)
     }
-
     return recipesBody
 }
 
