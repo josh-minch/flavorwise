@@ -123,13 +123,13 @@ function createRecipes(recipes, curIngreds) {
 function createRecipesTitle(recipes, curIngreds) {
     const titleSpan = document.createElement('span');
 
-    createRecipesTitleIntro(titleSpan, recipes, curIngreds);
-    createRecipesTitleIngreds(titleSpan, recipes, curIngreds);
+    appendRecipesTitleIntro(titleSpan, recipes, curIngreds);
+    appendRecipesTitleIngreds(titleSpan, recipes, curIngreds);
 
     return titleSpan
 }
 
-function createRecipesTitleIntro(titleSpan, recipes, curIngreds) {
+function appendRecipesTitleIntro(titleSpan, recipes, curIngreds) {
     /* Append title intro text to titleSpan of the form 'Recipes' or
     '1 recipe with ' or '5 recipes with 'depending on length of input arrays. */
     const introSpan = document.createElement('span');
@@ -151,7 +151,7 @@ function createRecipesTitleIntro(titleSpan, recipes, curIngreds) {
     }
 }
 
-function createRecipesTitleIngreds(titleSpan, recipes, curIngreds){
+function appendRecipesTitleIngreds(titleSpan, recipes, curIngreds){
     /* Append ingred text to titleSpan of the form 'butter' or
     'butter & garlic' or 'butter, garlic, & lemon' depending on
     length of input arrays. */
@@ -161,7 +161,7 @@ function createRecipesTitleIngreds(titleSpan, recipes, curIngreds){
 
     if (curIngreds.length == 1) {
         ingredSpan.innerText = curIngreds;
-    } else {
+    } else if (curIngreds.length > 1) {
         const ampersandSpan = document.createElement('span');
         ampersandSpan.setAttribute('class', 'recipe-prep');
         const finalIngredSpan = document.createElement('span');
