@@ -9,13 +9,13 @@ from helper import get_json
 app = Flask(__name__)
 app.config.from_object('config')
 
-VERSION_STR = '?v=0.1'
+VERSION_STR = '?v=0.2'
 ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_lemma.json')]
 N_R_INGREDS = 90
 N_RECIPES = 40
 
 
-# TODO: Move session storage from flask session to .js SessionStorage
+# TODO:
 #       Try render_template instead of js stuff? Just use js for fetch?
 # Or even move that straight to html with method="POST" action="/search"?
 #       Pagination of results
@@ -34,9 +34,11 @@ def index():
     random_ingred = random.choice(ALL_INGREDS)
     pattern = create_search_pattern()
 
-    return render_template('index.html', version_str=VERSION_STR, all_ingreds=ALL_INGREDS,
-                        random_ingred=random_ingred, pattern=pattern,
-                        r_ingreds=r_ingreds, recipes=recipes[:N_RECIPES], cur_ingreds=cur_ingreds)
+    return render_template('index.html', version_str=VERSION_STR,
+                           all_ingreds=ALL_INGREDS,
+                           random_ingred=random_ingred, pattern=pattern,
+                           r_ingreds=r_ingreds, recipes=recipes[:N_RECIPES],
+                           cur_ingreds=cur_ingreds)
 
 
 @app.route("/search", methods=["POST"])
@@ -48,6 +50,7 @@ def search():
 
     cur_ingreds = add_session_ingreds(new_ingreds)
     return update_front_end(cur_ingreds)
+
 
 @app.route("/remove", methods=["POST"])
 def remove():
@@ -63,18 +66,21 @@ def update_front_end(cur_ingreds):
                    r_ingreds=list(r_ingreds)[:N_R_INGREDS],
                    recipes=recipes[:N_RECIPES])
 
+
 def validate_ingred(ingred):
     if ingred.lower() in ALL_INGREDS:
         return True
     else:
         return False
 
+
 def create_search_pattern():
     """Return regex search string that matches any ingredient."""
     ingreds_regex = []
     for ingred in ALL_INGREDS:
         # Acount for upper or lower case of each letter
-        ingred_regex = ''.join(['[{}{}]'.format(c.upper(), c.lower()) for c in ingred])
+        ingred_regex = ''.join(
+            ['[{}{}]'.format(c.upper(), c.lower()) for c in ingred])
         ingreds_regex.append(ingred_regex)
 
     pattern = '|'.join(ingreds_regex)
@@ -91,12 +97,14 @@ def remove_invalid_session_ingreds():
             session['cur_ingreds'].remove(ingred)
             session.modified = True
 
+
 def get_cur_ingreds_from_session():
     if 'cur_ingreds' not in session or len(session['cur_ingreds']) == 0:
         cur_ingreds = []
     else:
         cur_ingreds = session['cur_ingreds']
     return cur_ingreds
+
 
 def add_session_ingreds(new_ingreds):
     if 'cur_ingreds' not in session or session['cur_ingreds'] is None:
@@ -120,6 +128,3 @@ def remove_session_ingreds(ingreds_to_remove):
             session.modified = True
 
     return session['cur_ingreds']
-
-
-
