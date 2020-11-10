@@ -28,8 +28,8 @@ def index():
     remove_invalid_session_ingreds()
     cur_ingreds = get_cur_ingreds_from_session()
 
-    r_ingreds, recipes = matrix.search(cur_ingreds)
-    r_ingreds = list(r_ingreds.keys())[:N_R_INGREDS]
+    r_ingreds, recipes = matrix.search_best_match(cur_ingreds)
+    #r_ingreds = list(r_ingreds.keys())[:N_R_INGREDS]
 
     random_ingred = random.choice(ALL_INGREDS)
     pattern = create_search_pattern()
@@ -60,10 +60,10 @@ def remove():
 
 
 def update_front_end(cur_ingreds):
-    r_ingreds, recipes = matrix.search(cur_ingreds)
+    r_ingreds, recipes = matrix.search_best_match(cur_ingreds)
 
     return jsonify(cur_ingreds=cur_ingreds,
-                   r_ingreds=list(r_ingreds)[:N_R_INGREDS],
+                   r_ingreds=list(r_ingreds),
                    recipes=recipes[:N_RECIPES])
 
 

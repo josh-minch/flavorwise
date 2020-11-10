@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 
 from helper import get_json, write_json
 
@@ -31,7 +32,6 @@ def get_match_recipes(match_recipe_ixs):
 
 def search(input_ingreds):
     """Return co-ocurring ranked ingreds and the recipes they occur in."""
-
     if isinstance(input_ingreds, str):
         input_ingreds = [input_ingreds]
     input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
@@ -61,6 +61,35 @@ def search(input_ingreds):
     return ranked_ingreds, match_recipes
 
 
+def search_best_match(input_ingreds):
+    """Return ingredients ranked by cosine similarity to input_ingreds."""
+    if isinstance(input_ingreds, str):
+        input_ingreds = [input_ingreds]
+    input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
+
+    # Get only rows for our ingreds
+    ingred_rows = RECIPE_MATRIX[input_ixs]
+
+    # Get ingreds similartiy to average of input ingreds
+    input_mean = np.mean(ingred_rows, 0)
+    similarity = cosine_similarity(input_mean.reshape(1, -1), RECIPE_MATRIX)
+    
+    # Get dict of ingred to similarity in descending order
+    ranked_ixs = np.flip(np.argsort(similarity)).tolist()[0]
+    sorted_similarity = np.flip(np.sort(similarity)).tolist()[0]
+
+    ranked_ingreds = {IX_TO_INGRED[ix]: s for ix, s in zip(ranked_ixs, sorted_similarity)}
+    # Remove indices of input_ingreds from our ranked_ixs
+    ix_to_remove = set(input_ixs)
+    ranked_ixs = (ix for ix in ranked_ixs if ix not in ix_to_remove)
+
+    ingred_sum = np.sum(ingred_rows, 0)
+    match_recipe_ixs = np.argwhere(ingred_sum == len(input_ixs))
+    match_recipes = get_match_recipes(match_recipe_ixs.flatten())
+
+    return ranked_ingreds, match_recipes
+
+
 def get_ranked_ingreds_from_cooc(ingred):
     ingreds = get_json('all_ingreds_filtered.json')
     ingred_to_ix = {k: v for v, k in enumerate(ingreds)}
@@ -83,7 +112,8 @@ def get_ranked_ingreds_from_cooc(ingred):
 
 
 def main():
-    pass
+    s = search_best_match('lemon')
+    print(s)
 
 if __name__ == "__main__":
     main()
