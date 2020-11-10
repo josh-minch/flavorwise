@@ -62,12 +62,34 @@ def check_ingred(ingred_to_check, prog):
     return None
 
 
+def pluralize(ingred, all_ingreds):
+    next_ingred_ix = all_ingreds.index(ingred) + 1
+    next_ingred = all_ingreds[next_ingred_ix]
+
+    suffixes = ['s', 'es', 'ies']
+
+    for suffix in suffixes:
+        if suffix == 'ies':
+            plural = ingred[:-1] + suffix
+        else:
+            plural = ingred + suffix
+        if plural == next_ingred:
+            return plural
+
+# TODO: Lemmatize with ML library instead of brute rule-based approach.
+# To handle deficiencies (the inability to
+# handle noun chunks like 'sweet potatoes):
+# Break down multi word phrases into individual words and lemmatize
+# each individually, or maybe only lemmatize the final word. Maybe
+# check if a word ends in 's' before lemmatizing?
+# Keep word substitutions like 'chile' and move to different function
+# (consolidate_spelling?).
 def lemmatize(ingred):
     split_ingred = ingred.split()
 
     for word in split_ingred:
         word_lemma = word
-        # Handle chiles, chilis, chillies, chilly, etcs
+        # Handle chiles, chilis, chillies, chilly, etc
         if word[:4] == 'chil':
             word_lemma = 'chile'
         elif word == 'leaves':
