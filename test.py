@@ -25,8 +25,8 @@ class TestScrape(unittest.TestCase):
             'apple sauce', self.s_prog), 'apple sauce')
         self.assertEqual(check_ingred('apple', self.s_prog), None)
 
-        self.assertEqual(check_ingred(
-            'jalapenos, seeded, stemmed and diced', self.g_prog), 'jalapeño')
+        ingreds = 'jalapenos, seeded, stemmed and diced'
+        self.assertEqual(check_ingred(ingreds, self.g_prog), 'jalapeño')
 
         self.assertEqual(check_ingred('no ingredients', self.s_prog), None)
 

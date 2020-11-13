@@ -1,6 +1,8 @@
 var search = document.getElementById('search');
 search.addEventListener('submit', searchAddIngred);
 search.addEventListener('change', searchAddIngred);
+var select = document.getElementById('algo-select');
+select.addEventListener('change', selectAlgo);
 var relatedIngreds = document.getElementById('r-ingreds');
 relatedIngreds.addEventListener('click', addRelatedIngred);
 var remove = document.getElementById('cur-ingreds');
@@ -12,7 +14,6 @@ function searchAddIngred(ev) {
     this.reset();
 }
 
-
 function addRelatedIngred(ev) {
     const isButton = ev.target.nodeName === 'BUTTON';
     if (!isButton) {
@@ -23,6 +24,11 @@ function addRelatedIngred(ev) {
     fetchPathEvent(formData, ev, '/search');
 }
 
+function selectAlgo(ev) {
+    var formData = new FormData();
+    formData.append('algo', ev.target.value)
+    fetchPathEvent(formData, ev, '/select_algo')
+}
 
 function removeIngred(ev) {
     fetchPathEvent(new FormData(this), ev, '/remove')

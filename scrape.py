@@ -90,6 +90,7 @@ def save_recipe_html_from_urls(filename):
     urls = extract_recipe_urls(filename)
     request_recipes_html(urls)
 
+
 # TODO: Fix extract_recipe_data duplicate recipe entries
 def extract_recipe_data(html_dir):
     data = []

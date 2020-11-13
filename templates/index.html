@@ -55,6 +55,15 @@
                     <input type="submit" class="" value="Remove" id="remove-button">
                     {%- endif -%}
                 </form>
+                <div class="row">
+                    <div class="col">Recommendations</div>
+                    <div class="col">
+                        <select name="algo" id="algo-select">
+                            <option value="0">Best match</option>
+                            <option value="1">Most recipes</option>
+                        </select>
+                    </div>
+                </div>
                 <div id="r-ingreds">
                     {%- if r_ingreds -%}
                     {%- for r_ingred in r_ingreds -%}

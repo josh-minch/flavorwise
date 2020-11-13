@@ -76,6 +76,7 @@ def pluralize(ingred, all_ingreds):
         if plural == next_ingred:
             return plural
 
+
 # TODO: Lemmatize with ML library instead of brute rule-based approach.
 # To handle deficiencies (the inability to
 # handle noun chunks like 'sweet potatoes):
