@@ -11,28 +11,28 @@
 }
 
 .container {
-  margin-top: 0.75rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
-.intro-text {}
-
-#search {
-  margin-top: .44rem;
+#ingred-title {
+  font-family: 'Lora', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
 }
 
 #search-input {
   width: 9rem;
 }
 
-#cur-ingreds {
-  margin-top: .45rem;
-  margin-bottom: .45rem;
+.cur-ingred {
+  margin-right: 4px;
 }
 
-.cur-ingred {
-  margin-right: 0.4rem;
+label {
+  margin-bottom: 0;
 }
+
 
 .r-ingred {
   margin-top: 0rem;
@@ -44,20 +44,20 @@
 }
 
 .recipe-intro {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   font-weight: 400;
   font-family: 'Lora', serif;
 }
 
 .recipe-prep {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   font-weight: 400;
   font-family: 'Lora', serif;
   font-style: italic
 }
 
 .recipe-ingred {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   font-weight: 600;
   font-family: 'Lora', serif;
 }

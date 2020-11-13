@@ -25,39 +25,35 @@
 
 <body>
     <div class="container">
-        <h2 class="serif">foodwise :^)</h2>
+        <h4 class="serif">foodwise :^)</h4>
         <div class="row">
             <div class="col-md">
-                <form id="search">
-                    <span class="intro-text">What goes with...</span>
-                    <input
-                            name="search"
-                            id="search-input"
-                            placeholder="{{ random_ingred }}"
-                            title="Select an ingredient"
-                            list="all_ingreds"
-                            pattern="{{ pattern }}"
-                            autocomplete="off"
-                            autofocus="true">
-                    <datalist id="all_ingreds">
-                        {%-for ingred in all_ingreds -%}<option value="{{ ingred }}"></option>{%-endfor -%}
-                    </datalist>
-                    <input type="submit" value="Add">
-                </form>
-                <form id="cur-ingreds">
+                <div class="d-flex justify-content-between mt-2">
+                    <span class= "align-self-end" id="ingred-title">Ingredients</span>
+                    <span class="d-flex justify-content-end">
+                        <form class="form-inline mt-1" id="search">
+                            <input name="search" id="search-input" placeholder="{{ random_ingred }}" title="Select an ingredient"
+                                list="all_ingreds" pattern="{{ pattern }}" autocomplete="off" autofocus="true">
+                            <datalist id="all_ingreds">
+                                {%-for ingred in all_ingreds -%}<option value="{{ ingred }}"></option>{%-endfor -%}
+                            </datalist>
+                            <input id="search-add" type="submit" value="Add">
+                        </form>
+                    </span>
+                </div>
+                <form class="mt-2" id="cur-ingreds">
                     {%- if cur_ingreds -%}
                     {%- for cur_ingred in cur_ingreds -%}
                     <span class='cur-ingred'>
                         <input type="checkbox" id="{{cur_ingred}}" name="{{cur_ingred}}">
-                        <label for="{{cur_ingred}}">{{ cur_ingred }}</label>
-                    </span>
+                        <label for="{{cur_ingred}}">{{- cur_ingred -}}</label></span>
                     {%- endfor -%}
                     <input type="submit" class="" value="Remove" id="remove-button">
                     {%- endif -%}
                 </form>
-                <div class="row">
-                    <div class="col">Recommendations</div>
-                    <div class="col">
+                <div class="row mt-2 mb-2">
+                    <div class="col d-flex align-self-end" id="ingred-title">Recommended</div>
+                    <div class="col d-flex justify-content-end" id="algo-select-col">
                         <select name="algo" id="algo-select">
                             <option value="0">Best match</option>
                             <option value="1">Most recipes</option>
@@ -77,12 +73,12 @@
                     <span class="recipe-intro">{{ recipes|length }} recipe{{ "s" if recipes|length != 1 }} </span><span class="recipe-prep">with </span>
                     {%- for cur_ingred in cur_ingreds -%}
                     {%- if cur_ingreds|length == 1 -%}
-                    <span class="recipe-ingred">{{- cur_ingred -}}</span>
+                        <span class="recipe-ingred">{{- cur_ingred -}}</span>
                     {%- elif cur_ingreds|length == 2 -%}
-                    <span class="recipe-prep">{{- "& " if loop.last -}}</span><span class="recipe-ingred">{{- cur_ingred -}}</span>
-                    {% else %}
-                    <span class="recipe-prep">{{- "& " if loop.last -}}</span><span class="recipe-ingred">{{- cur_ingred -}}{{- ", " if not loop.last -}}</span>
-                    {% endif %}
+                        <span class="recipe-prep">{{- " & " if loop.last -}}</span><span class="recipe-ingred">{{- cur_ingred -}}</span>
+                    {%- else -%}
+                        <span class="recipe-prep">{{- "& " if loop.last -}}</span><span class="recipe-ingred">{{- cur_ingred -}}{{- ", " if not loop.last -}}</span>
+                    {%- endif -%}
                     {%- endfor -%}
                 {%- else -%}
                     <span class="recipe-intro">Recipes</span>
@@ -92,7 +88,6 @@
                     <a href="{{recipe.1}}">{{ recipe.0 }}</a>
                 </div>
                 {%- endfor -%}
-
             </div>
         </div>
     </div>
