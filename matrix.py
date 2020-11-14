@@ -5,6 +5,7 @@ from helper import Algorithm, get_json
 
 '''2D matrix whose rows are ingredients and cols are recipes.
 A 1 denotes the occurence of an ingredient in a given recipe.'''
+print('loading RECIPE_MATRIX')
 RECIPE_MATRIX = np.array(get_json('recipe_matrix.json'))
 
 ALL_INGREDS = get_json('all_ingreds_filtered.json')
