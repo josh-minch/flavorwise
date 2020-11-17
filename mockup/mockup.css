@@ -1,0 +1,16 @@
+#search {
+    max-width: 11.7rem;
+}
+
+#items-selected-text {
+    margin-right: 28px;
+}
+
+.hide-text {
+    color: black;
+    border-bottom-color: black;
+}
+
+.hide-text:hover {
+    color: black
+}
