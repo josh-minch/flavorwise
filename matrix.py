@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
-from helper import Algorithm, get_json
+from helper import Algorithm, get_json, timer
 
 '''2D matrix whose rows are ingredients and cols are recipes.
 A 1 denotes the occurence of an ingredient in a given recipe.'''
@@ -33,6 +33,7 @@ def get_recommended(input_ingreds, algo=Algorithm.BEST_MATCH):
     return ranked_ingreds, match_recipes
 
 
+@timer
 def get_most_common(input_ingreds, match_recipe_ixs):
     """Return ranked ingreds that occur most with input_ingreds."""
     input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
@@ -69,6 +70,7 @@ def get_match_recipe_ixs(input_ingreds):
     return match_recipe_ixs
 
 
+@timer
 def get_best_matches(input_ingreds):
     """Return ingredients ranked by cosine similarity to input_ingreds."""
     input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
