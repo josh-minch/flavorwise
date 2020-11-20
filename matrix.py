@@ -5,7 +5,6 @@ from helper import Algorithm, get_json
 
 '''2D matrix whose rows are ingredients and cols are recipes.
 A 1 denotes the occurence of an ingredient in a given recipe.'''
-print('loading RECIPE_MATRIX')
 RECIPE_MATRIX = np.array(get_json('recipe_matrix.json'))
 
 ALL_INGREDS = get_json('all_ingreds_filtered.json')
@@ -34,22 +33,6 @@ def get_recommended(input_ingreds, algo=Algorithm.BEST_MATCH):
     return ranked_ingreds, match_recipes
 
 
-def get_match_recipes(match_recipe_ixs):
-    return [IX_TO_RECIPE[int(ix)] for ix in match_recipe_ixs]
-
-
-def get_match_recipe_ixs(input_ingreds):
-    input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
-    ingred_rows = RECIPE_MATRIX[input_ixs]
-
-    # For each recipe, sum occurences of all our ingred.
-    # Check where this sum equals the len of our ingred list.
-    # This ensures we only get recipes that contain all our ingreds.
-    ingred_sum = np.sum(ingred_rows, 0)
-    match_recipe_ixs = np.argwhere(ingred_sum == len(input_ixs))
-    return match_recipe_ixs
-
-
 def get_most_common(input_ingreds, match_recipe_ixs):
     """Return ranked ingreds that occur most with input_ingreds."""
     input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
@@ -70,14 +53,29 @@ def get_most_common(input_ingreds, match_recipe_ixs):
     return ranked_ingreds
 
 
-def get_best_matches(input_ingreds):
-    """Return ingredients ranked by cosine similarity to input_ingreds."""
+def get_match_recipes(match_recipe_ixs):
+    return [IX_TO_RECIPE[int(ix)] for ix in match_recipe_ixs]
+
+
+def get_match_recipe_ixs(input_ingreds):
     input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
     ingred_rows = RECIPE_MATRIX[input_ixs]
 
-    # Get ingreds cosine similarity to average of input ingreds
-    input_mean = np.mean(ingred_rows, 0).reshape(1, -1)
-    similarity_score = cosine_similarity(input_mean, RECIPE_MATRIX)[0]
+    # For each recipe, sum occurences of all our ingred.
+    # Check where this sum equals the len of our ingred list.
+    # This ensures we only get recipes that contain all our ingreds.
+    ingred_sum = np.sum(ingred_rows, 0)
+    match_recipe_ixs = np.argwhere(ingred_sum == len(input_ixs))
+    return match_recipe_ixs
+
+
+def get_best_matches(input_ingreds):
+    """Return ingredients ranked by cosine similarity to input_ingreds."""
+    input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
+    ingred_vectors = RECIPE_MATRIX[input_ixs]
+
+    similarity_score = cosine_similarity(ingred_vectors, RECIPE_MATRIX)
+    similarity_score = np.mean(similarity_score, axis=0)
 
     ranked_ixs = np.flip(np.argsort(similarity_score))
     similarity_score_sorted = np.flip(np.sort(similarity_score))
