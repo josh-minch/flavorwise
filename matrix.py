@@ -1,4 +1,5 @@
 import numpy as np
+import sklearn
 from sklearn.metrics.pairwise import cosine_similarity
 
 from helper import Algorithm, get_json, timer
@@ -33,7 +34,6 @@ def get_recommended(input_ingreds, algo=Algorithm.BEST_MATCH):
     return ranked_ingreds, match_recipes
 
 
-@timer
 def get_most_common(input_ingreds, match_recipe_ixs):
     """Return ranked ingreds that occur most with input_ingreds."""
     input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
@@ -70,11 +70,12 @@ def get_match_recipe_ixs(input_ingreds):
     return match_recipe_ixs
 
 
-@timer
 def get_best_matches(input_ingreds):
     """Return ingredients ranked by cosine similarity to input_ingreds."""
     input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
     ingred_vectors = RECIPE_MATRIX[input_ixs]
+
+    cosine_similarity = timer(sklearn.metrics.pairwise.cosine_similarity)
 
     similarity_score = cosine_similarity(ingred_vectors, RECIPE_MATRIX)
     similarity_score = np.mean(similarity_score, axis=0)
