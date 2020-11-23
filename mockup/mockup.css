@@ -1,5 +1,22 @@
-#items-selected-text {
-    margin-right: 28px;
+html {
+    font-size: 62.5%
+}
+
+body {
+    font-size: 1.6rem;
+}
+
+h1 {
+    font-size: 2.2rem;
+}
+
+h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+th {
+    font-weight: 600;
 }
 
 .hide-text {
@@ -14,4 +31,3 @@
 #ingred-table th:first-child+th, th:first-child+th+th, td:first-child+td, td:first-child+td+td {
     text-align: right;
 }
-
