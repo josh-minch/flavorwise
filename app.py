@@ -4,7 +4,7 @@ import random
 from flask import Flask, jsonify, render_template, request, session
 
 import matrix
-from helper import Algorithm, get_json
+from helper import get_json
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -30,7 +30,6 @@ def index():
     cur_ingreds = get_session_var('cur_ingreds')
 
     r_ingreds, recipes = matrix.get_recommended(cur_ingreds)
-    r_ingreds = list(r_ingreds.keys())[:N_R_INGREDS]
 
     random_ingred = random.choice(ALL_INGREDS)
     pattern = create_search_pattern()
@@ -69,11 +68,10 @@ def remove():
 
 def get_frontend_json_data():
     cur_ingreds = get_session_var('cur_ingreds')
-    algo = get_session_var('algo')
-    r_ingreds, recipes = matrix.get_recommended(cur_ingreds, algo)
+    r_ingreds, recipes = matrix.get_recommended(cur_ingreds)
 
     return jsonify(cur_ingreds=cur_ingreds,
-                   r_ingreds=list(r_ingreds)[:N_R_INGREDS],
+                   r_ingreds=r_ingreds,
                    recipes=recipes[:N_RECIPES])
 
 
@@ -108,13 +106,6 @@ def get_session_var(var_name):
 def init_session_vars():
     if 'cur_ingreds' not in session:
         session['cur_ingreds'] = []
-    if 'algo' not in session:
-        session['algo'] = Algorithm.BEST_MATCH
-
-
-def change_session_algo(selected_algo):
-    session['algo'] = selected_algo
-    session.modified = True
 
 
 def add_session_ingreds(new_ingreds):

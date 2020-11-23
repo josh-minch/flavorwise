@@ -3,12 +3,6 @@ import time
 import json
 
 
-class Algorithm:
-    BEST_MATCH = 0
-    COMMON = 1
-    UNIQUE = 2
-
-
 def get_json(filename):
     with open(filename, encoding='utf8') as f:
         return json.load(f)
