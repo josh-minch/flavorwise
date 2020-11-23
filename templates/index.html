@@ -12,10 +12,15 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
     <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
 
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.22/sp-1.2.1/datatables.min.css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}{{ version_str }}">
 
     <!--[if lt IE 9]>
@@ -29,11 +34,12 @@
         <div class="row">
             <div class="col-md">
                 <div class="d-flex justify-content-between mt-2">
-                    <span class= "align-self-end" id="ingred-title">Ingredients</span>
+                    <span class="align-self-end" id="ingred-title">Ingredients</span>
                     <span class="d-flex justify-content-end">
                         <form class="form-inline mt-1" id="search">
-                            <input name="search" id="search-input" placeholder="{{ random_ingred }}" title="Select an ingredient"
-                                list="all_ingreds" pattern="{{ pattern }}" autocomplete="off" autofocus="true">
+                            <input name="search" id="search-input" placeholder="{{ random_ingred }}"
+                                title="Select an ingredient" list="all_ingreds" pattern="{{ pattern }}"
+                                autocomplete="off" autofocus="true">
                             <datalist id="all_ingreds">
                                 {%-for ingred in all_ingreds -%}<option value="{{ ingred }}"></option>{%-endfor -%}
                             </datalist>
@@ -61,27 +67,49 @@
                     </div>
                 </div>
                 <div id="r-ingreds">
-                    {%- if r_ingreds -%}
-                    {%- for r_ingred in r_ingreds -%}
-                        <button type="button" class="r-ingred btn btn-outline-primary btn-sm" name="r_ingred" value="{{r_ingred}}">{{ r_ingred }}</button>
-                    {%- endfor -%}
-                    {%- endif -%}
+                    <table id="ingred-table" class="table table-sm table-borderless table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th class="pl-0" scope="col">ingredient</th>
+                                <th scope="col">score</th>
+                                <th scope="col">recipes</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%- if r_ingreds -%}
+                            {%- for r_ingred in r_ingreds -%}
+                            <tr>
+                                <td class="pl-0">{{ r_ingred.0 }}</td>
+                                <td>{{ (r_ingred.1*100)|round|int }}%</td>
+                                <td>{{ r_ingred.2 }}</td>
+                                <td class="text-right pr-0"><button type="button"
+                                        class="r-ingred btn btn-outline-primary btn-sm" name="r_ingred"
+                                        value="{{r_ingred.0}}">Add</button></td>
+                            </tr>
+                            {%- endfor -%}
+                            {%- endif -%}
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="col-md" id="recipes">
                 {%- if cur_ingreds -%}
-                    <span class="recipe-intro">{{ recipes|length }} recipe{{ "s" if recipes|length != 1 }} </span><span class="recipe-prep">with </span>
-                    {%- for cur_ingred in cur_ingreds -%}
-                    {%- if cur_ingreds|length == 1 -%}
-                        <span class="recipe-ingred">{{- cur_ingred -}}</span>
-                    {%- elif cur_ingreds|length == 2 -%}
-                        <span class="recipe-prep">{{- " & " if loop.last -}}</span><span class="recipe-ingred">{{- cur_ingred -}}</span>
-                    {%- else -%}
-                        <span class="recipe-prep">{{- "& " if loop.last -}}</span><span class="recipe-ingred">{{- cur_ingred -}}{{- ", " if not loop.last -}}</span>
-                    {%- endif -%}
-                    {%- endfor -%}
+                <span class="recipe-intro">{{ recipes|length }} recipe{{ "s" if recipes|length != 1 }} </span><span
+                    class="recipe-prep">with </span>
+                {%- for cur_ingred in cur_ingreds -%}
+                {%- if cur_ingreds|length == 1 -%}
+                <span class="recipe-ingred">{{- cur_ingred -}}</span>
+                {%- elif cur_ingreds|length == 2 -%}
+                <span class="recipe-prep">{{- " & " if loop.last -}}</span><span
+                    class="recipe-ingred">{{- cur_ingred -}}</span>
                 {%- else -%}
-                    <span class="recipe-intro">Recipes</span>
+                <span class="recipe-prep">{{- "& " if loop.last -}}</span><span
+                    class="recipe-ingred">{{- cur_ingred -}}{{- ", " if not loop.last -}}</span>
+                {%- endif -%}
+                {%- endfor -%}
+                {%- else -%}
+                <span class="recipe-intro">Recipes</span>
                 {%- endif -%}
                 {%- for recipe in recipes -%}
                 <div>
@@ -94,6 +122,8 @@
 
     <script src="https://unpkg.com/promise-polyfill@7.1.2/dist/polyfill.min.js"></script>
     <script src="https://unpkg.com/whatwg-fetch@2.0.4/fetch.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.22/sp-1.2.1/datatables.min.js"></script>
     <script src="{{ url_for('static', filename='datalist-polyfill.min.js') }}"></script>
     <script src="{{ url_for('static', filename='script.js') }}{{ version_str }}"></script>
 </body>

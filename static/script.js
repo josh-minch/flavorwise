@@ -1,3 +1,7 @@
+$(document).ready(function () {
+    $('#ingred-table').DataTable();
+});
+
 var search = document.getElementById('search');
 search.addEventListener('submit', searchAddIngred);
 search.addEventListener('change', searchAddIngred);
@@ -157,7 +161,7 @@ function appendRecipesTitleIntro(titleSpan, recipes, curIngreds) {
     }
 }
 
-function appendRecipesTitleIngreds(titleSpan, recipes, curIngreds){
+function appendRecipesTitleIngreds(titleSpan, recipes, curIngreds) {
     /* Append ingred text to titleSpan of the form 'butter' or
     'butter & garlic' or 'butter, garlic, & lemon' depending on
     length of input arrays. */
