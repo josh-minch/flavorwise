@@ -33,7 +33,6 @@ label {
   margin-bottom: 0;
 }
 
-
 .r-ingred {
   margin-top: 0rem;
   margin-bottom: .5rem;
@@ -41,6 +40,10 @@ label {
   margin-left: 0;
   font-size: 1rem;
   padding: 0.15rem .5rem;
+}
+
+#ingred-table th:first-child+th, th:first-child+th+th, td:first-child+td, td:first-child+td+td {
+  text-align: right;
 }
 
 .recipe-intro {

@@ -1,12 +1,24 @@
 $(document).ready(function () {
-    $('#ingred-table').DataTable();
+    $('#ingred-table').DataTable({
+        columnDefs: [
+            { className: "pl-0", "targets": [0] },
+            { className: "text-right pr-0", "targets": [3] },
+            { orderable: false, targets: [0, 3] },
+            {
+                "targets": -1,
+                "render": function (data, type, row) {
+                    let btn = '<button type="button" class="r-ingred btn btn-outline-primary btn-sm" name="r_ingred" value="' + row[0] + '">Add</button>'
+                    return btn;
+                }
+            }
+        ],
+        "order": [[1, "desc"]]
+    });
 });
 
 var search = document.getElementById('search');
 search.addEventListener('submit', searchAddIngred);
 search.addEventListener('change', searchAddIngred);
-var select = document.getElementById('algo-select');
-select.addEventListener('change', selectAlgo);
 var relatedIngreds = document.getElementById('r-ingreds');
 relatedIngreds.addEventListener('click', addRelatedIngred);
 var remove = document.getElementById('cur-ingreds');
@@ -26,12 +38,6 @@ function addRelatedIngred(ev) {
     var formData = new FormData();
     formData.append('search', String(ev.target.value))
     fetchPathEvent(formData, ev, '/search');
-}
-
-function selectAlgo(ev) {
-    var formData = new FormData();
-    formData.append('algo', ev.target.value)
-    fetchPathEvent(formData, ev, '/select_algo')
 }
 
 function removeIngred(ev) {
@@ -54,7 +60,6 @@ function parseJSON(response) {
 
 function updateDisplay(jsonData) {
     removeAllChild(document.getElementById('cur-ingreds'));
-    removeAllChild(document.getElementById('r-ingreds'));
     removeAllChild(document.getElementById('recipes'));
     createCurIngreds(jsonData.cur_ingreds);
     createRelatedIngreds(jsonData.r_ingreds);
@@ -109,7 +114,21 @@ function createRemoveBtn() {
 }
 
 function createRelatedIngreds(rankedIngreds) {
-    const rankedIngredsDiv = document.querySelector('#r-ingreds');
+    let table = $('#ingred-table').DataTable();
+
+    table.clear();
+    var tableData = [];
+    rankedIngreds.forEach(ingred => {
+        const ingredName = ingred[0];
+        const score = ingred[1];
+        const recipes = ingred[2];
+        const rowData = { "0": ingredName, "1": score, "2": recipes };
+        tableData.push(rowData);
+    });
+
+    table.rows.add(tableData).draw();
+
+    /* const rankedIngredsDiv = document.querySelector('#r-ingreds');
 
     rankedIngreds.forEach(ingred => {
         const btn = document.createElement('button');
@@ -119,6 +138,21 @@ function createRelatedIngreds(rankedIngreds) {
         btn.innerText = ingred;
         rankedIngredsDiv.appendChild(btn)
     });
+
+    <button type="button"
+    class="r-ingred btn btn-outline-primary btn-sm" name="r_ingred"
+    value="{{r_ingred.0}}">Add</button>
+
+    */
+}
+
+function createAddBtn(ingredName) {
+    const btn = document.createElement('button');
+    btn.setAttribute('class', 'r-ingred btn btn-outline-primary btn-sm');
+    btn.setAttribute('name', 'r_ingred');
+    btn.setAttribute('value', ingredName);
+    btn.textContent = 'Add';
+    return btn
 }
 
 function createRecipes(recipes, curIngreds) {
