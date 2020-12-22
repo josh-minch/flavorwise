@@ -7,12 +7,25 @@ $(document).ready(function () {
             {
                 "targets": -1,
                 "render": function (data, type, row) {
-                    let btn = '<button type="button" class="r-ingred btn btn-outline-primary btn-sm" name="r_ingred" value="' + row[0] + '">Add</button>'
+                    let btn = '<button type="button" class="r-ingred btn btn-outline-primary" name="r_ingred" value="' + row[0] + '">Add</button>'
                     return btn;
                 }
             }
         ],
-        "order": [[1, "desc"]]
+        "aoColumns": [
+            null,
+            { "orderSequence": ["desc", "asc"] },
+            { "orderSequence": ["desc", "asc"] },
+            null
+        ],
+        "order": [[1, "desc"]],
+        "pageLength": 11,
+        "lengthChange": false,
+        "info": false,
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Filter recommendations"
+        }
     });
 });
 
