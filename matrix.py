@@ -30,6 +30,9 @@ def get_recommended(input_ingreds):
 
 def get_ranked_ingreds(input_ingreds, match_recipe_ixs):
     """Return ranked ingreds that occur most with input_ingreds."""
+    if not input_ingreds:
+        return
+
     input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
     match_recipes_m = RECIPE_MATRIX[:, match_recipe_ixs.flatten()]
 
@@ -58,8 +61,10 @@ def get_ranked_ingreds(input_ingreds, match_recipe_ixs):
     num_of_recipes = getattr(num_of_recipes, "tolist",
                              lambda: num_of_recipes)()
 
+    # Remove ingredients already in current ingreds
+    #  and make score human-readable
     ix_to_remove = set(input_ixs)
-    ranked_ingreds = [(IX_TO_INGRED[i], s, n) for i, s, n in zip(
+    ranked_ingreds = [(IX_TO_INGRED[i], f'{round(100*s, 1)}%', n) for i, s, n in zip(
         ranked_ixs, similarity_score, num_of_recipes) if i not in ix_to_remove]
 
     return ranked_ingreds
