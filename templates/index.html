@@ -13,7 +13,6 @@
     <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
 
 
-
     <link
         href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet">
@@ -59,12 +58,6 @@
                 </form>
                 <div class="row mt-2 mb-2">
                     <div class="col d-flex align-self-end" id="ingred-title">Recommended</div>
-                    <div class="col d-flex justify-content-end" id="algo-select-col">
-                        <select name="algo" id="algo-select">
-                            <option value="0">Best match</option>
-                            <option value="1">Most recipes</option>
-                        </select>
-                    </div>
                 </div>
                 <div id="r-ingreds">
                     <table id="ingred-table" class="table table-sm table-borderless table-hover mb-0">
@@ -81,7 +74,7 @@
                             {%- for r_ingred in r_ingreds -%}
                             <tr>
                                 <td class="pl-0">{{ r_ingred.0 }}</td>
-                                <td>{{ (r_ingred.1*100)|round|int }}%</td>
+                                <td>{{ r_ingred.1 }}</td>
                                 <td>{{ r_ingred.2 }}</td>
                                 <td class="text-right pr-0"><button type="button"
                                         class="r-ingred btn btn-outline-primary btn-sm" name="r_ingred"
@@ -120,12 +113,12 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/promise-polyfill@7.1.2/dist/polyfill.min.js"></script>
-    <script src="https://unpkg.com/whatwg-fetch@2.0.4/fetch.js"></script>
     <script type="text/javascript"
         src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.22/sp-1.2.1/datatables.min.js"></script>
-    <script src="{{ url_for('static', filename='datalist-polyfill.min.js') }}"></script>
     <script src="{{ url_for('static', filename='script.js') }}{{ version_str }}"></script>
+    <script src="https://unpkg.com/promise-polyfill@7.1.2/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/whatwg-fetch@2.0.4/fetch.js"></script>
+    <script src="{{ url_for('static', filename='datalist-polyfill.min.js') }}"></script>
 </body>
 
 </html>
