@@ -11,7 +11,6 @@ app.config.from_object('config')
 
 VERSION_STR = '?v=0.4'
 ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_lemma.json')]
-N_R_INGREDS = 40
 N_RECIPES = 40
 
 
@@ -49,13 +48,6 @@ def search():
         return '', http.HTTPStatus.NO_CONTENT
 
     add_session_ingreds(new_ingreds)
-    return get_frontend_json_data()
-
-
-@app.route("/select_algo", methods=["POST"])
-def select_algo():
-    algo = request.form.get('algo', 0, type=int)
-    change_session_algo(algo)
     return get_frontend_json_data()
 
 
