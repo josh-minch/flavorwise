@@ -34,12 +34,26 @@ $(document).ready(function () {
     });
 });
 
-var search = document.getElementById('search');
+const toggles = document.querySelectorAll('[id^="toggle"]');
+const contents = document.querySelectorAll('[id^="content"]');
+
+for (let i = 0; i < toggles.length; i++) {
+    toggles[i].addEventListener("click", function () {
+        const newState = contents[i].dataset.toggled ^= 1;
+        contents[i].style.display = newState ? "none" : "block";
+        toggles[i].textContent = newState ? "Hide" : "Show";
+    });
+}
+
+
+const search = document.getElementById('search');
 search.addEventListener('submit', searchAddIngred);
 search.addEventListener('change', searchAddIngred);
-var relatedIngreds = document.getElementById('r-ingreds');
+
+const relatedIngreds = document.getElementById('r-ingreds');
 relatedIngreds.addEventListener('click', addRelatedIngred);
-var remove = document.getElementById('cur-ingreds');
+
+const remove = document.getElementById('cur-ingreds');
 remove.addEventListener('submit', removeIngred);
 
 
