@@ -41,7 +41,7 @@ for (let i = 0; i < toggles.length; i++) {
     toggles[i].addEventListener("click", function () {
         const newState = contents[i].dataset.toggled ^= 1;
         contents[i].style.display = newState ? "none" : "block";
-        toggles[i].textContent = newState ? "Hide" : "Show";
+        toggles[i].textContent = newState ? "Show" : "Hide";
     });
 }
 
