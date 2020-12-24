@@ -1,7 +1,8 @@
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 
-from helper import get_json
+from sklearn.metrics.pairwise import cosine_similarity as cs
+
+from helper import get_json, timer
 
 '''2D matrix whose rows are ingredients and cols are recipes.
 A 1 denotes the occurence of an ingredient in a given recipe.'''
@@ -47,6 +48,8 @@ def get_ranked_ingreds(input_ingreds, match_recipe_ixs):
 
     cooc_ingred_vec = RECIPE_MATRIX[cooc_ingred_ix]
     ingred_vec = RECIPE_MATRIX[input_ixs]
+
+    cosine_similarity = timer(cs)
     similarity_score = cosine_similarity(ingred_vec, cooc_ingred_vec)
     similarity_score = np.mean(similarity_score, axis=0)
 
