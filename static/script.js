@@ -24,11 +24,11 @@ $(document).ready(function () {
         lengthChange: false,
         language: {
             emptyTable: "Add an ingredient to see recommendations",
-            info: "_TOTAL_ results based on your ingredients",
+            info: "_TOTAL_ results",
             infoEmpty: "0 results based on your ingredients",
             search: "_INPUT_",
             searchPlaceholder: "Filter results",
-            infoFiltered: "and filter",
+            infoFiltered: "matching your search",
             zeroRecords: "No ingredients match your search filter. Bummer dude!"
         }
     });
