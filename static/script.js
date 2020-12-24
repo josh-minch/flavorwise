@@ -1,30 +1,35 @@
 $(document).ready(function () {
     $('#ingred-table').DataTable({
+        dom: "<if>t<lp>",
         columnDefs: [
             { className: "pl-0", "targets": [0] },
             { className: "text-right pr-0", "targets": [3] },
             { orderable: false, targets: [0, 3] },
             {
-                "targets": -1,
-                "render": function (data, type, row) {
+                targets: -1,
+                render: function (data, type, row) {
                     let btn = '<button type="button" class="r-ingred btn btn-outline-primary" name="r_ingred" value="' + row[0] + '">Add</button>'
                     return btn;
                 }
             }
         ],
-        "aoColumns": [
+        aoColumns: [
             null,
             { "orderSequence": ["desc", "asc"] },
             { "orderSequence": ["desc", "asc"] },
             null
         ],
-        "order": [[1, "desc"]],
-        "pageLength": 11,
-        "lengthChange": false,
-        "info": false,
+        order: [[1, "desc"]],
+        pageLength: 11,
+        lengthChange: false,
         language: {
+            emptyTable: "Add an ingredient to see recommendations",
+            info: "_TOTAL_ results based on your ingredients",
+            infoEmpty: "0 results based on your ingredients",
             search: "_INPUT_",
-            searchPlaceholder: "Filter recommendations"
+            searchPlaceholder: "Filter results",
+            infoFiltered: "and filter",
+            zeroRecords: "No ingredients match your search filter. Bummer dude!"
         }
     });
 });

@@ -1,5 +1,5 @@
 h1 {
-  font-size: 1.3rem;
+  font-size: 1.375rem;
 }
 
 h2 {
@@ -19,9 +19,17 @@ h2 {
   font-style: italic
 }
 
+div.dataTables_wrapper div.dataTables_info {
+  float: left;
+  padding-top: 0px;
+  color: #6c757d;
+}
+
+.dataTables_filter {}
+
 #my-ingred-col {
-  min-width: 270px;
-  max-width: 270px;
+  min-width: 300px;
+  max-width: 300px;
 }
 
 #search-input {
