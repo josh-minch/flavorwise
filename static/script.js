@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#ingred-table').DataTable({
-        dom: "<if>t<lp>",
+        dom: "<'row'<'col'i><'col'f>>t<lp>",
         columnDefs: [
             { className: "pl-0", "targets": [0] },
             { className: "text-right pr-0", "targets": [3] },
@@ -25,11 +25,11 @@ $(document).ready(function () {
         language: {
             emptyTable: "Add an ingredient to see recommendations",
             info: "_TOTAL_ results",
-            infoEmpty: "0 results based on your ingredients",
+            infoEmpty: "0 results",
             search: "_INPUT_",
             searchPlaceholder: "Filter results",
-            infoFiltered: "matching your search",
-            zeroRecords: "No ingredients match your search filter. Bummer dude!"
+            infoFiltered: "match your search",
+            zeroRecords: "No recommendations match your search filter. Bummer dude!"
         }
     });
 });
