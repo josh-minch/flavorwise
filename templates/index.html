@@ -32,73 +32,77 @@
                     <div class="col-lg-5" id="my-ingred-col">
                         <div class="d-flex justify-content-between">
                             <h2>My ingredients</h2>
-                            <a class="d-block d-md-none hide-text" href=#>Hide</a>
+                            <a class="btn btn-link d-block d-md-none" id="toggle-ingred" role="button"
+                                href="javascript:void(0)">Hide</a>
                         </div>
                         <hr class="mt-0 mb-2 d-block d-md-none" />
-                        <form class="mt-1 mb-1" id="search">
-                            <div class="form-inline">
-                                <input class="form-control" name="search" id="search-input"
-                                    placeholder="{{ random_ingred }}" title="Select an ingredient" list="all_ingreds"
-                                    pattern="{{ pattern }}" autocomplete="off" autofocus="true">
-                                <datalist id="all_ingreds">
-                                    {%-for ingred in all_ingreds -%}<option value="{{ ingred }}"></option>{%-endfor -%}
-                                </datalist>
-                                <input class="btn btn-outline-primary" id="search-add" type="submit" value="Add">
-                            </div>
-                        </form>
-                        <form class="" id="cur-ingreds">
-                            {%- if cur_ingreds -%}
-                            {%- for cur_ingred in cur_ingreds -%}
-                            <span class='cur-ingred'>
-                                <input type="checkbox" id="{{cur_ingred}}" name="{{cur_ingred}}">
-                                <label for="{{cur_ingred}}">{{- cur_ingred -}}</label></span>
-                            {%- endfor -%}
-                            <input type="submit" class="btn btn-outline-danger" value="Remove" id="remove-button">
-                            {%- endif -%}
-                        </form>
+                        <div id="content-ingred" class="form-group">
+                            <form class="mt-1 mb-1" id="search">
+                                <div class="form-inline">
+                                    <input class="form-control" name="search" id="search-input"
+                                        placeholder="{{ random_ingred }}" title="Select an ingredient"
+                                        list="all_ingreds" pattern="{{ pattern }}" autocomplete="off" autofocus="true">
+                                    <datalist id="all_ingreds">
+                                        {%-for ingred in all_ingreds -%}<option value="{{ ingred }}"></option>{%-endfor
+                                        -%}
+                                    </datalist>
+                                    <input class="btn btn-outline-primary" id="search-add" type="submit" value="Add">
+                                </div>
+                            </form>
+                            <form class="" id="cur-ingreds">
+                                {%- if cur_ingreds -%}
+                                {%- for cur_ingred in cur_ingreds -%}
+                                <span class='cur-ingred'>
+                                    <input type="checkbox" id="{{cur_ingred}}" name="{{cur_ingred}}">
+                                    <label for="{{cur_ingred}}">{{- cur_ingred -}}</label></span>
+                                {%- endfor -%}
+                                <input type="submit" class="btn btn-outline-danger" value="Remove" id="remove-button">
+                                {%- endif -%}
+                            </form>
+                        </div>
                     </div>
                     <div class="col-lg mt-3 mt-lg-0">
                         <div class="d-flex justify-content-between">
                             <h2>Recommendations</h2>
-                            <a class="d-block d-md-none hide-text" href=#>Hide</a>
+                            <a class="btn btn-link d-block d-md-none" id="toggle-recommend" role="button"
+                                href="javascript:void(0)">Hide</a>
                         </div>
-                        <hr class="mt-0 mb-2 d-block d-md-none" />
-                        <div id="r-ingreds">
-                            <table id="ingred-table" class="table table-sm table-borderless table-hover mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="pl-0" scope="col">ingredient</th>
-                                        <th scope="col">score</th>
-                                        <th scope="col">recipes</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {%- if r_ingreds -%}
-                                    {%- for r_ingred in r_ingreds -%}
-                                    <tr>
-                                        <td class="pl-0">{{ r_ingred.0 }}</td>
-                                        <td>{{ r_ingred.1 }}</td>
-                                        <td>{{ r_ingred.2 }}</td>
-                                        <td class="text-right pr-0"><button type="button"
-                                                class="r-ingred btn btn-outline-primary btn-sm" name="r_ingred"
-                                                value="{{r_ingred.0}}">Add</button></td>
-                                    </tr>
-                                    {%- endfor -%}
-                                    {%- endif -%}
-                                </tbody>
-                            </table>
+                        <hr class=" mt-0 mb-2 d-block d-md-none" />
+                        <div id="content-recommend">
+                            <div id="r-ingreds">
+                                <table id="ingred-table" class="table table-sm table-borderless table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="pl-0" scope="col">ingredient</th>
+                                            <th scope="col">score</th>
+                                            <th scope="col">recipes</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {%- if r_ingreds -%}
+                                        {%- for r_ingred in r_ingreds -%}
+                                        <tr>
+                                            <td class="pl-0">{{ r_ingred.0 }}</td>
+                                            <td>{{ r_ingred.1 }}</td>
+                                            <td>{{ r_ingred.2 }}</td>
+                                            <td class="text-right pr-0"><button type="button"
+                                                    class="r-ingred btn btn-outline-primary btn-sm" name="r_ingred"
+                                                    value="{{r_ingred.0}}">Add</button></td>
+                                        </tr>
+                                        {%- endfor -%}
+                                        {%- endif -%}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md mt-3 mt-md-0">
-                <div class="d-flex justify-content-between">
-                    <h2>Recipes</h2>
-                    <a class="d-block d-md-none hide-text" href=#>Hide</a>
-                </div>
+                <h2>Recipes</h2>
+                <hr class="mt-0 mb-2 d-block d-md-none" />
                 <div id="recipes">
-                    <hr class="mt-0 mb-2 d-block d-md-none" />
                     <div class="">
                         {%- for recipe in recipes -%}
                         <div>
