@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-md-7">
                 <div class="row">
-                    <div class="col-lg-5" id="my-ingred-col">
+                    <div class="col-lg-5 mr-0 pr-0" id="my-ingred-col">
                         <div class="d-flex align-items-end justify-content-between">
                             <h2 class="">My ingredients</h2>
                             <button type="button" class="btn btn-link d-block d-md-none shadow-none" id="toggle-ingred"
@@ -39,7 +39,7 @@
                         <div id="content-ingred" class="form-group">
                             <form class="mt-1 mb-1" id="search">
                                 <div class="form-inline">
-                                    <input class="form-control" name="search" id="search-input"
+                                    <input class="form-control mr-2" name="search" id="search-input"
                                         placeholder="{{ random_ingred }}" title="Select an ingredient"
                                         list="all_ingreds" pattern="{{ pattern }}" autocomplete="off" autofocus="true">
                                     <datalist id="all_ingreds">
@@ -61,7 +61,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg mt-3 mt-lg-0">
+                    <div class="col-lg mt-3 mt-md-0">
                         <div class="d-flex align-items-end justify-content-between">
                             <h2>Recommendations</h2>
                             <button class="btn btn-link shadow-none d-block d-md-none" id="toggle-recommend"
@@ -100,7 +100,8 @@
                 </div>
             </div>
             <div class="col-md mt-3 mt-md-0">
-                <h2>Recipes</h2>
+
+                <h2 class="">Recipes</h2>
                 <hr class="mt-0 mb-2 d-block d-md-none" />
                 <div id="recipes">
                     <div class="">

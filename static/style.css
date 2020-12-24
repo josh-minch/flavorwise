@@ -25,13 +25,13 @@ h2 {
 
 @media (min-width: 768px) {
   #my-ingred-col {
-    min-width: 300px;
-    max-width: 300px;
+    min-width: 285px;
+    max-width: 285px;
   }
 }
 
 #search-input {
-  max-width: 170px;
+  width: 200px;
 }
 
 .cur-ingred {
