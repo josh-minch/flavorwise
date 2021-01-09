@@ -78,6 +78,9 @@ def get_match_recipes(match_recipe_ixs):
 
 
 def get_match_recipe_ixs(input_ingreds):
+    if not input_ingreds:
+        return []
+
     input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
     ingred_rows = RECIPE_MATRIX[input_ixs]
 
