@@ -11,7 +11,6 @@ app.config.from_object('config')
 
 VERSION_STR = '?v=0.5'
 ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_lemma.json')]
-N_RECIPES = 40
 
 
 # TODO:
@@ -36,7 +35,7 @@ def index():
     return render_template('index.html', version_str=VERSION_STR,
                            all_ingreds=ALL_INGREDS,
                            random_ingred=random_ingred, pattern=pattern,
-                           r_ingreds=r_ingreds, recipes=recipes[:N_RECIPES],
+                           r_ingreds=r_ingreds, recipes=recipes,
                            cur_ingreds=cur_ingreds)
 
 
@@ -64,7 +63,7 @@ def get_frontend_json_data():
 
     return jsonify(cur_ingreds=cur_ingreds,
                    r_ingreds=r_ingreds,
-                   recipes=recipes[:N_RECIPES])
+                   recipes=recipes)
 
 
 def validate_ingred(ingred):

@@ -8,7 +8,7 @@ $(document).ready(function () {
             {
                 targets: -1,
                 render: function (data, type, row) {
-                    let btn = '<button type="button" class="r-ingred btn btn-outline-primary" name="r_ingred" value="' + row[0] + '">Add</button>'
+                    let btn = '<button type="button" class="r-ingred btn btn-outline-primary" name="r_ingred" value="' + row[0] + '">Add</button>';
                     return btn;
                 }
             }
@@ -30,6 +30,51 @@ $(document).ready(function () {
             searchPlaceholder: "Filter results",
             infoFiltered: "match your search",
             zeroRecords: "No recommendations match your search filter. Bummer dude!"
+        },
+        initComplete: function () {
+            $("#ingred-table").show();
+        }
+    });
+});
+
+$(document).ready(function () {
+    $('#recipe-table').DataTable({
+        dom: "<'row'<'col'i><'col'f>>t<lp>",
+        autoWidth: false,
+        columns: [
+            { width: '100%' }
+        ],
+        columnDefs: [
+            {
+                visible: false,
+                targets: [1],
+                searchable: false
+            },
+            { className: "pl-0", "targets": [0] },
+            {
+                targets: 0,
+                render: function (data, type, row) {
+                    let link = '<a href="' + row[1] + '">' + row[0] + '</a>';
+                    return link;
+                }
+            }
+        ],
+        pageLength: 16,
+        lengthChange: false,
+        language: {
+            emptyTable: "Add an ingredient to see recommendations",
+            info: "_TOTAL_ results",
+            infoEmpty: "0 results",
+            search: "_INPUT_",
+            searchPlaceholder: "Filter results",
+            infoFiltered: "match your search",
+            zeroRecords: "No recipes match your search filter. Bummer dude!"
+        },
+        fnDrawCallback: function () {
+            $("#recipe-table thead").remove();
+        },
+        initComplete: function () {
+            $("#recipe-table").show();
         }
     });
 });
@@ -92,7 +137,6 @@ function parseJSON(response) {
 
 function updateDisplay(jsonData) {
     removeAllChild(document.getElementById('cur-ingreds'));
-    removeAllChild(document.getElementById('recipes'));
     createCurIngreds(jsonData.cur_ingreds);
     createRelatedIngreds(jsonData.r_ingreds);
     createRecipes(jsonData.recipes, jsonData.cur_ingreds);
@@ -189,10 +233,10 @@ function createAddBtn(ingredName) {
 
 function createRecipes(recipes, curIngreds) {
     const recipesSec = document.querySelector('#recipes');
-    const recipesTitleDiv = createRecipesTitle(recipes, curIngreds);
+    //const recipesTitleDiv = createRecipesTitle(recipes, curIngreds);
     const recipesBodyDiv = createRecipesBody(recipes);
 
-    recipesSec.appendChild(recipesTitleDiv);
+    //recipesSec.appendChild(recipesTitleDiv);
     recipesSec.appendChild(recipesBodyDiv);
 }
 
@@ -265,20 +309,18 @@ function appendRecipesTitleIngreds(titleSpan, recipes, curIngreds) {
 }
 
 function createRecipesBody(recipes) {
-    const recipesBody = document.createElement('div');
+    let table = $('#recipe-table').DataTable();
 
-    for (let i = 0; i < recipes.length; i++) {
-        const recipe = document.createElement('div');
+    table.clear();
+    var tableData = [];
+    recipes.forEach(recipe => {
+        const recipeName = recipe[0];
+        const recipeLink = recipe[1];
+        const rowData = { "0": recipeName, "1": recipeLink };
+        tableData.push(rowData);
+    });
 
-        const link = document.createElement('a');
-        recipe.appendChild(link)
-        link.setAttribute('href', recipes[i][1]);
-        link.innerText = recipes[i][0];
-        recipe.appendChild(link)
-
-        recipesBody.appendChild(recipe)
-    }
-    return recipesBody
+    table.rows.add(tableData).draw();
 }
 
 

@@ -57,7 +57,6 @@
                                     <label for="{{cur_ingred}}">{{- cur_ingred -}}</label>
                                 </div>
                                 {%- endfor -%}
-
                                 <input type="submit" class="btn btn-outline-danger mt-1" value="Remove"
                                     id="remove-button">
 
@@ -108,13 +107,24 @@
                 <h2 class="">Recipes</h2>
                 <hr class="mt-0 mb-2 d-block d-md-none" />
                 <div id="recipes">
-                    <div class="">
-                        {%- for recipe in recipes -%}
-                        <div>
-                            <a href="{{recipe.1}}">{{ recipe.0 }}</a>
-                        </div>
-                        {%- endfor -%}
-                    </div>
+                    <table id="recipe-table" class="table table-sm table-borderless">
+                        <thead>
+                            <tr>
+                                <th class="border-0 pl-0" scope="col">recipe</th>
+                                <th class="border-0" scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%- if recipes -%}
+                            {%- for recipe in recipes -%}
+                            <tr>
+                                <td class="pl-0"><a href="{{recipe.1}}">{{ recipe.0 }}</a></td>
+                                <td class="pl-0"></td>
+                            </tr>
+                            {%- endfor -%}
+                            {%- endif -%}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
