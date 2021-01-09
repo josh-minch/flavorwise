@@ -86,7 +86,12 @@ table.dataTable.table-sm thead tr th:not(.sorting_disabled) {
 }
 
 th {
+  color: rgba(0, 0, 0, 0.70);
   font-weight: 600;
+}
+
+th:hover {
+  color: black !important;
 }
 
 table.dataTable tbody td {
