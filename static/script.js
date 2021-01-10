@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    const numTableRows = Math.round(window.innerHeight / 45);
+    const numIngredTableRows = numTableRows - 7;
+
     $('#ingred-table').DataTable({
         dom: "<'row'<'col'i><'col'f>>t<lp>",
         columnDefs: [
@@ -20,7 +23,7 @@ $(document).ready(function () {
             null
         ],
         order: [[1, "desc"]],
-        pageLength: 11,
+        pageLength: numIngredTableRows,
         lengthChange: false,
         language: {
             emptyTable: "Add an ingredient to see recommendations",
@@ -35,9 +38,7 @@ $(document).ready(function () {
             $("#ingred-table").show();
         }
     });
-});
 
-$(document).ready(function () {
     $('#recipe-table').DataTable({
         dom: "<'row'<'col'i><'col'f>>t<lp>",
         autoWidth: false,
@@ -59,7 +60,7 @@ $(document).ready(function () {
                 }
             }
         ],
-        pageLength: 16,
+        pageLength: numTableRows,
         lengthChange: false,
         language: {
             emptyTable: "Add an ingredient to see recommendations",
@@ -77,6 +78,24 @@ $(document).ready(function () {
             $("#recipe-table").show();
         }
     });
+
+});
+
+
+$(window).on('resize', function (e) {
+    if (typeof resizeTimer !== 'undefined') {
+        clearTimeout(resizeTimer);
+    }
+    resizeTimer = setTimeout(function () {
+
+        const ingredTable = $('#ingred-table').DataTable();
+        const recipeTable = $('#recipe-table').DataTable();
+
+        const newLen = Math.round(window.innerHeight / 50);
+        ingredTable.page.len(newLen - 6).draw();
+        recipeTable.page.len(newLen).draw();
+
+    }, 250);    // Timer value for checking resize event start/stop
 });
 
 const toggles = document.querySelectorAll('[id^="toggle"]');
