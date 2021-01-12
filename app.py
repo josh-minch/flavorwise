@@ -10,14 +10,17 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 VERSION_STR = '?v=0.6'
-ALL_INGREDS = [ingred.lower() for ingred in get_json('all_ingreds_lemma.json')]
+ALL_INGREDS = [ingred.lower()
+               for ingred in get_json('./static/all_ingreds_lemma.json')]
 
 
 # TODO:
 #       Try render_template instead of js stuff? Just use js for fetch?
 # Or even move that straight to html with method="POST" action="/search"?
-#       Pagination of results
-#       allow multiple inputs,
+#     - Get seperate JQuery source seperate from datatables bundle.
+#       load JQuery first, then typeahead, then datatables
+#       for faster load time.
+#     - allow multiple inputs
 #       Emojis, anyone?
 
 
@@ -33,7 +36,6 @@ def index():
     pattern = create_search_pattern()
 
     return render_template('index.html', version_str=VERSION_STR,
-                           all_ingreds=ALL_INGREDS,
                            random_ingred=random_ingred, pattern=pattern,
                            r_ingreds=r_ingreds, recipes=recipes,
                            cur_ingreds=cur_ingreds)

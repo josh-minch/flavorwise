@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.22/sp-1.2.1/datatables.min.css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}{{ version_str }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='typeahead.css') }}{{ version_str }}">
 
     <!--[if lt IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -38,14 +39,11 @@
                         <hr class="mt-0 mb-2 d-block d-md-none" />
                         <div id="content-ingred">
                             <form class="mt-1 mb-1" id="search">
-                                <div class="form-inline">
-                                    <input class="form-control mr-2" name="search" id="search-input"
+                                <div class="" id="bloodhound">
+                                    <input class="typeahead" name="search" id="search-input"
                                         placeholder="{{ random_ingred }}" title="Select an ingredient"
-                                        list="all_ingreds" pattern="{{ pattern }}" autocomplete="off" autofocus="true">
-                                    <datalist id="all_ingreds">
-                                        {%-for ingred in all_ingreds -%}<option value="{{ ingred }}"></option>{%-endfor
-                                        -%}
-                                    </datalist>
+                                        autocomplete="off" autofocus="true">
+
                                     <input class="btn btn-outline-primary" id="search-add" type="submit" value="Add">
                                 </div>
                             </form>
@@ -132,9 +130,31 @@
 
     <script type="text/javascript"
         src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.22/sp-1.2.1/datatables.min.js"></script>
+    <script src="{{ url_for('static', filename='typeahead.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bloodhound.min.js') }}"></script>
+    <script>
+        var states = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: '../static/all_ingreds_lemma.json'
+        });
+
+        $('#bloodhound .typeahead').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 0
+        },
+            {
+                name: 'states',
+                source: states,
+                limit: 999
+            });
+    </script>
+
     <script src="{{ url_for('static', filename='script.js') }}{{ version_str }}"></script>
-    <script src="https://unpkg.com/promise-polyfill@7.1.2/dist/polyfill.min.js"></script>
+
     <script src="https://unpkg.com/whatwg-fetch@2.0.4/fetch.js"></script>
+    <script src="https://unpkg.com/promise-polyfill@7.1.2/dist/polyfill.min.js"></script>
     <script src="{{ url_for('static', filename='datalist-polyfill.min.js') }}"></script>
 </body>
 
