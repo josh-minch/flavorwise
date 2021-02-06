@@ -214,7 +214,7 @@ def write_all_ingreds(recipe_file_name, ingred_file_name):
 
 
 def write_all_ingreds_lemma(infile='all_ingreds_filtered.json',
-                            outfile='all_ingreds_lemma.json'):
+                            outfile='static/all_ingreds_lemma.json'):
     """Save json of lemmatization of ingreds in infile to outfile."""
     ingreds = helper.get_json(infile)
     ingreds = [lemmatize(ingred) for ingred in ingreds]
