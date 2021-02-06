@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $.fn.DataTable.ext.pager.numbers_length = 9;
+
     const numTableRows = Math.round(window.innerHeight / 45);
     const numIngredTableRows = numTableRows - 7;
 
@@ -32,7 +34,10 @@ $(document).ready(function () {
             search: "_INPUT_",
             searchPlaceholder: "Filter results",
             infoFiltered: "match your search",
-            zeroRecords: "No recommendations match your search filter. Bummer dude!"
+            zeroRecords: "No recommendations match your search filter. Bummer dude!",
+            paginate: {
+                previous: "Prev"
+            }
         },
         initComplete: function () {
             $("#ingred-table").show();
@@ -69,7 +74,10 @@ $(document).ready(function () {
             search: "_INPUT_",
             searchPlaceholder: "Filter results",
             infoFiltered: "match your search",
-            zeroRecords: "No recipes match your search filter. Bummer dude!"
+            zeroRecords: "No recipes match your search filter. Bummer dude!",
+            paginate: {
+                previous: "Prev"
+            }
         },
         fnDrawCallback: function () {
             $("#recipe-table thead").remove();
