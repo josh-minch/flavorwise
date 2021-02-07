@@ -5,21 +5,23 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.tt-input {}
-
-
 */
 
+.tt-input {
+    width: 200px;
+}
+
 .tt-hint {
+    width: 200px;
     color: #999;
 }
 
 .tt-menu {
-    width: 207px;
+    width: 200px;
     padding: 2px 0;
     background-color: #fff;
     border: 1px solid #ccc;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.3);
     max-height: 500px;
     overflow-y: auto;
 }

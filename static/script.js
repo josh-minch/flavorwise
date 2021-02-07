@@ -5,7 +5,7 @@ $(document).ready(function () {
     const numIngredTableRows = numTableRows - 7;
 
     $('#ingred-table').DataTable({
-        dom: "<'row'<'col'i><'col'f>>t<lp>",
+        dom: "<if>t<lp>",
         columnDefs: [
             { className: "pl-0", "targets": [0] },
             { className: "text-right pr-0", "targets": [3] },
@@ -29,11 +29,10 @@ $(document).ready(function () {
         lengthChange: false,
         language: {
             emptyTable: "Add an ingredient to see recommendations",
-            info: "_TOTAL_ results",
+            info: "_TOTAL_ foods pair with your ingredients",
             infoEmpty: "0 results",
             search: "_INPUT_",
-            searchPlaceholder: "Filter results",
-            infoFiltered: "match your search",
+            /* infoFiltered: "match your search", */
             zeroRecords: "No recommendations match your search filter. Bummer dude!",
             paginate: {
                 previous: "Prev"
@@ -45,7 +44,7 @@ $(document).ready(function () {
     });
 
     $('#recipe-table').DataTable({
-        dom: "<'row'<'col'i><'col'f>>t<lp>",
+        dom: "<if>t<lp>",
         autoWidth: false,
         columns: [
             { width: '100%' }
@@ -69,10 +68,9 @@ $(document).ready(function () {
         lengthChange: false,
         language: {
             emptyTable: "Add an ingredient to see recommendations",
-            info: "_TOTAL_ results",
+            info: "_TOTAL_ recipes have all your ingredients",
             infoEmpty: "0 results",
             search: "_INPUT_",
-            searchPlaceholder: "Filter results",
             infoFiltered: "match your search",
             zeroRecords: "No recipes match your search filter. Bummer dude!",
             paginate: {
