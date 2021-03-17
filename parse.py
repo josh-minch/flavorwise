@@ -17,24 +17,16 @@ def filter_naive(ingreds, ingred_filters):
     """Return sublist of ingreds matching ingredients in filter."""
     filtered_ingreds = set()
 
-    s_prog = create_filter_prog(ingred_filters['special'])
-    g_prog = create_filter_prog(ingred_filters['general'])
-
     for ingred in ingreds:
         ingred = ingred.replace(',', '')
         ingred = ingred.replace('-', ' ')
-        '''First check if ingred is found in list of special foods.
-        These foods contain substrings found in more general food strings.
-        For example, if ingred is 'sour cream', we must check for 'sour cream'
-        before 'cream', otherwise the filter will incorrectly add 'cream' to
-        filtered_ingreds.'''
-        found_spec_ingred = check_ingred(ingred, s_prog)
-        if found_spec_ingred:
-            filtered_ingreds.add(found_spec_ingred)
-        else:
-            found_gen_ingred = check_ingred(ingred, g_prog)
-            if found_gen_ingred:
-                filtered_ingreds.add(found_gen_ingred)
+
+        for ingred_filter in reversed(ingred_filters):
+            prog = create_filter_prog(ingred_filter)
+            found_ingred = check_ingred(ingred, prog)
+            if found_ingred:
+                filtered_ingreds.add(found_ingred)
+                break
 
     return list(filtered_ingreds)
 
@@ -129,15 +121,15 @@ def lemmatize(ingred):
     """
 
 
-def generate_ingred_filters(unsorted_ingreds):
-    """Takes unsorted list of ingreds and returns list of ingred filter sets.
+def generate_ingred_filters(approved_ingreds):
+    """Takes approved list of ingreds and returns list of ingred filter sets.
 
     Each filter contains more specific superstrings of the the previous. For
     example, the first filter may have 'rice', the second 'rice flour', the
     third 'brown rice flour', etc.
     """
     filters = []
-    current_filter = unsorted_ingreds
+    current_filter = approved_ingreds
 
     while current_filter:
         next_filter = set()
@@ -209,7 +201,9 @@ def filter_regex(ingredients):
 def write_recipe_data_filtered(infile, outfile):
     """Filter recipes from infile and save to outfile as json."""
     data = helper.get_json(infile)
-    ingred_filters = create_ingred_filters()
+    with open('approved_ingreds', 'r', encoding="utf8") as f:
+        approved_ingreds = set(f.read().splitlines())
+    ingred_filters = generate_ingred_filters(approved_ingreds)
 
     # Remove duplicate recipes
     df = pd.DataFrame(data)
@@ -309,10 +303,10 @@ def get_cooc():
 
 def main():
     clean_approved_ingreds()
-    """ write_recipe_data_filtered('recipe_data.json', 'recipe_data_filtered.json')
+    write_recipe_data_filtered('recipe_data.json', 'recipe_data_filtered.json')
     write_all_ingreds('recipe_data_filtered.json', 'all_ingreds_filtered.json')
     write_all_ingreds_lemma()
-    write_recipe_matrix() """
+    write_recipe_matrix()
 
 
 if __name__ == "__main__":
