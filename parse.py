@@ -287,6 +287,19 @@ def write_recipe_matrix(outfile='recipe_matrix.json'):
     helper.write_json(data, outfile, 'w')
 
 
+def clean_approved_ingreds():
+    with open('approved_ingreds', 'r', encoding="utf8") as f:
+        ingreds = f.read().splitlines()
+        # Remove duplicates
+        ingreds = set(ingreds)
+        ingreds.discard('')
+        ingreds = list(ingreds)
+        ingreds.sort()
+
+    with open('approved_ingreds', 'w', encoding='utf8') as f:
+        f.write('\n'.join(ingreds))
+
+
 def get_cooc():
     df = pd.DataFrame(helper.get_json('recipe_matrix.json'))
     m = df.dot(df.transpose())
@@ -295,10 +308,11 @@ def get_cooc():
 
 
 def main():
-    write_recipe_data_filtered('recipe_data.json', 'recipe_data_filtered.json')
+    clean_approved_ingreds()
+    """ write_recipe_data_filtered('recipe_data.json', 'recipe_data_filtered.json')
     write_all_ingreds('recipe_data_filtered.json', 'all_ingreds_filtered.json')
     write_all_ingreds_lemma()
-    write_recipe_matrix()
+    write_recipe_matrix() """
 
 
 if __name__ == "__main__":
