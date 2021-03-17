@@ -54,7 +54,7 @@ def create_filter_prog(ingred_filter):
 
 
 def check_ingred(ingred_to_check, prog):
-    """Return lemmatized ingred_to_check if it matches prog."""
+    """Checks if ingred_to_check matches prog and returns it lemmatized."""
     match = prog.search(ingred_to_check.lower())
     if match:
         ingred = match.group(0)
@@ -127,6 +127,31 @@ def lemmatize(ingred):
     w = Word(ingred)
     return w.lemmatize()
     """
+
+
+def generate_ingred_filters(unsorted_ingreds):
+    """Takes unsorted list of ingreds and returns list of ingred filter sets.
+
+    Each filter contains more specific superstrings of the the previous. For
+    example, the first filter may have 'rice', the second 'rice flour', the
+    third 'brown rice flour', etc.
+    """
+    filters = []
+    current_filter = unsorted_ingreds
+
+    while current_filter:
+        next_filter = set()
+        for cur_ingred in current_filter:
+            other_ingreds = set(current_filter)
+            other_ingreds.remove(cur_ingred)
+            for ingred_to_check in other_ingreds:
+                if re.search(r'\b' + re.escape(cur_ingred) + r'\b', ingred_to_check):
+                    next_filter.add(ingred_to_check)
+
+        filters.append(current_filter - next_filter)
+        current_filter = next_filter
+
+    return filters
 
 
 def create_ingred_filters():

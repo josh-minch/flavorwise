@@ -1,10 +1,11 @@
 import unittest
 
-from parse import (check_ingred, create_filter_prog, create_ingred_filters,
+from parse import (check_ingred, generate_ingred_filters,
+                   create_filter_prog, create_ingred_filters,
                    filter_naive, lemmatize)
 
 
-class TestScrape(unittest.TestCase):
+class TestParse(unittest.TestCase):
     def setUp(self):
         self.filters = create_ingred_filters()
 
@@ -13,6 +14,23 @@ class TestScrape(unittest.TestCase):
 
         self.s_filter = self.filters['special']
         self.s_prog = create_filter_prog(self.s_filter)
+
+    def test_generate_filters(self):
+        unsorted_ingreds = {'brown rice', 'apple sauce', 'white rice', 'rice',
+                            'brown rice flour', 'sweet rice flour', 'apple',
+                            'rice flour', 'beans',
+                            'black beans', 'black bean paste'}
+
+        correct_ingred_filters = [{'apple', 'rice', 'beans', 'black bean paste'},
+                                  {'brown rice', 'white rice',
+                                   'apple sauce',
+                                   'rice flour', 'black beans'},
+                                  {'brown rice flour', 'sweet rice flour'}]
+
+        ingred_filters = generate_ingred_filters(unsorted_ingreds)
+
+        for i, c in zip(ingred_filters, correct_ingred_filters):
+            self.assertCountEqual(i, c)
 
     def test_check_ingred(self):
         self.assertEqual(check_ingred('apple', self.g_prog), 'apple')
