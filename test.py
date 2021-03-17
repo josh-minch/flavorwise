@@ -7,13 +7,13 @@ from parse import (check_ingred, generate_ingred_filters,
 
 class TestParse(unittest.TestCase):
     def setUp(self):
-        self.filters = create_ingred_filters()
-
-        self.g_filter = self.filters['general']
-        self.g_prog = create_filter_prog(self.g_filter)
-
-        self.s_filter = self.filters['special']
-        self.s_prog = create_filter_prog(self.s_filter)
+        with open('approved_ingreds', 'r', encoding="utf8") as f:
+            ingreds = set(f.read().splitlines())
+        self.filters = generate_ingred_filters(ingreds)
+        self.progs = []
+        for ingred_filter in self.filters:
+            prog = create_filter_prog(ingred_filter)
+            self.progs.append(prog)
 
     def test_generate_filters(self):
         unsorted_ingreds = {'brown rice', 'apple sauce', 'white rice', 'rice',
@@ -33,20 +33,18 @@ class TestParse(unittest.TestCase):
             self.assertCountEqual(i, c)
 
     def test_check_ingred(self):
-        self.assertEqual(check_ingred('apple', self.g_prog), 'apple')
-        self.assertEqual(check_ingred('apples', self.g_prog), 'apple')
+        self.assertEqual(check_ingred('apple', self.progs[0]), 'apple')
+        self.assertEqual(check_ingred('apples', self.progs[0]), 'apple')
         self.assertEqual(check_ingred(
-            'Golden Delicious apples', self.g_prog), 'apple')
-        self.assertEqual(check_ingred('jalapeno', self.g_prog), 'jalapeño')
+            'Golden Delicious apples', self.progs[0]), 'apple')
+        self.assertEqual(check_ingred('jalapeno', self.progs[0]), 'jalapeño')
+        ingred = 'jalapenos, seeded, stemmed and diced'
+        self.assertEqual(check_ingred(ingred, self.progs[0]), 'jalapeño')
+        self.assertEqual(check_ingred('no ingredients', self.progs[0]), None)
 
         self.assertEqual(check_ingred(
-            'apple sauce', self.s_prog), 'apple sauce')
-        self.assertEqual(check_ingred('apple', self.s_prog), None)
-
-        ingreds = 'jalapenos, seeded, stemmed and diced'
-        self.assertEqual(check_ingred(ingreds, self.g_prog), 'jalapeño')
-
-        self.assertEqual(check_ingred('no ingredients', self.s_prog), None)
+            'apple sauce', self.progs[1]), 'apple sauce')
+        self.assertEqual(check_ingred('apple', self.progs[1]), None)
 
     def test_filter_naive(self):
         filtered_ingreds = filter_naive(
@@ -80,7 +78,7 @@ class TestParse(unittest.TestCase):
         self.assertEqual(lemmatize('chiles'), 'chile')
         self.assertEqual(lemmatize('chilis'), 'chile')
         self.assertEqual(lemmatize('chilies'), 'chile')
-        self.assertEqual(lemmatize('chillies'), 'chile')
+       approved_ingredsl(lemmatize('chillies'), 'chile')
 
         self.assertEqual(lemmatize('white onions'), 'white onion')
         self.assertEqual(lemmatize('acorn squashes'), 'acorn squash')
