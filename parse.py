@@ -1,9 +1,6 @@
 import re
-import csv
 
-import numpy as np
 import pandas as pd
-import spacy
 
 import helper
 
@@ -106,19 +103,6 @@ def lemmatize(ingred):
         ingred = ingred[:-1]
 
     return ingred
-    """
-    return lemmatizer(ingred, NOUN)[-1]
-
-    tokens = nlp(ingred)
-    chunk_lemma = [chunk.lemma_ for chunk in tokens.noun_chunks]
-    if len(chunk_lemma) > 0:
-        return chunk_lemma[0]
-    else:
-        return [token.lemma_ for token in tokens][0]
-
-    w = Word(ingred)
-    return w.lemmatize()
-    """
 
 
 def generate_ingred_filters(approved_ingreds):
@@ -137,65 +121,14 @@ def generate_ingred_filters(approved_ingreds):
             other_ingreds = set(current_filter)
             other_ingreds.remove(cur_ingred)
             for ingred_to_check in other_ingreds:
-                if re.search(r'\b' + re.escape(cur_ingred) + r'\b', ingred_to_check):
+                if re.search(r'\b' + re.escape(cur_ingred) + r'\b',
+                             ingred_to_check):
                     next_filter.add(ingred_to_check)
 
         filters.append(current_filter - next_filter)
         current_filter = next_filter
 
     return filters
-
-
-def create_ingred_filters():
-    """Return dictionary of approved ingredient filters, stored as lists."""
-    filter_files = ['general', 'special']
-
-    ingred_filters = {}
-    for filter_name in filter_files:
-        with open(filter_name, encoding="utf8") as f:
-            ingred_filter = f.read().splitlines()
-            # Remove duplicates, empty lines
-            ingred_filter = set(ingred_filter)
-            ingred_filter.remove('')
-            ingred_filter = list(ingred_filter)
-
-            ingred_filters[filter_name] = ingred_filter
-
-    return ingred_filters
-
-
-def filter_nlp(ingreds):
-    nlp = spacy.load('en_core_web_sm')
-    ingreds_filtered = []
-
-    for ingred in ingreds:
-        doc = nlp(ingred)
-
-        nouns = [chunk.text for chunk in doc.noun_chunks]
-
-        ingreds_filtered += nouns
-
-    return ingreds_filtered
-
-
-def filter_regex(ingredients):
-    # Regex for parenthetical statements like (100g)
-    reg_parentheses = r'(\(.*?\))'
-    # For numerals, decimals, fractions
-    reg_quantity = r'([-]?[0-9]+[,.]?[0-9]*([\/][0-9]+[,.]?[0-9]*)*)'
-
-    units = ['oz', 'ounce', 'lb', 'pound', 'g', 'grams',
-             'kg', 'kilogram', 'teaspoon', 'tablespoon', 'cup']
-    units = ['{}s?'.format(unit) for unit in units]
-    reg_units = r'\b(?:' + '|'.join(units) + r')\b'
-
-    prog = re.compile(reg_parentheses + '|' + reg_quantity + '|' + reg_units)
-
-    ingred_stripped = []
-    for ingred in ingredients:
-        ingred_stripped.append(prog.sub('', ingred).strip())
-
-    return ingred_stripped
 
 
 def write_recipe_data_filtered(infile, outfile):
@@ -240,8 +173,8 @@ def write_all_ingreds_lemma(infile='all_ingreds_filtered.json',
     helper.write_json(ingreds, outfile, 'w')
 
 
-def find_unrecognized_ingreds(ingreds):
-    """Write ingredients not found by ingred_filters to csv"""
+""" def find_unrecognized_ingreds(ingreds):
+    Write ingredients not found by ingred_filters to csv
     open('unrecognized_ingreds.csv', 'w').close()
 
     ingred_filters = create_ingred_filters()
@@ -254,7 +187,7 @@ def find_unrecognized_ingreds(ingreds):
             with open('unrecognized_ingreds.csv', 'a',
                       encoding='utf8', newline='') as outfile:
                 recipe_writer = csv.writer(outfile)
-                recipe_writer.writerow([ingred])
+                recipe_writer.writerow([ingred]) """
 
 
 def write_recipe_matrix(outfile='recipe_matrix.json'):
@@ -292,13 +225,6 @@ def clean_approved_ingreds():
 
     with open('approved_ingreds', 'w', encoding='utf8') as f:
         f.write('\n'.join(ingreds))
-
-
-def get_cooc():
-    df = pd.DataFrame(helper.get_json('recipe_matrix.json'))
-    m = df.dot(df.transpose())
-    np.fill_diagonal(m, 0)
-    return m
 
 
 def main():

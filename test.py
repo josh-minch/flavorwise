@@ -1,7 +1,7 @@
 import unittest
 
 from parse import (check_ingred, generate_ingred_filters,
-                   create_filter_prog, create_ingred_filters,
+                   create_filter_prog,
                    filter_naive, lemmatize)
 
 
@@ -21,7 +21,8 @@ class TestParse(unittest.TestCase):
                             'rice flour', 'beans',
                             'black beans', 'black bean paste'}
 
-        correct_ingred_filters = [{'apple', 'rice', 'beans', 'black bean paste'},
+        correct_ingred_filters = [{'apple', 'rice', 'beans',
+                                   'black bean paste'},
                                   {'brown rice', 'white rice',
                                    'apple sauce',
                                    'rice flour', 'black beans'},
@@ -78,7 +79,7 @@ class TestParse(unittest.TestCase):
         self.assertEqual(lemmatize('chiles'), 'chile')
         self.assertEqual(lemmatize('chilis'), 'chile')
         self.assertEqual(lemmatize('chilies'), 'chile')
-       approved_ingredsl(lemmatize('chillies'), 'chile')
+        self.assertEqual(lemmatize('chillies'), 'chile')
 
         self.assertEqual(lemmatize('white onions'), 'white onion')
         self.assertEqual(lemmatize('acorn squashes'), 'acorn squash')
