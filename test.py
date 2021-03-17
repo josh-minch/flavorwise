@@ -19,11 +19,13 @@ class TestParse(unittest.TestCase):
         unsorted_ingreds = {'brown rice', 'apple sauce', 'white rice', 'rice',
                             'brown rice flour', 'sweet rice flour', 'apple',
                             'rice flour', 'beans',
-                            'black beans', 'black bean paste'}
+                            'black beans', 'black bean paste',
+                            'butter', 'unsalted butter'}
 
-        correct_ingred_filters = [{'apple', 'rice', 'beans',
+        correct_ingred_filters = [{'butter', 'apple', 'rice', 'beans',
                                    'black bean paste'},
-                                  {'brown rice', 'white rice',
+                                  {'unsalted butter',
+                                   'brown rice', 'white rice',
                                    'apple sauce',
                                    'rice flour', 'black beans'},
                                   {'brown rice flour', 'sweet rice flour'}]
