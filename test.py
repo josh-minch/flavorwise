@@ -96,6 +96,10 @@ class TestParse(unittest.TestCase):
         self.assertEqual(lemmatize('jalapeño'), 'jalapeño')
         self.assertEqual(lemmatize('jalapenos'), 'jalapeño')
 
+        self.assertEqual(lemmatize('clove of garlic'), 'garlic')
+        self.assertEqual(lemmatize('cloves of garlic'), 'garlic')
+        self.assertEqual(lemmatize('cloves'), 'clove')
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -91,6 +91,11 @@ def lemmatize(ingred):
 
     ingred = ' '.join(split_ingred)
 
+    if ingred == 'clove of garlic':
+        ingred = 'garlic'
+    elif ingred == 'cloves of garlic':
+        ingred = 'garlic'
+
     if ingred[-2:] == 'ss' or ingred[-2:] == 'us':
         pass
     elif ingred[-3:] == 'ies':
