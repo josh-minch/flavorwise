@@ -10,7 +10,7 @@ RECIPE_MATRIX = np.array(get_json('recipe_matrix.json'))
 INGRED_AXIS = 0
 RECIPE_AXIS = 1
 
-ALL_INGREDS = get_json('all_ingreds_filtered.json')
+ALL_INGREDS = get_json('static/all_ingreds_filtered.json')
 INGRED_TO_IX = {k: i for i, k in enumerate(ALL_INGREDS)}
 IX_TO_INGRED = {i: k for i, k in enumerate(ALL_INGREDS)}
 

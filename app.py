@@ -11,7 +11,7 @@ app.config.from_object('config')
 
 VERSION_STR = '?v=0.61'
 ALL_INGREDS = [ingred.lower()
-               for ingred in get_json('./static/all_ingreds_lemma.json')]
+               for ingred in get_json('./static/all_ingreds_filtered.json')]
 
 
 # TODO:

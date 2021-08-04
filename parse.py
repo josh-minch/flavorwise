@@ -170,14 +170,6 @@ def write_all_ingreds(recipe_file_name, ingred_file_name):
     return ingreds
 
 
-def write_all_ingreds_lemma(infile='all_ingreds_filtered.json',
-                            outfile='static/all_ingreds_lemma.json'):
-    """Save json of lemmatization of ingreds in infile to outfile."""
-    ingreds = helper.get_json(infile)
-    ingreds = [lemmatize(ingred) for ingred in ingreds]
-    helper.write_json(ingreds, outfile, 'w')
-
-
 """ def find_unrecognized_ingreds(ingreds):
     Write ingredients not found by ingred_filters to csv
     open('unrecognized_ingreds.csv', 'w').close()
@@ -235,8 +227,8 @@ def clean_approved_ingreds():
 def main():
     clean_approved_ingreds()
     write_recipe_data_filtered('recipe_data.json', 'recipe_data_filtered.json')
-    write_all_ingreds('recipe_data_filtered.json', 'all_ingreds_filtered.json')
-    write_all_ingreds_lemma()
+    write_all_ingreds('recipe_data_filtered.json',
+                      'static/all_ingreds_filtered.json')
     write_recipe_matrix()
 
 
