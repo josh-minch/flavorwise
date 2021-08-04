@@ -50,6 +50,9 @@ class TestParse(unittest.TestCase):
         self.assertEqual(check_ingred('apple', self.progs[1]), None)
 
     def test_filter_naive(self):
+        filtered_ingreds = filter_naive([''], self.filters)
+        self.assertCountEqual(filtered_ingreds, [])
+
         filtered_ingreds = filter_naive(
             ['apple', 'apple sauce', 'no ingredients'], self.filters)
         self.assertCountEqual(filtered_ingreds, ['apple sauce', 'apple'])
@@ -67,7 +70,8 @@ class TestParse(unittest.TestCase):
         self.assertCountEqual(
             filtered_ingreds, ['extra virgin olive oil', 'mahi mahi'])
 
-        filtered_ingreds = filter_naive([''], self.filters)
+        filtered_ingreds = filter_naive(
+            ['creamy', 'creamed'], self.filters)
         self.assertCountEqual(filtered_ingreds, [])
 
     def test_lemmatize(self):
