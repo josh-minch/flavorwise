@@ -174,20 +174,21 @@ function removeAllChild(node) {
 }
 
 function createCurIngreds(curIngreds) {
-    const curIngredsDiv = document.querySelector('#cur-ingreds');
+    const curIngredsForm = document.querySelector('#cur-ingreds');
 
     curIngreds.forEach(ingred => {
-        const ingredSpan = document.createElement('span');
-        ingredSpan.setAttribute('class', 'cur-ingred')
+        const ingredDiv = document.createElement('div');
+        ingredDiv.setAttribute('class', 'cur-ingred')
         const box = createInput(ingred);
         const label = createLabel(ingred);
-        curIngredsDiv.appendChild(ingredSpan);
-        ingredSpan.appendChild(label);
+        curIngredsForm.appendChild(ingredDiv);
+        ingredDiv.appendChild(label);
         label.prepend(box);
     });
     if (curIngreds.length > 0) {
+
         const btn = createRemoveBtn();
-        curIngredsDiv.appendChild(btn);
+        curIngredsForm.appendChild(btn);
     }
 }
 
@@ -211,6 +212,7 @@ function createRemoveBtn() {
     btn.setAttribute('type', 'submit');
     btn.setAttribute('value', 'Remove');
     btn.setAttribute('id', 'remove-button');
+    btn.setAttribute('class', 'btn btn-outline-danger mt-1');
     return btn;
 }
 
