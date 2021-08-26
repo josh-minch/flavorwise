@@ -33,8 +33,7 @@
 }
 
 .tt-suggestion.tt-cursor {
-    color: #fff;
-    background-color: #007bff;
+    background-color: rgb(238, 238, 238);
 }
 
 .tt-suggestion p {
