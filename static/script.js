@@ -13,7 +13,7 @@ $(document).ready(function () {
             {
                 targets: -1,
                 render: function (data, type, row) {
-                    let btn = '<button type="button" class="r-ingred btn btn-outline-primary" name="r_ingred" value="' + row[0] + '">Add</button>';
+                    let btn = '<button type="button" class="r-ingred-btn btn btn-outline-primary" name="r_ingred" value="' + row[0] + '">Add</button>';
                     return btn;
                 }
             }
@@ -251,7 +251,7 @@ function createRelatedIngreds(rankedIngreds) {
 
 function createAddBtn(ingredName) {
     const btn = document.createElement('button');
-    btn.setAttribute('class', 'r-ingred btn btn-outline-primary btn-sm');
+    btn.setAttribute('class', 'r-ingred-btn btn btn-outline-primary btn-sm');
     btn.setAttribute('name', 'r_ingred');
     btn.setAttribute('value', ingredName);
     btn.textContent = 'Add';

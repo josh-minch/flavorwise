@@ -39,11 +39,10 @@
                         <hr class="mt-0 mb-2 d-block d-lg-none" />
                         <div id="content-ingred">
                             <form class="mt-1 mb-1" id="search">
-                                <div class="" id="bloodhound">
-                                    <input class="typeahead" name="search" id="search-input"
+                                <div class="d-flex align-items-center" id="bloodhound">
+                                    <input class="typeahead mr-2" name="search" id="search-input"
                                         placeholder="{{ random_ingred }}" title="Select an ingredient"
                                         autocomplete="off" autofocus="true">
-
                                     <input class="btn btn-outline-primary" id="search-add" type="submit" value="Add">
                                 </div>
                             </form>
@@ -88,7 +87,7 @@
                                             <td>{{ r_ingred.1 }}</td>
                                             <td>{{ r_ingred.2 }}</td>
                                             <td class="text-right pr-0"><button type="button"
-                                                    class="r-ingred btn btn-outline-primary btn-sm" name="r_ingred"
+                                                    class="r-ingred-btn btn btn-outline-primary btn-sm" name="r_ingred"
                                                     value="{{r_ingred.0}}">Add</button></td>
                                         </tr>
                                         {%- endfor -%}
