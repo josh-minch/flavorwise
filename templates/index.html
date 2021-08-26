@@ -135,7 +135,7 @@
         var states = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: '../static/all_ingreds_lemma.json'
+            prefetch: '../static/all_ingreds_filtered.json'
         });
 
         $('#bloodhound .typeahead').typeahead({
