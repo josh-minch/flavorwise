@@ -41,8 +41,7 @@
                             <form class="mt-1 mb-1" id="search">
                                 <div class="d-flex align-items-center" id="bloodhound">
                                     <input class="typeahead mr-2" name="search" id="search-input"
-                                        placeholder="{{ random_ingred }}" title="Select an ingredient"
-                                        autocomplete="off" autofocus="true">
+                                        title="Select an ingredient" autocomplete="off" autofocus="true">
                                     <input class="btn btn-outline-primary" id="search-add" type="submit" value="Add">
                                 </div>
                             </form>
@@ -131,7 +130,7 @@
     <script src="{{ url_for('static', filename='typeahead.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bloodhound.min.js') }}"></script>
     <script>
-        var states = new Bloodhound({
+        var all_ingreds = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             prefetch: '../static/all_ingreds_filtered.json'
@@ -144,8 +143,8 @@
             autoselect: true
         },
             {
-                name: 'states',
-                source: states,
+                name: 'all_ingreds',
+                source: all_ingreds,
                 limit: 999
             });
     </script>
