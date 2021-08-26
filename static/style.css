@@ -41,6 +41,10 @@ h2 {
   }
 }
 
+#search-add, #remove-button, .r-ingred-btn {
+  line-height: 20px;
+}
+
 .cur-ingred {
   margin-right: 4px;
 }
