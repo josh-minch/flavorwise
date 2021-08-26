@@ -52,6 +52,13 @@ def search():
     return get_frontend_json_data()
 
 
+@app.route("/add_dropdown_ingred", methods=["POST"])
+def add_dropdown_ingred():
+    new_ingred = request.form.get('ingred_to_add')
+    add_session_ingreds(new_ingred)
+    return get_frontend_json_data()
+
+
 @app.route("/remove", methods=["POST"])
 def remove():
     ingreds_to_remove = request.form.keys()

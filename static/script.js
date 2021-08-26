@@ -118,7 +118,14 @@ for (let i = 0; i < toggles.length; i++) {
 
 const search = document.getElementById('search');
 search.addEventListener('submit', searchAddIngred);
-search.addEventListener('change', searchAddIngred);
+
+/* When selecting a dropdown ingredient, add ingredient to current ingredients,
+close dropdown, and clear search field. */
+$('.typeahead').on('typeahead:selected', function (ev, ingred) {
+    addDropdownIngred(ingred);
+    $('.typeahead').typeahead('close');
+    $('.typeahead').typeahead('val', '');
+})
 
 const relatedIngreds = document.getElementById('r-ingreds');
 relatedIngreds.addEventListener('click', addRelatedIngred);
@@ -126,10 +133,22 @@ relatedIngreds.addEventListener('click', addRelatedIngred);
 const remove = document.getElementById('cur-ingreds');
 remove.addEventListener('submit', removeIngred);
 
-
 function searchAddIngred(ev) {
     fetchPathEvent(new FormData(this), ev, '/search')
+    // Clear search field after adding ingred
     this.reset();
+}
+
+function addDropdownIngred(ingred) {
+    var formData = new FormData();
+    formData.append('ingred_to_add', ingred)
+
+    fetch('/add_dropdown_ingred', {
+        method: 'POST',
+        body: formData
+    })
+        .then(parseJSON)
+        .then(updateDisplay);
 }
 
 function addRelatedIngred(ev) {
@@ -264,7 +283,7 @@ function createRecipes(recipes, curIngreds) {
     const recipesBodyDiv = createRecipesBody(recipes);
 
     //recipesSec.appendChild(recipesTitleDiv);
-    recipesSec.appendChild(recipesBodyDiv);
+    //recipesSec.appendChild(recipesBodyDiv);
 }
 
 function createRecipesTitle(recipes, curIngreds) {
