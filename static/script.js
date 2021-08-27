@@ -28,7 +28,7 @@ $(document).ready(function () {
         pageLength: numIngredTableRows,
         lengthChange: false,
         language: {
-            emptyTable: "Add an ingredient to see recommendations",
+            emptyTable: " ",
             info: "_TOTAL_ results based on your ingredients",
             infoEmpty: "0 results",
             search: "_INPUT_",
@@ -67,7 +67,7 @@ $(document).ready(function () {
         pageLength: numTableRows,
         lengthChange: false,
         language: {
-            emptyTable: "Add an ingredient to see recommendations",
+            emptyTable: "Add ingredients to see recipes",
             info: "_TOTAL_ recipes with all your ingredients",
             infoEmpty: "0 results",
             infoFiltered: "matching your search",
