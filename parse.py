@@ -190,7 +190,7 @@ def write_all_ingreds(recipe_file_name, ingred_file_name):
 def write_recipe_matrix(outfile='recipe_matrix.json'):
     '''2D matrix whose rows are ingredients and cols are recipes.
     A 1 denotes the occurence of an ingredient in a given recipe.'''
-    ingreds = helper.get_json('all_ingreds_filtered.json')
+    ingreds = helper.get_json('./static/all_ingreds_filtered.json')
     recipes = helper.get_json('recipe_data_filtered.json')
 
     titles = []

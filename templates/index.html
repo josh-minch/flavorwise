@@ -131,7 +131,7 @@
         var all_ingreds = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: '../static/all_ingreds_filtered.json'
+            prefetch: 'static/all_ingreds_filtered.json'
         });
 
         $('#bloodhound .typeahead').typeahead({
@@ -143,7 +143,7 @@
             {
                 name: 'all_ingreds',
                 source: all_ingreds,
-                limit: 999
+                limit: Infinity
             });
 
         // Autofocus on typeahead search field
