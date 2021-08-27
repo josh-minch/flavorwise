@@ -29,10 +29,10 @@ $(document).ready(function () {
         lengthChange: false,
         language: {
             emptyTable: "Add an ingredient to see recommendations",
-            info: "_TOTAL_ foods pair with your ingredients",
+            info: "_TOTAL_ results based on your ingredients",
             infoEmpty: "0 results",
             search: "_INPUT_",
-            /* infoFiltered: "match your search", */
+            infoFiltered: "and search",
             zeroRecords: "No recommendations match your search filter. Bummer dude!",
             paginate: {
                 previous: "Prev"
@@ -68,10 +68,10 @@ $(document).ready(function () {
         lengthChange: false,
         language: {
             emptyTable: "Add an ingredient to see recommendations",
-            info: "_TOTAL_ recipes have all your ingredients",
+            info: "_TOTAL_ recipes with all your ingredients",
             infoEmpty: "0 results",
+            infoFiltered: "matching your search",
             search: "_INPUT_",
-            infoFiltered: "match your search",
             zeroRecords: "No recipes match your search filter. Bummer dude!",
             paginate: {
                 previous: "Prev"
