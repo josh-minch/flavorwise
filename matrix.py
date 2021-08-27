@@ -67,8 +67,9 @@ def get_ranked_ingreds(input_ingreds, match_recipe_ixs):
     # Remove ingredients already in current ingreds
     #  and make score human-readable
     ix_to_remove = set(input_ixs)
-    ranked_ingreds = [(IX_TO_INGRED[i], f'{round(100*s, 1)}%', n) for i, s, n in zip(
-        ranked_ixs, similarity_score, num_of_recipes) if i not in ix_to_remove]
+    ranked_ingreds = [(IX_TO_INGRED[i], f'{round(100*s, 1)}%', n) for i, s, n
+                      in zip(ranked_ixs, similarity_score, num_of_recipes)
+                      if i not in ix_to_remove]
 
     return ranked_ingreds
 
