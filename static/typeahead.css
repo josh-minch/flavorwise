@@ -1,19 +1,18 @@
-/* .tt-input, .tt-hint {
+.tt-input, .tt-hint {
     width: 200px;
     height: 30px;
     padding: 3px 7px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.5);
 }
-
-*/
 
 .tt-input {
     width: 200px;
+    background-color: transparent;
 }
 
 .tt-hint {
     width: 200px;
-    color: #999;
+    color: rgb(153, 153, 153);
 }
 
 .tt-menu {
