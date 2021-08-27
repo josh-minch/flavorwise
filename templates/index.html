@@ -26,7 +26,7 @@
 
 <body>
     <div class="container-fluid pt-4 pb-3 pt-sm-3">
-        <h1 class="mb-2">foodwise</h1>
+        <h1 class="mb-3">foodwise</h1>
         <div class="row">
             <div class="col-lg-7">
                 <div class="row">
@@ -38,7 +38,7 @@
                         </div>
                         <hr class="mt-0 mb-2 d-block d-lg-none" />
                         <div id="content-ingred">
-                            <form class="mt-1 mb-1" id="search">
+                            <form class="mt-2 mb-1" id="search">
                                 <div class="d-flex align-items-center" id="bloodhound">
                                     <input class="typeahead mr-2" name="search" id="search-input"
                                         title="Select an ingredient" autocomplete="off" autofocus="true">
@@ -66,34 +66,32 @@
                             <button class="btn btn-link shadow-none d-block d-lg-none" id="toggle-recommend"
                                 href="javascript:void(0)">Hide</button>
                         </div>
-                        <hr class=" mt-0 mb-2 d-block d-lg-none" />
-                        <div id="content-recommend">
-                            <div id="r-ingreds">
-                                <table id="ingred-table" class="table table-sm table-hover pt-2 mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-0 pl-0" scope="col">ingredient</th>
-                                            <th class="border-0" scope="col">score</th>
-                                            <th class="border-0" scope="col">recipes</th>
-                                            <th class="border-0" scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {%- if r_ingreds -%}
-                                        {%- for r_ingred in r_ingreds -%}
-                                        <tr>
-                                            <td class="pl-0">{{ r_ingred.0 }}</td>
-                                            <td>{{ r_ingred.1 }}</td>
-                                            <td>{{ r_ingred.2 }}</td>
-                                            <td class="text-right pr-0"><button type="button"
-                                                    class="r-ingred-btn btn btn-outline-primary btn-sm" name="r_ingred"
-                                                    value="{{r_ingred.0}}">Add</button></td>
-                                        </tr>
-                                        {%- endfor -%}
-                                        {%- endif -%}
-                                    </tbody>
-                                </table>
-                            </div>
+                        <hr class="mt-0 mb-2 d-block d-lg-none" />
+                        <div id="r-ingreds" class="mt-2">
+                            <table id="ingred-table" class="table table-sm table-hover pt-2 mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="border-0 pl-0" scope="col">ingredient</th>
+                                        <th class="border-0" scope="col">score</th>
+                                        <th class="border-0" scope="col">recipes</th>
+                                        <th class="border-0" scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {%- if r_ingreds -%}
+                                    {%- for r_ingred in r_ingreds -%}
+                                    <tr>
+                                        <td class="pl-0">{{ r_ingred.0 }}</td>
+                                        <td>{{ r_ingred.1 }}</td>
+                                        <td>{{ r_ingred.2 }}</td>
+                                        <td class="text-right pr-0"><button type="button"
+                                                class="r-ingred-btn btn btn-outline-primary btn-sm" name="r_ingred"
+                                                value="{{r_ingred.0}}">Add</button></td>
+                                    </tr>
+                                    {%- endfor -%}
+                                    {%- endif -%}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -101,7 +99,7 @@
             <div class="col-lg mt-2 mt-lg-0">
                 <h2 class="">Recipes</h2>
                 <hr class="mt-0 mb-2 d-block d-lg-none" />
-                <div id="recipes">
+                <div id="recipes" class="mt-3">
                     <table id="recipe-table" class="table table-sm table-borderless pt-2">
                         <thead>
                             <tr>
