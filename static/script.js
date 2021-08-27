@@ -239,6 +239,12 @@ function createRelatedIngreds(rankedIngreds) {
     let table = $('#ingred-table').DataTable();
 
     table.clear();
+
+    if (rankedIngreds == undefined || rankedIngreds.length == 0) {
+        table.draw();
+        return;
+    }
+
     var tableData = [];
     rankedIngreds.forEach(ingred => {
         const ingredName = ingred[0];
