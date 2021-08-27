@@ -41,6 +41,10 @@ h2 {
   }
 }
 
+#search-input {
+  width: 200px;
+}
+
 #search-add, #remove-button, .r-ingred-btn {
   line-height: 20px;
 }

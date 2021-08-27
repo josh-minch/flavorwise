@@ -69,7 +69,7 @@
                         <hr class=" mt-0 mb-2 d-block d-lg-none" />
                         <div id="content-recommend">
                             <div id="r-ingreds">
-                                <table id="ingred-table" class="table table-sm table-hover mb-0">
+                                <table id="ingred-table" class="table table-sm table-hover pt-2 mb-0">
                                     <thead>
                                         <tr>
                                             <th class="border-0 pl-0" scope="col">ingredient</th>
@@ -102,7 +102,7 @@
                 <h2 class="">Recipes</h2>
                 <hr class="mt-0 mb-2 d-block d-lg-none" />
                 <div id="recipes">
-                    <table id="recipe-table" class="table table-sm table-borderless">
+                    <table id="recipe-table" class="table table-sm table-borderless pt-2">
                         <thead>
                             <tr>
                                 <th class="border-0 pl-0" scope="col">recipe</th>
@@ -147,6 +147,10 @@
                 source: all_ingreds,
                 limit: 999
             });
+
+        // Autofocus on typeahead search field
+        $('.typeahead').focus();
+
     </script>
 
     <script src="{{ url_for('static', filename='script.js') }}{{ version_str }}"></script>
