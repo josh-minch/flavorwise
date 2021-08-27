@@ -102,6 +102,9 @@ class TestParse(unittest.TestCase):
 
         self.assertEqual(lemmatize('clove of garlic'), 'garlic')
         self.assertEqual(lemmatize('cloves of garlic'), 'garlic')
+        self.assertEqual(lemmatize('garlic cloves'), 'garlic')
+        self.assertEqual(lemmatize('cloves garlic '), 'garlic')
+        self.assertEqual(lemmatize('clove garlic '), 'garlic')
         self.assertEqual(lemmatize('cloves'), 'clove')
 
 
