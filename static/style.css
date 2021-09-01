@@ -73,7 +73,7 @@ label {
 div.dataTables_wrapper div.dataTables_info {
   color: #4d5156;
   float: left;
-  padding-top: 0px;
+  padding-top: 3px;
 }
 
 .dataTables_filter {
