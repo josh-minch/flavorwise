@@ -1,8 +1,10 @@
 $(document).ready(function () {
     $.fn.DataTable.ext.pager.numbers_length = 9;
 
-    const numTableRows = Math.round(window.innerHeight / 45);
-    const numIngredTableRows = numTableRows - 7;
+    const ingredTablePercent = 0.75;
+    const ingredTableUsableHeight = ingredTablePercent * window.innerHeight;
+    const numIngredTableRows = Math.round(ingredTableUsableHeight / 50);
+    const numRecipeTableRows = Math.round(ingredTableUsableHeight / 40);
 
     $('#ingred-table').DataTable({
         dom: "<if>t<lp>",
@@ -29,10 +31,10 @@ $(document).ready(function () {
         lengthChange: false,
         language: {
             emptyTable: " ",
-            info: "_TOTAL_ results based on your ingredients",
+            info: "_TOTAL_ results",
             infoEmpty: "0 results",
             search: "_INPUT_",
-            infoFiltered: "and search",
+            infoFiltered: "match your search",
             zeroRecords: "No recommendations match your search filter. Bummer dude!",
             paginate: {
                 previous: "Prev"
@@ -64,13 +66,13 @@ $(document).ready(function () {
                 }
             }
         ],
-        pageLength: numTableRows,
+        pageLength: numRecipeTableRows,
         lengthChange: false,
         language: {
             emptyTable: "Add ingredients to see recipes",
-            info: "_TOTAL_ recipes with all your ingredients",
+            info: "_TOTAL_ matching recipes",
             infoEmpty: "0 results",
-            infoFiltered: "matching your search",
+            infoFiltered: "match your search",
             search: "_INPUT_",
             zeroRecords: "No recipes match your search filter. Bummer dude!",
             paginate: {
@@ -85,10 +87,16 @@ $(document).ready(function () {
         }
     });
 
+    const ingredTableHeight = document.getElementById('ingred-table').offsetHeight;
+    const recipeTableHeight = document.getElementById('recipe-table').offsetHeight;
+    const recipePaginationPaddingTop = ingredTableHeight - recipeTableHeight;
+    const paddingTopString = recipePaginationPaddingTop.toString() + 'px';
+    $('#recipe-table_paginate').css('padding-top', paddingTopString);
+
 });
 
 
-$(window).on('resize', function (e) {
+/* $(window).on('resize', function (e) {
     if (typeof resizeTimer !== 'undefined') {
         clearTimeout(resizeTimer);
     }
@@ -102,7 +110,7 @@ $(window).on('resize', function (e) {
         recipeTable.page.len(newLen).draw();
 
     }, 250);    // Timer value for checking resize event start/stop
-});
+}); */
 
 const toggles = document.querySelectorAll('[id^="toggle"]');
 const contents = document.querySelectorAll('[id^="content"]');
