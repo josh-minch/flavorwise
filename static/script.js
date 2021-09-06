@@ -34,7 +34,8 @@ $(document).ready(function () {
             info: "_TOTAL_ results",
             infoEmpty: "0 results",
             search: "_INPUT_",
-            infoFiltered: "match your search",
+            searchPlaceholder: 'Filter results',
+            infoFiltered: "(filtered)",
             zeroRecords: "No recommendations match your search filter. Bummer dude!",
             paginate: {
                 previous: "Prev"
@@ -70,10 +71,11 @@ $(document).ready(function () {
         lengthChange: false,
         language: {
             emptyTable: "Add ingredients to see recipes",
-            info: "_TOTAL_ matching recipes",
+            info: "_TOTAL_ results",
             infoEmpty: "0 results",
-            infoFiltered: "match your search",
+            infoFiltered: "(filtered)",
             search: "_INPUT_",
+            searchPlaceholder: 'Filter results',
             zeroRecords: "No recipes match your search filter. Bummer dude!",
             paginate: {
                 previous: "Prev"
@@ -91,8 +93,13 @@ $(document).ready(function () {
     const recipeTableHeight = document.getElementById('recipe-table').offsetHeight;
     const recipePaginationPaddingTop = ingredTableHeight - recipeTableHeight;
     const paddingTopString = recipePaginationPaddingTop.toString() + 'px';
-    $('#recipe-table_paginate').css('padding-top', paddingTopString);
+    $("#recipe-table_paginate").css("padding-top", paddingTopString);
 
+
+    const tableFilters = document.querySelectorAll('.dataTables_filter label input');
+    tableFilters.forEach(filter => {
+        filter.classList.remove("form-control", "form-control-sm")
+    });
 });
 
 
