@@ -41,8 +41,8 @@ h3 {
 
 @media screen and (min-width: 992px) {
   #my-ingred-col {
-    min-width: 297px;
-    max-width: 297px;
+    min-width: 300px;
+    max-width: 300px;
   }
 }
 

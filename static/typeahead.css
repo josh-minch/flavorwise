@@ -1,5 +1,5 @@
-#search-input, .tt-input, .tt-hint, .tt-menu {
-    width: 260px;
+#search, #bloodhound, .twitter-typeahead, #search-input, .tt-input, .tt-hint, .tt-menu {
+    width: 100%;
 }
 
 #search-input {
@@ -40,6 +40,7 @@
     background: url("plus.svg") left / contain no-repeat;
     background-size: 12px;
     background-position: 8px 12px;
+    cursor: pointer;
 }
 
 .tt-suggestion.tt-cursor {
