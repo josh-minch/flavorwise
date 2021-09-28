@@ -37,7 +37,7 @@
     padding-left: 26px;
     font-size: 1rem;
     line-height: 35px;
-    background: url("plus.svg") left / contain no-repeat;
+    background: url("plus_muted.svg") left / contain no-repeat;
     background-size: 12px;
     background-position: 8px 12px;
     cursor: pointer;
@@ -45,6 +45,10 @@
 
 .tt-suggestion.tt-cursor {
     background-color: rgb(238, 238, 238);
+    background-image: url("plus.svg");
+    background-size: 12px;
+    background-position: 8px 12px;
+    background-repeat: no-repeat;
 }
 
 .tt-suggestion p {

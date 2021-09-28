@@ -1,0 +1,11 @@
+<svg width="600" height="600"
+    xmlns="http://www.w3.org/2000/svg">
+    <g>
+        <title>Layer 1</title>
+        <g opacity="0.2" id="svg_3">
+            <path fill="#007bff" fill-opacity="0" stroke="#000000" stroke-width="100" d="m300,0l0,599" id="svg_1"/>
+            <path fill="#007bff" stroke="#000000" stroke-width="100" d="m1,300l599,0" id="svg_2" fill-opacity="0"/>
+        </g>
+    </g>
+
+</svg>
