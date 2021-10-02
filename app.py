@@ -1,5 +1,6 @@
 import http
 import random
+import os
 
 from flask import Flask, jsonify, render_template, request, session
 from whitenoise import WhiteNoise
@@ -9,9 +10,10 @@ from helper import get_json
 
 app = Flask(__name__)
 app.config.from_object('config')
-app.wsgi_app = WhiteNoise(app.wsgi_app, root='static/')
+app.wsgi_app = WhiteNoise(app.wsgi_app, root=os.path.join(
+    os.path.dirname(__file__), 'static'), prefix='static/')
 
-VERSION_STR = '?v=0.65'
+VERSION_STR = '?v=0.66'
 ALL_INGREDS = [ingred.lower()
                for ingred in get_json('./static/all_ingreds_filtered.json')]
 
@@ -26,7 +28,7 @@ ALL_INGREDS = [ingred.lower()
 #       Emojis, anyone?
 
 
-@app.route("/")
+@ app.route("/")
 def index():
     init_session_vars()
     remove_invalid_session_ingreds()
@@ -43,7 +45,7 @@ def index():
                            cur_ingreds=cur_ingreds)
 
 
-@app.route("/search", methods=["POST"])
+@ app.route("/search", methods=["POST"])
 def search():
     new_ingreds = request.form.get('search', 0, type=str).strip()
 
@@ -54,14 +56,14 @@ def search():
     return get_frontend_json_data()
 
 
-@app.route("/add_dropdown_ingred", methods=["POST"])
+@ app.route("/add_dropdown_ingred", methods=["POST"])
 def add_dropdown_ingred():
     new_ingred = request.form.get('ingred_to_add')
     add_session_ingreds(new_ingred)
     return get_frontend_json_data()
 
 
-@app.route("/remove", methods=["POST"])
+@ app.route("/remove", methods=["POST"])
 def remove():
     ingreds_to_remove = request.form.keys()
     remove_session_ingreds(ingreds_to_remove)
