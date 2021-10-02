@@ -1,17 +1,13 @@
 import http
 import random
-import os
 
 from flask import Flask, jsonify, render_template, request, session
-from whitenoise import WhiteNoise
 
 import matrix
 from helper import get_json
 
 app = Flask(__name__)
 app.config.from_object('config')
-app.wsgi_app = WhiteNoise(app.wsgi_app, root=os.path.join(
-    os.path.dirname(__file__), 'static'), prefix='static/')
 
 VERSION_STR = '?v=0.66'
 ALL_INGREDS = [ingred.lower()
