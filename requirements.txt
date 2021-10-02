@@ -10,4 +10,5 @@ scikit-learn==0.24.0
 scipy==1.5.4
 sklearn==0.0
 threadpoolctl==2.1.0
+whitenoise==5.3.0
 Werkzeug==1.0.1
