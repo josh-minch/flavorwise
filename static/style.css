@@ -9,8 +9,47 @@ body {
   }
 }
 
-#content {
-  display: block;
+@media screen and (max-width: 320px) {
+  .container-fluid {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+#my-ingred-col, #rec-ingred-col, #recipe-col {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+@media screen and (min-width: 992px) {
+  #my-ingred-col {
+    padding-left: 0px;
+    padding-right: 10px;
+  }
+  #rec-ingred-col {
+    padding: 0px 10px;
+  }
+  #recipe-col {
+    padding-left: 10px;
+    padding-right: 0px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  h1 {
+    padding-left: 15px;
+  }
+  #my-ingred-col {
+    padding-left: 15px;
+    padding-right: 20px;
+  }
+  #rec-ingred-col {
+    padding: 0px 20px;
+  }
+  #recipe-col {
+    padding-left: 20px;
+    padding-right: 15px;
+  }
 }
 
 h1 {
@@ -41,8 +80,7 @@ h3 {
 
 @media screen and (min-width: 992px) {
   #my-ingred-col {
-    min-width: 300px;
-    max-width: 300px;
+    flex: 0 0 250px;
   }
 }
 
@@ -60,6 +98,23 @@ label {
 
 #ingred-table, #recipe-table {
   display: none;
+}
+
+.lg-view {
+  display: inline-block;
+}
+
+.xs-view {
+  display: none;
+}
+
+@media screen and (max-width: 350px) {
+  .lg-view {
+    display: none;
+  }
+  .xs-view {
+    display: inline-block;
+  }
 }
 
 /* .r-ingred {
@@ -158,29 +213,4 @@ table.dataTable tbody td {
     flex-wrap: wrap;
     justify-content: center;
   }
-}
-
-#ingred-title {
-  font-family: 'Lora', serif;
-  font-size: 1.1rem;
-  font-weight: 400;
-}
-
-.recipe-intro {
-  font-size: 1.1rem;
-  font-weight: 400;
-  font-family: 'Lora', serif;
-}
-
-.recipe-prep {
-  font-size: 1.1rem;
-  font-weight: 400;
-  font-family: 'Lora', serif;
-  font-style: italic
-}
-
-.recipe-ingred {
-  font-size: 1.1rem;
-  font-weight: 600;
-  font-family: 'Lora', serif;
 }
