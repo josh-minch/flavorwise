@@ -8,6 +8,13 @@ $(document).ready(function () {
 
     $('#ingred-table').DataTable({
         dom: "<if>t<lp>",
+        autoWidth: false,
+        columns: [
+            null,
+            null,
+            { width: '19%' },
+            { width: '14%' }
+        ],
         columnDefs: [
             { className: "pl-0", "targets": [0] },
             { className: "text-right pr-0", "targets": [3] },
