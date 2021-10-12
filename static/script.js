@@ -167,6 +167,9 @@ function addRelatedIngred(ev) {
     var formData = new FormData();
     formData.append('search', String(ev.target.value))
     fetchPathEvent(formData, ev, '/search');
+    // Clear table filters
+    $('#ingred-table').DataTable().search('').draw();
+    $('#recipe-table').DataTable().search('').draw();
 }
 
 function removeIngred(ev) {
