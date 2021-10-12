@@ -1,3 +1,7 @@
+#search-input, .dataTables_filter>label>input {
+    border-radius: 4px;
+}
+
 #search, #bloodhound, .twitter-typeahead, #search-input, .tt-input, .tt-hint, .tt-menu {
     width: 100%;
 }
