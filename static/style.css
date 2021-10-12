@@ -9,6 +9,10 @@ body {
   }
 }
 
+body, table {
+  color: #1d1d1f;
+}
+
 @media screen and (max-width: 320px) {
   .container-fluid {
     padding-left: 10px;
@@ -37,10 +41,10 @@ body {
 
 @media screen and (min-width: 1200px) {
   h1 {
-    padding-left: 15px;
+    padding-left: 13px;
   }
   #my-ingred-col {
-    padding-left: 15px;
+    padding-left: 13px;
     padding-right: 20px;
   }
   #rec-ingred-col {
@@ -48,7 +52,7 @@ body {
   }
   #recipe-col {
     padding-left: 20px;
-    padding-right: 15px;
+    padding-right: 13px;
   }
 }
 
@@ -127,7 +131,6 @@ label {
 } */
 
 div.dataTables_wrapper div.dataTables_info {
-  /* color: rgb(51, 51, 51); */
   float: left;
   padding-top: 3px;
 }
@@ -154,10 +157,6 @@ div.dataTables_wrapper div.dataTables_info {
 
 div.dataTables_wrapper div.dataTables_filter input {
   margin-left: 0px;
-}
-
-#ingred-table th {
-  color: black;
 }
 
 #ingred-table th:first-child+th, th:first-child+th+th, td:first-child+td, td:first-child+td+td {
