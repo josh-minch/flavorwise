@@ -89,13 +89,6 @@ $(document).ready(function () {
         }
     });
 
-    const ingredTableHeight = document.getElementById('ingred-table').offsetHeight;
-    const recipeTableHeight = document.getElementById('recipe-table').offsetHeight;
-    const recipePaginationPaddingTop = ingredTableHeight - recipeTableHeight;
-    const paddingTopString = recipePaginationPaddingTop.toString() + 'px';
-    $("#recipe-table_paginate").css("padding-top", paddingTopString);
-
-
     const tableFilters = document.querySelectorAll('.dataTables_filter label input');
     tableFilters.forEach(filter => {
         filter.classList.remove("form-control", "form-control-sm")
