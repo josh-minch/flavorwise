@@ -9,13 +9,11 @@ $(document).ready(function () {
     $('#ingred-table').DataTable({
         dom: "<if>t<lp>",
         autoWidth: false,
-        columns: [
-            null,
-            null,
-            { width: '19%' },
-            { width: '14%' }
-        ],
         columnDefs: [
+            // You must set column widths through columnDefs, not through columns property.
+            // Setting with "columns" causes default order sequenceto break
+            { width: '19%', targets: 2 },
+            { width: '14%', targets: 3 },
             { className: "pl-0", "targets": [0] },
             { className: "text-right pr-0", "targets": [3] },
             { orderable: false, targets: [0, 3] },
@@ -29,8 +27,8 @@ $(document).ready(function () {
         ],
         aoColumns: [
             null,
-            { "orderSequence": ["desc", "asc"] },
-            { "orderSequence": ["desc", "asc"] },
+            { orderSequence: ["desc", "asc"] },
+            { orderSequence: ["desc", "asc"] },
             null
         ],
         order: [[1, "desc"]],
