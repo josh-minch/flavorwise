@@ -87,22 +87,21 @@ $(document).ready(function () {
         }
     });
 
-    // Hide tables when empty
-    $('#ingred-table').on('DOMNodeInserted DOMNodeRemoved', function () {
-        if ($(this).find('tbody tr td').first().attr('colspan')) {
-            $(this).parent().hide();
-        } else {
-            $(this).parent().show();
-        }
-    });
+    function toggleTableVisisbleWhenEmpty(table) {
+        table.on('DOMNodeInserted DOMNodeRemoved', function () {
+            if (table.find('tbody tr td').first().attr('colspan')) {
+                table.hide();
+                // hide table's pagination also
+                table.parent().find('div.dataTables_paginate').hide();
+            } else {
+                table.show();
+                table.parent().find('div.dataTables_paginate').show();
+            }
+        });
+    }
 
-    $('#recipe-table').on('DOMNodeInserted DOMNodeRemoved', function () {
-        if ($(this).find('tbody tr td').first().attr('colspan')) {
-            $(this).parent().hide();
-        } else {
-            $(this).parent().show();
-        }
-    });
+    toggleTableVisisbleWhenEmpty($('#ingred-table'));
+    toggleTableVisisbleWhenEmpty($('#recipe-table'));
 
     // Remove bootstrap class from datatable filters for easier custom styling
     const tableFilters = document.querySelectorAll('.dataTables_filter label input');
