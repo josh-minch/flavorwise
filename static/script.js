@@ -212,6 +212,7 @@ function createCurIngreds(curIngreds) {
 function createInput(ingred) {
     const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
+    input.setAttribute('autocomplete', 'off');
     input.setAttribute('id', ingred);
     input.setAttribute('name', ingred);
     return input;
@@ -261,7 +262,7 @@ function createAddBtn(ingredName) {
     btn.setAttribute('name', 'r_ingred');
     btn.setAttribute('value', ingredName);
     btn.textContent = 'Add';
-    return btn
+    return btn;
 }
 
 function createRecipes(recipes, curIngreds) {
@@ -279,7 +280,7 @@ function createRecipesTitle(recipes, curIngreds) {
     appendRecipesTitleIntro(titleSpan, recipes, curIngreds);
     appendRecipesTitleIngreds(titleSpan, recipes, curIngreds);
 
-    return titleSpan
+    return titleSpan;
 }
 
 function appendRecipesTitleIntro(titleSpan, recipes, curIngreds) {
@@ -291,7 +292,7 @@ function appendRecipesTitleIntro(titleSpan, recipes, curIngreds) {
 
     const withSpan = document.createElement('span');
     withSpan.setAttribute('class', 'recipe-prep');
-    withSpan.innerText = 'with '
+    withSpan.innerText = 'with ';
 
     if (curIngreds.length == 0) {
         introSpan.innerText = 'Recipes'
