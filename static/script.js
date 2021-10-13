@@ -111,18 +111,6 @@ $(document).ready(function () {
 });
 
 
-const toggles = document.querySelectorAll('[id^="toggle"]');
-const contents = document.querySelectorAll('[id^="content"]');
-
-for (let i = 0; i < toggles.length; i++) {
-    toggles[i].addEventListener("click", function () {
-        const newState = contents[i].dataset.toggled ^= 1;
-        contents[i].style.display = newState ? "none" : "block";
-        toggles[i].textContent = newState ? "Show" : "Hide";
-    });
-}
-
-
 const search = document.getElementById('search');
 search.addEventListener('submit', searchAddIngred);
 
@@ -265,23 +253,6 @@ function createRelatedIngreds(rankedIngreds) {
     });
 
     table.rows.add(tableData).draw();
-
-    /* const rankedIngredsDiv = document.querySelector('#r-ingreds');
-
-    rankedIngreds.forEach(ingred => {
-        const btn = document.createElement('button');
-        btn.setAttribute('type', 'button');
-        btn.setAttribute('class', 'r-ingred btn btn-outline-primary btn-sm');
-        btn.setAttribute('value', ingred);
-        btn.innerText = ingred;
-        rankedIngredsDiv.appendChild(btn)
-    });
-
-    <button type="button"
-    class="r-ingred btn btn-outline-primary btn-sm" name="r_ingred"
-    value="{{r_ingred.0}}">Add</button>
-
-    */
 }
 
 function createAddBtn(ingredName) {
@@ -384,5 +355,3 @@ function createRecipesBody(recipes) {
 
     table.rows.add(tableData).draw();
 }
-
-
