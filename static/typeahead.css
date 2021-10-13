@@ -77,19 +77,21 @@
     cursor: pointer;
 }
 
-@media screen and (min-width: 992px) {
-    .tt-suggestion {
-        line-height: 35px;
-    }
-}
-
 .tt-suggestion.tt-cursor {
-    background-color: rgb(238, 238, 238);
     background-image: url("plus.svg");
     background-size: 12px;
     background-position-x: 8px;
     background-position-y: center;
     background-repeat: no-repeat;
+}
+
+@media screen and (min-width: 992px) {
+    .tt-suggestion {
+        line-height: 35px;
+    }
+    .tt-suggestion.tt-cursor {
+        background-color: rgb(238, 238, 238);
+    }
 }
 
 .tt-suggestion:active {
