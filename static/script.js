@@ -87,28 +87,30 @@ $(document).ready(function () {
         }
     });
 
+    // Hide tables when empty
+    $('#ingred-table').on('DOMNodeInserted DOMNodeRemoved', function () {
+        if ($(this).find('tbody tr td').first().attr('colspan')) {
+            $(this).parent().hide();
+        } else {
+            $(this).parent().show();
+        }
+    });
+
+    $('#recipe-table').on('DOMNodeInserted DOMNodeRemoved', function () {
+        if ($(this).find('tbody tr td').first().attr('colspan')) {
+            $(this).parent().hide();
+        } else {
+            $(this).parent().show();
+        }
+    });
+
+    // Remove bootstrap class from datatable filters for easier custom styling
     const tableFilters = document.querySelectorAll('.dataTables_filter label input');
     tableFilters.forEach(filter => {
         filter.classList.remove("form-control", "form-control-sm")
     });
 });
 
-
-/* $(window).on('resize', function (e) {
-    if (typeof resizeTimer !== 'undefined') {
-        clearTimeout(resizeTimer);
-    }
-    resizeTimer = setTimeout(function () {
-
-        const ingredTable = $('#ingred-table').DataTable();
-        const recipeTable = $('#recipe-table').DataTable();
-
-        const newLen = Math.round(window.innerHeight / 50);
-        ingredTable.page.len(newLen - 6).draw();
-        recipeTable.page.len(newLen).draw();
-
-    }, 250);    // Timer value for checking resize event start/stop
-}); */
 
 const toggles = document.querySelectorAll('[id^="toggle"]');
 const contents = document.querySelectorAll('[id^="content"]');
