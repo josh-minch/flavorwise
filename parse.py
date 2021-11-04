@@ -226,7 +226,8 @@ def clean_approved_ingreds():
 
 def main():
     clean_approved_ingreds()
-    write_recipe_data_filtered('recipe_data.json', 'recipe_data_filtered.json')
+    write_recipe_data_filtered(
+        'recipe_data_with_images.json', 'recipe_data_filtered.json')
     write_all_ingreds('recipe_data_filtered.json',
                       'static/all_ingreds_filtered.json')
     write_recipe_matrix()

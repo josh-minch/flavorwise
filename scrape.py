@@ -4,6 +4,8 @@ import os
 import requests
 from bs4 import BeautifulSoup, SoupStrainer
 
+import helper
+
 
 def get_soup_local(path, strainer):
     with open(path, encoding="utf8") as f:
@@ -127,8 +129,18 @@ def get_unfiltered_ingreds(html_path):
     return [ingredient_row.text for ingredient_row in ingredient_rows]
 
 
+def get_recipe_image(html_path):
+    soup = get_soup(html_path)
+    recipe_row = soup.find('meta', property='og:image', content=True)
+    return recipe_row.get('content')
+
+
 def main():
-    pass
+    recipes = helper.get_json('recipe_data.json')
+    for recipe in recipes:
+        image_url = get_recipe_image(recipe['url'])
+        recipe['image_url'] = image_url
+    helper.write_json(recipes, 'recipe_data_with_images.json', 'w+')
 
 
 if __name__ == "__main__":
