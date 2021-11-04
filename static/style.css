@@ -197,7 +197,8 @@ table.dataTable tbody td {
 }
 
 .recipe-image {
-  width: 7rem;
+  width: 112px;
+  height: 84px;
   border-radius: 4px;
 }
 
