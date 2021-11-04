@@ -4,7 +4,8 @@ $(document).ready(function () {
     const ingredTablePercent = 0.75;
     const ingredTableUsableHeight = ingredTablePercent * window.innerHeight;
     const numIngredTableRows = Math.round(ingredTableUsableHeight / 50);
-    const numRecipeTableRows = Math.round(ingredTableUsableHeight / 40);
+    //const numRecipeTableRows = Math.round(ingredTableUsableHeight / 400);
+    const numRecipeTableRows = 6;
 
     $('#ingred-table').DataTable({
         dom: "<if>t<lp>",
@@ -47,6 +48,8 @@ $(document).ready(function () {
     $('#recipe-table').DataTable({
         dom: "<if>t<lp>",
         autoWidth: false,
+        scrollY: "600px",
+        scrollCollapse: false,
         columns: [
             { width: '100%' }
         ],
@@ -78,9 +81,6 @@ $(document).ready(function () {
             paginate: {
                 previous: "Prev"
             }
-        },
-        fnDrawCallback: function () {
-            $("#recipe-table thead").remove();
         },
         initComplete: function () {
             hideTableIfEmpty($('#recipe-table'));
@@ -353,7 +353,8 @@ function createRecipesBody(recipes) {
     recipes.forEach(recipe => {
         const recipeName = recipe[0];
         const recipeLink = recipe[1];
-        const rowData = { "0": recipeName, "1": recipeLink };
+        const recipeImage = recipe[2];
+        const rowData = { "0": recipeName, "1": recipeLink, "2": recipeImage };
         tableData.push(rowData);
     });
 

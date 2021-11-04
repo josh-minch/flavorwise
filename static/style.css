@@ -9,7 +9,7 @@ body {
   }
 }
 
-body, table {
+body, table, h5 {
   color: #1d1d1f;
 }
 
@@ -157,6 +157,10 @@ div.dataTables_wrapper div.dataTables_info {
 
 div.dataTables_wrapper div.dataTables_filter input {
   margin-left: 0px;
+}
+
+#recipe-table_wrapper thead, .dataTables_scrollHeadInner {
+  display: none;
 }
 
 #ingred-table th:first-child+th, th:first-child+th+th, td:first-child+td, td:first-child+td+td {
