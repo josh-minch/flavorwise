@@ -196,6 +196,11 @@ table.dataTable tbody td {
   vertical-align: middle;
 }
 
+.recipe-image {
+  width: 7rem;
+  border-radius: 4px;
+}
+
 @media screen and (max-width: 420px) {
   li.paginate_button.previous {
     display: inline;

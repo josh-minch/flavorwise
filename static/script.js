@@ -56,15 +56,26 @@ $(document).ready(function () {
         columnDefs: [
             {
                 visible: false,
-                targets: [1],
+                targets: [1, 2],
                 searchable: false
             },
             { className: "pl-0", "targets": [0] },
             {
                 targets: 0,
                 render: function (data, type, row) {
-                    let link = '<a href="' + row[1] + '">' + row[0] + '</a>';
-                    return link;
+                    if (data) {
+                        let recipe_card = `
+                        <div class="media position-relative">
+                            <img src = "${row[2]}" class="mr-3 recipe-image">
+                                <div class="media-body">
+                                    <h6 class="mt-0">${row[0]}</h6>
+                                    <a href="${row[1]}" class="stretched-link">Go to recipe at Serious
+                                        Eats</a>
+                                </div>
+                        </div>
+                        `;
+                        return recipe_card;
+                    }
                 }
             }
         ],

@@ -101,23 +101,16 @@
                             <tr>
                                 <th class="border-0 pl-0" scope="col">recipe</th>
                                 <th class="border-0" scope="col"></th>
+                                <th class="border-0" scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
                             {%- if recipes -%}
                             {%- for recipe in recipes -%}
                             <tr>
-                                <td class="pl-0">
-                                    <div class="media position-relative">
-                                        <img src="" class="mr-3" style="width: 7rem;">
-                                        <div class="media-body">
-                                            <h6 class="mt-0">{{ recipe.0 }}</h6>
-                                            <a href="{{recipe.1}}" class="stretched-link">Go to recipe at Serious
-                                                Eats</a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="pl-0"></td>
+                                <td class="pl-0">{{ recipe.0 }} </td>
+                                <td class="pl-0">{{ recipe.1 }}</td>
+                                <td class="pl-0">{{ recipe.2 }}</td>
                             </tr>
                             {%- endfor -%}
                             {%- endif -%}
