@@ -48,8 +48,6 @@ $(document).ready(function () {
     $('#recipe-table').DataTable({
         dom: "<if>t<lp>",
         autoWidth: false,
-        scrollY: "600px",
-        scrollCollapse: false,
         columns: [
             { width: '100%' }
         ],
@@ -66,7 +64,7 @@ $(document).ready(function () {
                     if (data) {
                         let recipe_card = `
                         <div class="media position-relative">
-                            <img src = "${row[2]}" class="mr-3 recipe-image">
+                            <img src="" data-src="${row[2]}" class="mr-3 recipe-image">
                                 <div class="media-body">
                                     <h6 class="mt-0">${row[0]}</h6>
                                     <a href="${row[1]}" class="stretched-link">Go to recipe at Serious
@@ -92,6 +90,10 @@ $(document).ready(function () {
             paginate: {
                 previous: "Prev"
             }
+        },
+
+        drawCallback: function (settings) {
+            $("#recipe-table img:visible").unveil();
         },
         initComplete: function () {
             hideTableIfEmpty($('#recipe-table'));
