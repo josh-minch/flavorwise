@@ -61,8 +61,8 @@ h1 {
 }
 
 h2 {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 550;
 }
 
 h3 {
@@ -202,8 +202,9 @@ table.dataTable tbody td {
 }
 
 .recipe-title {
-  z-index: 2;
+  z-index: 1;
   position: relative;
+  cursor: pointer;
 }
 
 .recipe-image {
@@ -212,8 +213,21 @@ table.dataTable tbody td {
 }
 
 .recipe-link {
-  font-size: 14px;
+  font-size: 15px;
 }
+
+.bi-arrow-right-square {
+  z-index: 1;
+  position: relative;
+  color: #007bff;
+}
+
+.bi-arrow-right-square:hover {
+  /* color: rgb(0, 86, 179); */
+  color: red;
+}
+
+.recipe-link:hover {}
 
 @media screen and (max-width: 420px) {
   li.paginate_button.previous {

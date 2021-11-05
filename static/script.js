@@ -64,11 +64,13 @@ $(document).ready(function () {
                     if (data) {
                         const recipe_card = `
                         <div class="media position-relative">
-                            <img src="" data-src="${row[2]}" class="mr-3 recipe-image">
+                            <img src="" data-src="${row[2]}" class="mr-2 recipe-image">
                                 <div class="media-body">
-                                    <h6 class="recipe-title mt-0 mb-0">${row[0]}</h6>
-                                    <a href="${row[1]}" class="stretched-link recipe-link">Recipe at Serious
-                                        Eats</a>
+                                    <h6 class="recipe-title mt-0 mb-0"><span class="p-1">${row[0]}</span></h6>
+                                    <i class="bi bi-arrow-right-square text-primary ml-1"></i>
+                                    <a href="${row[1]}" class="stretched-link recipe-link text-primary">
+                                        Recipe at Serious Eats
+                                    </a>
                                 </div>
                         </div>
                         `;
@@ -109,11 +111,22 @@ $(document).ready(function () {
     // Underline recipe-title when hovering over recipe-link
     $(".recipe-link").hover(
         function () {
-            $(this).siblings(".recipe-title").css('text-decoration', 'underline');
+            // $(this).siblings(".recipe-title").css('text-decoration', 'underline');
+            $(this).siblings(".recipe-title").children().css('background', 'yellow');
+            $(this).siblings(".bi-arrow-right-square").css('color', 'yellow');
+
         }, function () {
-            $(this).siblings(".recipe-title").css('text-decoration', 'none');
+            $(this).siblings(".recipe-title").children().css('background', 'none');
         }
     );
+
+    // $(".recipe-title").hover(
+    //     function () {
+    //         $(this).css('text-decoration', 'underline');
+    //     }, function () {
+    //         $(this).css('text-decoration', 'none');
+    //     }
+    // );
 
 });
 
