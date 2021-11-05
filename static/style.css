@@ -196,10 +196,23 @@ table.dataTable tbody td {
   vertical-align: middle;
 }
 
+#recipe-table td {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.recipe-title {
+  z-index: 2;
+  position: relative;
+}
+
 .recipe-image {
-  width: 112px;
-  height: 84px;
+  width: 120px;
   border-radius: 4px;
+}
+
+.recipe-link {
+  font-size: 14px;
 }
 
 @media screen and (max-width: 420px) {

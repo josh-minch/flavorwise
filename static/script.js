@@ -62,12 +62,12 @@ $(document).ready(function () {
                 targets: 0,
                 render: function (data, type, row) {
                     if (data) {
-                        let recipe_card = `
+                        const recipe_card = `
                         <div class="media position-relative">
                             <img src="" data-src="${row[2]}" class="mr-3 recipe-image">
                                 <div class="media-body">
-                                    <h6 class="mt-0">${row[0]}</h6>
-                                    <a href="${row[1]}" class="stretched-link">Go to recipe at Serious
+                                    <h6 class="recipe-title mt-0 mb-0">${row[0]}</h6>
+                                    <a href="${row[1]}" class="stretched-link recipe-link">Recipe at Serious
                                         Eats</a>
                                 </div>
                         </div>
@@ -105,7 +105,18 @@ $(document).ready(function () {
     tableFilters.forEach(filter => {
         filter.classList.remove("form-control", "form-control-sm")
     });
+
+    // Underline recipe-title when hovering over recipe-link
+    $(".recipe-link").hover(
+        function () {
+            $(this).siblings(".recipe-title").css('text-decoration', 'underline');
+        }, function () {
+            $(this).siblings(".recipe-title").css('text-decoration', 'none');
+        }
+    );
+
 });
+
 
 function hideTableIfEmpty(table) {
     if (table.find('tbody tr td').first().hasClass('dataTables_empty')) {
@@ -316,7 +327,7 @@ function appendRecipesTitleIntro(titleSpan, recipes, curIngreds) {
         introSpan.innerText = `${recipes.length} recipe `;
         titleSpan.insertBefore(withSpan, introSpan.nextSibling);
     } else if (curIngreds.length > 0 && recipes.length != 1) {
-        introSpan.innerText = `${recipes.length} recipes `;
+        introSpan.innerText = `${recipes.length} recipes`;
         titleSpan.insertBefore(withSpan, introSpan.nextSibling);
     }
 }
