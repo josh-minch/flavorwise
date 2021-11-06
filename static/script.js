@@ -5,7 +5,7 @@ $(document).ready(function () {
     const ingredTableUsableHeight = ingredTablePercent * window.innerHeight;
     const numIngredTableRows = Math.round(ingredTableUsableHeight / 50);
     //const numRecipeTableRows = Math.round(ingredTableUsableHeight / 400);
-    const numRecipeTableRows = 6;
+    const numRecipeTableRows = 5;
 
 
     $('#ingred-table').DataTable({
@@ -111,10 +111,6 @@ $(document).ready(function () {
 
         drawCallback: function (settings) {
             $("#recipe-table img:visible").unveil();
-        },
-        initComplete: function () {
-            hideTableIfEmpty($('#recipe-table'));
-
             // Change recipe card style on hover
             $(".recipe-link").hover(
                 function () {
@@ -133,6 +129,9 @@ $(document).ready(function () {
                     $(this).parent().parent().parent().toggleClass('drop-shadow');
                 }
             );
+        },
+        initComplete: function () {
+            hideTableIfEmpty($('#recipe-table'));
         }
     });
 
