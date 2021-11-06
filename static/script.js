@@ -113,7 +113,7 @@ $(document).ready(function () {
     // Change recipe card style on hover
     $(".recipe-link").hover(
         function () {
-            const hoverBorderColor = 'rgb(29, 29, 31)';
+            const hoverBorderColor = 'rgb(77, 77, 77)';
             $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'underline');
             $(this).siblings(".link-icon").css('color', 'rgb(0, 86, 179)');
             $(this).parent().parent().siblings(".recipe-image").css('border-color', hoverBorderColor);
@@ -129,13 +129,9 @@ $(document).ready(function () {
         }
     );
 
-    // $(".recipe-title").hover(
-    //     function () {
-    //         $(this).css('text-decoration', 'underline');
-    //     }, function () {
-    //         $(this).css('text-decoration', 'none');
-    //     }
-    // );
+    $(".recipe-link").click(function () {
+        $(this).parent().parent().parent().toggleClass('drop-shadow');
+    });
 
 });
 

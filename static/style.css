@@ -214,13 +214,11 @@ table.dataTable tbody td {
   position: absolute;
   height: 90px;
   width: 100%;
-  top: 5px;
-  left: 6px;
+  top: 7px;
+  left: 8px;
   z-index: -1;
-  background-color: yellow;
-  border: 1px solid rgba(31, 31, 29, 0.267);
-  border-top: none;
-  border-left: none;
+  background-color: orange;
+  /* border: 1px solid rgba(0, 0, 0, 0.288) */
 }
 
 .media-body {
