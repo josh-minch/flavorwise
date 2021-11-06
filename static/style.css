@@ -206,13 +206,13 @@ table.dataTable tbody td {
   border-top: none;
   border-left: none;
   background-color: #FFFFFF;
-  height: 90px;
+  height: 100px;
 }
 
 .media.drop-shadow:after {
   content: "";
   position: absolute;
-  height: 90px;
+  height: 100px;
   width: 100%;
   top: 7px;
   left: 8px;
@@ -234,8 +234,8 @@ table.dataTable tbody td {
 
 .recipe-image {
   border-bottom: 1px solid #dee2e6;
-  width: 120px;
-  height: 90px;
+  width: auto;
+  height: 100px;
 }
 
 .recipe-link-row {
