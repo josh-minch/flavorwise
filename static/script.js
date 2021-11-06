@@ -130,7 +130,7 @@ $(document).ready(function () {
     );
 
     $(".recipe-link").click(function () {
-        $(this).parent().parent().parent().toggleClass('drop-shadow');
+        // $(this).parent().parent().parent().toggleClass('drop-shadow');
     });
 
 });
