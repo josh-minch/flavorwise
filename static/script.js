@@ -59,6 +59,7 @@ $(document).ready(function () {
             url: "/init_recipe_data",
             dataType: "json",
             dataSrc: "",
+            cache: false
         },
         autoWidth: false,
         columns: [
@@ -108,32 +109,37 @@ $(document).ready(function () {
                 previous: "Prev"
             }
         },
-
+        rowCallback: function (row, data) {
+            setRecipeHover()
+        },
         drawCallback: function (settings) {
             $("#recipe-table img:visible").unveil();
-            // Change recipe card style on hover
-            $(".recipe-link").hover(
-                function () {
-                    const hoverBorderColor = 'rgb(77, 77, 77)';
-                    $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'underline');
-                    $(this).siblings(".link-icon").css('color', 'rgb(0, 86, 179)');
-                    $(this).parent().parent().siblings(".recipe-image").css('border-color', hoverBorderColor);
-                    $(this).parent().parent().parent().css('border-color', hoverBorderColor);
-                    $(this).parent().parent().parent().toggleClass('drop-shadow');
-                }, function () {
-                    const borderColor = '#dee2e6';
-                    $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'none');
-                    $(this).siblings(".link-icon").css('color', '#007bff');
-                    $(this).parent().parent().siblings(".recipe-image").css('border-color', borderColor);
-                    $(this).parent().parent().parent().css('border-color', borderColor);
-                    $(this).parent().parent().parent().toggleClass('drop-shadow');
-                }
-            );
+            setRecipeHover()
         },
         initComplete: function () {
             hideTableIfEmpty($('#recipe-table'));
         }
     });
+
+    function setRecipeHover() {
+        $(".recipe-link").hover(
+            function () {
+                const hoverBorderColor = 'rgb(77, 77, 77)';
+                $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'underline');
+                $(this).siblings(".link-icon").css('color', 'rgb(0, 86, 179)');
+                $(this).parent().parent().siblings(".recipe-image").css('border-color', hoverBorderColor);
+                $(this).parent().parent().parent().css('border-color', hoverBorderColor);
+                $(this).parent().parent().parent().toggleClass('drop-shadow');
+            }, function () {
+                const borderColor = '#dee2e6';
+                $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'none');
+                $(this).siblings(".link-icon").css('color', '#007bff');
+                $(this).parent().parent().siblings(".recipe-image").css('border-color', borderColor);
+                $(this).parent().parent().parent().css('border-color', borderColor);
+                $(this).parent().parent().parent().toggleClass('drop-shadow');
+            }
+        );
+    }
 
     // Remove bootstrap class from datatable filters for easier custom styling
     const tableFilters = document.querySelectorAll('.dataTables_filter label input');
