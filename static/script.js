@@ -114,12 +114,15 @@ $(document).ready(function () {
     $(".recipe-link").hover(
         function () {
             $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'underline');
+
             $(this).siblings(".link-icon").css('color', 'rgb(0, 86, 179)');
-            $(this).parent().parent().css('border-color', '#7f82858f');
+            $(this).parent().parent().parent().css('border-color', '#7f82858f');
+            $(this).parent().parent().parent().toggleClass('drop-shadow');
         }, function () {
             $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'none');
             $(this).siblings(".link-icon").css('color', '#007bff');
-            $(this).parent().parent().css('border-color', '#dee2e6');
+            $(this).parent().parent().parent().css('border-color', '#dee2e6');
+            $(this).parent().parent().parent().toggleClass('drop-shadow');
         }
     );
 
