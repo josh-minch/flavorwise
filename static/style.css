@@ -197,20 +197,35 @@ table.dataTable tbody td {
 }
 
 #recipe-table td {
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.media {
+  width: fit-content;
+}
+
+.media-body {
+  border: 1px solid #dee2e6;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  border-width: fit-content;
+  box-shadow: yellow;
+  padding: 9px 15px 9px 9px;
+  height: 90px;
 }
 
 .recipe-title {
   z-index: 1;
   position: relative;
   cursor: pointer;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .recipe-image {
   width: 120px;
-  border-radius: 4px;
+  height: 90px;
+  border-radius: 4px 0 0 4px;
 }
 
 .recipe-link-row {
@@ -228,6 +243,10 @@ table.dataTable tbody td {
 
 .recipe-link {
   font-size: 15px;
+}
+
+.recipe-link:hover {
+  text-decoration: none;
 }
 
 @media screen and (max-width: 420px) {

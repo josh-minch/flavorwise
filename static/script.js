@@ -64,11 +64,11 @@ $(document).ready(function () {
                     if (data) {
                         const recipe_card = `
                         <div class="media position-relative">
-                            <img src="" data-src="${row[2]}" class="mr-2 recipe-image">
+                            <img src="" data-src="${row[2]}" class="recipe-image">
                             <div class="media-body">
-                                <h6 class="recipe-title mt-0"><span class="p-1">${row[0]}</span></h6>
+                                <h6 class="recipe-title"><span class="">${row[0]}</span></h6>
                                 <span class="recipe-link-row">
-                                    <i class="link-icon bi bi-arrow-up-right-square ml-1"></i>
+                                    <i class="link-icon bi bi-arrow-up-right-square"></i>
                                     <a href="${row[1]}" class="stretched-link recipe-link text-primary">
                                         Recipe at Serious Eats
                                     </a>
@@ -113,14 +113,13 @@ $(document).ready(function () {
     // Underline recipe-title when hovering over recipe-link
     $(".recipe-link").hover(
         function () {
-            $(this).parent().siblings(".recipe-title").children().css('background', 'yellow');
-            //$(this).siblings(".link-icon").css('color', 'rgb(0, 86, 179)');
-            $(this).siblings(".link-icon").css('color', '#1d1d1f');
-            $(this).siblings(".link-icon").css('background', 'yellow');
+            $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'underline');
+            $(this).siblings(".link-icon").css('color', 'rgb(0, 86, 179)');
+            $(this).parent().parent().css('border-color', '#7f82858f');
         }, function () {
-            $(this).parent().siblings(".recipe-title").children().css('background', 'none');
+            $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'none');
             $(this).siblings(".link-icon").css('color', '#007bff');
-            $(this).siblings(".link-icon").css('background', 'none');
+            $(this).parent().parent().css('border-color', '#dee2e6');
         }
     );
 
