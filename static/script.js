@@ -7,8 +7,15 @@ $(document).ready(function () {
     //const numRecipeTableRows = Math.round(ingredTableUsableHeight / 400);
     const numRecipeTableRows = 6;
 
+
     $('#ingred-table').DataTable({
         dom: "<if>t<lp>",
+        deferRender: true,
+        ajax: {
+            url: "/init_r_ingred_data",
+            dataType: "json",
+            dataSrc: "",
+        },
         autoWidth: false,
         columnDefs: [
             { width: '19%', targets: 2 },
@@ -47,6 +54,12 @@ $(document).ready(function () {
 
     $('#recipe-table').DataTable({
         dom: "<if>t<lp>",
+        deferRender: true,
+        ajax: {
+            url: "/init_recipe_data",
+            dataType: "json",
+            dataSrc: "",
+        },
         autoWidth: false,
         columns: [
             { width: '100%' }
@@ -101,6 +114,25 @@ $(document).ready(function () {
         },
         initComplete: function () {
             hideTableIfEmpty($('#recipe-table'));
+
+            // Change recipe card style on hover
+            $(".recipe-link").hover(
+                function () {
+                    const hoverBorderColor = 'rgb(77, 77, 77)';
+                    $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'underline');
+                    $(this).siblings(".link-icon").css('color', 'rgb(0, 86, 179)');
+                    $(this).parent().parent().siblings(".recipe-image").css('border-color', hoverBorderColor);
+                    $(this).parent().parent().parent().css('border-color', hoverBorderColor);
+                    $(this).parent().parent().parent().toggleClass('drop-shadow');
+                }, function () {
+                    const borderColor = '#dee2e6';
+                    $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'none');
+                    $(this).siblings(".link-icon").css('color', '#007bff');
+                    $(this).parent().parent().siblings(".recipe-image").css('border-color', borderColor);
+                    $(this).parent().parent().parent().css('border-color', borderColor);
+                    $(this).parent().parent().parent().toggleClass('drop-shadow');
+                }
+            );
         }
     });
 
@@ -108,29 +140,6 @@ $(document).ready(function () {
     const tableFilters = document.querySelectorAll('.dataTables_filter label input');
     tableFilters.forEach(filter => {
         filter.classList.remove("form-control", "form-control-sm")
-    });
-
-    // Change recipe card style on hover
-    $(".recipe-link").hover(
-        function () {
-            const hoverBorderColor = 'rgb(77, 77, 77)';
-            $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'underline');
-            $(this).siblings(".link-icon").css('color', 'rgb(0, 86, 179)');
-            $(this).parent().parent().siblings(".recipe-image").css('border-color', hoverBorderColor);
-            $(this).parent().parent().parent().css('border-color', hoverBorderColor);
-            $(this).parent().parent().parent().toggleClass('drop-shadow');
-        }, function () {
-            const borderColor = '#dee2e6';
-            $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'none');
-            $(this).siblings(".link-icon").css('color', '#007bff');
-            $(this).parent().parent().siblings(".recipe-image").css('border-color', borderColor);
-            $(this).parent().parent().parent().css('border-color', borderColor);
-            $(this).parent().parent().parent().toggleClass('drop-shadow');
-        }
-    );
-
-    $(".recipe-link").click(function () {
-        // $(this).parent().parent().parent().toggleClass('drop-shadow');
     });
 
 });

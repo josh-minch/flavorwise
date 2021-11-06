@@ -74,20 +74,6 @@
                                 <th class="border-0" scope="col"></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {%- if r_ingreds -%}
-                            {%- for r_ingred in r_ingreds -%}
-                            <tr>
-                                <td class="pl-0">{{ r_ingred.0 }}</td>
-                                <td>{{ r_ingred.1 }}</td>
-                                <td>{{ r_ingred.2 }}</td>
-                                <td class="text-right pr-0"><button type="button"
-                                        class="r-ingred-btn btn btn-outline-primary btn-sm" name="r_ingred"
-                                        value="{{r_ingred.0}}">Add</button></td>
-                            </tr>
-                            {%- endfor -%}
-                            {%- endif -%}
-                        </tbody>
                     </table>
                 </div>
 
@@ -105,17 +91,6 @@
                                 <th class="border-0" scope="col"></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {%- if recipes -%}
-                            {%- for recipe in recipes -%}
-                            <tr>
-                                <td class="pl-0">{{ recipe.0 }}</td>
-                                <td class="pl-0">{{ recipe.1 }}</td>
-                                <td class="pl-0">{{ recipe.2 }}</td>
-                            </tr>
-                            {%- endfor -%}
-                            {%- endif -%}
-                        </tbody>
                     </table>
                 </div>
 

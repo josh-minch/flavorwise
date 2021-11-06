@@ -15,12 +15,9 @@ ALL_INGREDS = [ingred.lower()
 
 
 # TODO:
-#       Try render_template instead of js stuff? Just use js for fetch?
-# Or even move that straight to html with method="POST" action="/search"?
 #     - Get seperate JQuery source seperate from datatables bundle.
 #       load JQuery first, then typeahead, then datatables
 #       for faster load time.
-#     - allow multiple inputs
 #       Emojis, anyone?
 
 
@@ -30,15 +27,26 @@ def index():
     remove_invalid_session_ingreds()
     cur_ingreds = get_session_var('cur_ingreds')
 
-    r_ingreds, recipes = matrix.get_recommended(cur_ingreds)
-
     random_ingred = random.choice(ALL_INGREDS)
     pattern = create_search_pattern()
 
     return render_template('index.html', version_str=VERSION_STR,
                            random_ingred=random_ingred, pattern=pattern,
-                           r_ingreds=r_ingreds, recipes=recipes,
                            cur_ingreds=cur_ingreds)
+
+
+@ app.route("/init_r_ingred_data")
+def init_r_ingred_data():
+    cur_ingreds = get_session_var('cur_ingreds')
+    r_ingreds = matrix.get_r_ingreds(cur_ingreds)
+    return jsonify(r_ingreds)
+
+
+@ app.route("/init_recipe_data")
+def init_recipe_data():
+    cur_ingreds = get_session_var('cur_ingreds')
+    recipes = matrix.get_recipes(cur_ingreds)
+    return jsonify(recipes)
 
 
 @ app.route("/search", methods=["POST"])

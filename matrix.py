@@ -24,13 +24,33 @@ def get_recommended(input_ingreds):
         input_ingreds = [input_ingreds]
 
     match_recipe_ixs = get_match_recipe_ixs(input_ingreds)
-    ranked_ingreds = get_ranked_ingreds(input_ingreds, match_recipe_ixs)
+    ranked_ingreds = calculate_ranked_ingreds(input_ingreds, match_recipe_ixs)
     match_recipes = get_match_recipes(match_recipe_ixs)
 
     return ranked_ingreds, match_recipes
 
 
-def get_ranked_ingreds(input_ingreds, match_recipe_ixs):
+def get_recipes(input_ingreds):
+    if isinstance(input_ingreds, str):
+        input_ingreds = [input_ingreds]
+
+    match_recipe_ixs = get_match_recipe_ixs(input_ingreds)
+    match_recipes = get_match_recipes(match_recipe_ixs)
+
+    return match_recipes
+
+
+def get_r_ingreds(input_ingreds):
+    if isinstance(input_ingreds, str):
+        input_ingreds = [input_ingreds]
+
+    match_recipe_ixs = get_match_recipe_ixs(input_ingreds)
+    ranked_ingreds = calculate_ranked_ingreds(input_ingreds, match_recipe_ixs)
+
+    return ranked_ingreds
+
+
+def calculate_ranked_ingreds(input_ingreds, match_recipe_ixs):
     """Return ranked ingreds that occur most with input_ingreds."""
     if not input_ingreds:
         return
