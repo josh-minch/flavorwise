@@ -197,8 +197,7 @@ table.dataTable tbody td {
 }
 
 #recipe-table td {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .media {
@@ -215,10 +214,13 @@ table.dataTable tbody td {
   position: absolute;
   height: 90px;
   width: 100%;
-  top: 3px;
-  left: 5px;
+  top: 5px;
+  left: 6px;
   z-index: -1;
-  background-color: #FFF200;
+  background-color: yellow;
+  border: 1px solid rgba(31, 31, 29, 0.267);
+  border-top: none;
+  border-left: none;
 }
 
 .media-body {
@@ -233,9 +235,9 @@ table.dataTable tbody td {
 }
 
 .recipe-image {
+  border-bottom: 1px solid #dee2e6;
   width: 120px;
   height: 90px;
-  /* border-radius: 4px 0 0 4px; */
 }
 
 .recipe-link-row {

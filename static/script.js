@@ -110,18 +110,21 @@ $(document).ready(function () {
         filter.classList.remove("form-control", "form-control-sm")
     });
 
-    // Underline recipe-title when hovering over recipe-link
+    // Change recipe card style on hover
     $(".recipe-link").hover(
         function () {
+            const hoverBorderColor = 'rgb(29, 29, 31)';
             $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'underline');
-
             $(this).siblings(".link-icon").css('color', 'rgb(0, 86, 179)');
-            $(this).parent().parent().parent().css('border-color', '#7f82858f');
+            $(this).parent().parent().siblings(".recipe-image").css('border-color', hoverBorderColor);
+            $(this).parent().parent().parent().css('border-color', hoverBorderColor);
             $(this).parent().parent().parent().toggleClass('drop-shadow');
         }, function () {
+            const borderColor = '#dee2e6';
             $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'none');
             $(this).siblings(".link-icon").css('color', '#007bff');
-            $(this).parent().parent().parent().css('border-color', '#dee2e6');
+            $(this).parent().parent().siblings(".recipe-image").css('border-color', borderColor);
+            $(this).parent().parent().parent().css('border-color', borderColor);
             $(this).parent().parent().parent().toggleClass('drop-shadow');
         }
     );
