@@ -37,7 +37,7 @@ def save_all_recipe_urls():
 def save_recipe_data():
     urls = get_json('urls/saveur_urls.json')
     recipe_data = []
-    for url in urls[8725:]:
+    for url in urls:
         try:
             r = requests.get(url)
         except requests.exceptions.TooManyRedirects:
@@ -72,7 +72,7 @@ def save_recipe_data():
                   'source': 'Saveur'}
         recipe_data.append(recipe)
 
-    write_json(recipe_data, 'saveur_end.json', 'w+')
+    write_json(recipe_data, 'saveur.json', 'w+')
 
 
 def get_ingreds(soup):
@@ -96,9 +96,9 @@ def get_property(soup, property_name):
 
 
 def main():
-
     # save_all_recipe_urls()
-    save_recipe_data()
+    # save_recipe_data()
+    pass
 
 
 if __name__ == "__main__":
