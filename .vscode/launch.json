@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Scrapers/nyt",
+            "type": "python",
+            "request": "launch",
+            "module": "scrapers.nyt"
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
@@ -24,7 +30,7 @@
             "args": [
                 "run",
                 "--no-debugger",
-                "--host=0.0.0.0"
+                "--host=0.0.0.0",
             ],
             "jinja": true
         }
