@@ -84,7 +84,7 @@ $(document).ready(function () {
                                 <span class="recipe-link-row">
                                     <i class="link-icon bi bi-arrow-up-right-square"></i>
                                     <a href="${row[1]}" class="stretched-link recipe-link text-primary">
-                                        Recipe at Serious Eats
+                                        Recipe at ${row[3]}
                                     </a>
                                 </span>
                             </div>
@@ -410,7 +410,8 @@ function createRecipesBody(recipes) {
         const recipeName = recipe[0];
         const recipeLink = recipe[1];
         const recipeImage = recipe[2];
-        const rowData = { "0": recipeName, "1": recipeLink, "2": recipeImage };
+        const recipeSource = recipe[3];
+        const rowData = { '0': recipeName, '1': recipeLink, '2': recipeImage, '3': recipeSource };
         tableData.push(rowData);
     });
 

@@ -15,7 +15,7 @@ INGRED_TO_IX = {k: i for i, k in enumerate(ALL_INGREDS)}
 IX_TO_INGRED = {i: k for i, k in enumerate(ALL_INGREDS)}
 
 RECIPE_DATA = get_json('recipe_data_filtered.json')
-IX_TO_RECIPE = {i: (r['title'], r['url'], r['image_url'])
+IX_TO_RECIPE = {i: (r['title'], r['url'], r['image_url'], r['source'])
                 for i, r in enumerate(RECIPE_DATA)}
 
 
