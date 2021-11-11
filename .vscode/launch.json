@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: scrapers.saveur",
+            "type": "python",
+            "request": "launch",
+            "module": "scrapers.saveur"
+        },
+        {
             "name": "Python: Scrapers/nyt",
             "type": "python",
             "request": "launch",

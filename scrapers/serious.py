@@ -8,8 +8,6 @@ import os
 import requests
 from bs4 import BeautifulSoup, SoupStrainer
 
-import helper
-
 
 def get_soup_local(path, strainer):
     with open(path, encoding="utf8") as f:

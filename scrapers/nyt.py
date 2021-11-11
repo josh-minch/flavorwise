@@ -62,7 +62,8 @@ def save_recipe_data():
         image_url = get_property(soup, 'og:image')
 
         recipe = {'title': title, 'url': url,
-                  'image_url': image_url, 'ingreds': ingreds, 'source': 'nyt'}
+                  'image_url': image_url, 'ingreds': ingreds,
+                  'source': 'NYT Cooking'}
         recipe_data.append(recipe)
 
     write_json(recipe_data, 'data/nyt.json', 'w+')
@@ -89,14 +90,8 @@ def main():
     # save_all_collections_recipe_urls()
     # save_all_recipe_urls()
     # save_recipe_data()
-    nyt = get_json('data/nyt.json')
-    se = get_json('data/se.json')
-    for element in se:
-        element['source'] = 'Serious Eats'
-    for element in nyt:
-        element['source'] = 'NYT Cooking'
-    data = nyt + se
-    write_json(data, 'recipe_data.json', 'w+')
+
+    pass
 
 
 if __name__ == "__main__":
