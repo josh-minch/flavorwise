@@ -53,7 +53,7 @@ def get_r_ingreds(input_ingreds):
 def calculate_ranked_ingreds(input_ingreds, match_recipe_ixs):
     """Return ranked ingreds that occur most with input_ingreds."""
     if not input_ingreds:
-        return
+        return []
 
     input_ixs = [INGRED_TO_IX[ingred] for ingred in input_ingreds]
     match_recipes_m = RECIPE_MATRIX[:, match_recipe_ixs.flatten()]
