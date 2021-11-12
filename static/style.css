@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitter&display=swap');
 @import url('https://rsms.me/inter/inter.css');
 body {
   font-family: 'Inter', sans-serif;
@@ -57,7 +58,8 @@ body, table, h6 {
 }
 
 h1 {
-  font-size: 1.375rem;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 h2 {
@@ -78,9 +80,7 @@ h3 {
   font-weight: 700;
 }
 
-.italic {
-  font-style: italic
-}
+.orange-text {}
 
 @media screen and (min-width: 992px) {
   #my-ingred-col {
@@ -203,18 +203,16 @@ table.dataTable tbody td {
 .media {
   width: fit-content;
   border: 1px solid #dee2e6;
-  border-top: none;
-  border-left: none;
   background-color: #FFFFFF;
-  height: 100px;
+  height: 131px;
 }
 
 .media.drop-shadow:after {
   content: "";
   position: absolute;
-  height: 100px;
+  height: 100%;
   width: 100%;
-  top: 7px;
+  top: 8px;
   left: 8px;
   z-index: -1;
   background-color: orange;
@@ -222,7 +220,7 @@ table.dataTable tbody td {
 }
 
 .media-body {
-  padding: 0px 15px 9px 9px;
+  padding: 7px 15px 9px 7px;
 }
 
 .recipe-title {
@@ -233,9 +231,10 @@ table.dataTable tbody td {
 }
 
 .recipe-image {
+  object-fit: cover;
   border-bottom: 1px solid #dee2e6;
-  width: auto;
-  height: 100px;
+  width: 130px;
+  height: 130px;
 }
 
 .recipe-link-row {

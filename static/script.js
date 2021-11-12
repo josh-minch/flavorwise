@@ -4,8 +4,7 @@ $(document).ready(function () {
     const ingredTablePercent = 0.75;
     const ingredTableUsableHeight = ingredTablePercent * window.innerHeight;
     const numIngredTableRows = Math.round(ingredTableUsableHeight / 50);
-    //const numRecipeTableRows = Math.round(ingredTableUsableHeight / 400);
-    const numRecipeTableRows = 5;
+    const numRecipeTableRows = 4;
 
 
     $('#ingred-table').DataTable({
@@ -149,6 +148,27 @@ $(document).ready(function () {
 
 });
 
+let checkboxes = document.querySelectorAll("input[type='checkbox']");
+setRemoveButtonState()
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', setRemoveButtonState)
+});
+
+function setRemoveButtonState() {
+    let checkboxes = document.querySelectorAll("input[type='checkbox']");
+    let numChecked = 0;
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            numChecked++;
+        }
+    });
+    if (numChecked == 0) {
+        document.getElementById('remove-button').disabled = true;
+    }
+    else {
+        document.getElementById('remove-button').disabled = false;
+    }
+}
 
 function hideTableIfEmpty(table) {
     if (table.find('tbody tr td').first().hasClass('dataTables_empty')) {

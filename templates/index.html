@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>foodwise</title>
+    <title>FlavorYeti</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
@@ -28,7 +28,8 @@
 
 <body>
     <div class="container-fluid pt-3 pb-3 pt-xl-4 pl-xl-4 pr-xl-4">
-        <h1 class="mb-3">foodwise</h1>
+        <h1 class="mb-3"><span class="orange-text">FlavorYeti</span>
+        </h1>
         <div class="row m-0">
             <div class="col-lg mb-4 mb-lg-0" id="my-ingred-col">
                 <h2>Your Ingredients</h2>
@@ -47,7 +48,11 @@
                             <label for="{{cur_ingred}}">{{- cur_ingred -}}</label>
                         </div>
                         {%- endfor -%}
-                        <input type="submit" class="btn btn-outline-danger mt-1" value="Remove" id="remove-button">
+                        <div class="d-flex justify-content-between">
+                            <div id="selected-ingred-text"></div>
+                            <input type=" submit" class="float-right btn btn-danger mt-1" value="Remove"
+                                id="remove-button">
+                        </div>
 
                         {%- endif -%}
                     </form>
