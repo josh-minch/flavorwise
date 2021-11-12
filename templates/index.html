@@ -41,20 +41,22 @@
                         </div>
                     </form>
                     <form class="" id="cur-ingreds">
-                        {%- if cur_ingreds -%}
-                        {%- for cur_ingred in cur_ingreds -%}
-                        <div class='cur-ingred'>
-                            <input type="checkbox" autocomplete="off" id="{{cur_ingred}}" name="{{cur_ingred}}">
-                            <label for="{{cur_ingred}}">{{- cur_ingred -}}</label>
-                        </div>
-                        {%- endfor -%}
-                        <div class="d-flex justify-content-between">
-                            <div id="selected-ingred-text"></div>
-                            <input type=" submit" class="float-right btn btn-danger mt-1" value="Remove"
-                                id="remove-button">
-                        </div>
+                        <div id="cur-ingreds-list">
+                            {%- if cur_ingreds -%}
+                            {%- for cur_ingred in cur_ingreds -%}
 
-                        {%- endif -%}
+                            <div class='cur-ingred'>
+                                <input type="checkbox" autocomplete="off" id="{{cur_ingred}}" name="{{cur_ingred}}">
+                                <label for="{{cur_ingred}}">{{- cur_ingred -}}</label>
+                            </div>
+
+                            {%- endfor -%}
+                            {%- endif -%}
+                        </div>
+                        <div class="text-right mt-2 text-muted" id="selected-ingred-text">0 selected</div>
+                        <div class="d-flex justify-content-end mt-1">
+                            <input type="submit" class="btn btn-danger" value="Remove" id="remove-button" disabled>
+                        </div>
                     </form>
                 </div>
 

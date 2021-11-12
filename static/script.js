@@ -162,11 +162,20 @@ function setRemoveButtonState() {
             numChecked++;
         }
     });
-    if (numChecked == 0) {
-        document.getElementById('remove-button').disabled = true;
-    }
-    else {
-        document.getElementById('remove-button').disabled = false;
+
+    let selectedIngredText = document.getElementById('selected-ingred-text');
+    selectedIngredText.textContent = numChecked + " selected"
+
+    let removeBtn = document.getElementById('remove-button');
+    if (removeBtn) {
+        if (numChecked == 0) {
+            selectedIngredText.classList.add('text-secondary');
+            removeBtn.disabled = true;
+        }
+        else {
+            selectedIngredText.classList.remove('text-secondary');
+            removeBtn.disabled = false;
+        }
     }
 }
 
@@ -257,20 +266,26 @@ function parseJSON(response) {
 }
 
 function updateDisplay(jsonData) {
-    removeAllChild(document.getElementById('cur-ingreds'));
+    removeCurIngreds();
     createCurIngreds(jsonData.cur_ingreds);
     createRelatedIngreds(jsonData.r_ingreds);
     createRecipes(jsonData.recipes, jsonData.cur_ingreds);
+    let checkboxes = document.querySelectorAll("input[type='checkbox']");
+    setRemoveButtonState()
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', setRemoveButtonState)
+    });
 }
 
-function removeAllChild(node) {
-    while (node.firstChild) {
-        node.removeChild(node.firstChild);
+function removeCurIngreds() {
+    curIngreds = document.querySelectorAll('.cur-ingred');
+    for (const curIngred of curIngreds) {
+        curIngred.remove()
     }
 }
 
 function createCurIngreds(curIngreds) {
-    const curIngredsForm = document.querySelector('#cur-ingreds');
+    const curIngredsForm = document.querySelector('#cur-ingreds-list');
 
     curIngreds.forEach(ingred => {
         const ingredDiv = document.createElement('div');
@@ -281,11 +296,6 @@ function createCurIngreds(curIngreds) {
         ingredDiv.appendChild(label);
         label.prepend(box);
     });
-    if (curIngreds.length > 0) {
-
-        const btn = createRemoveBtn();
-        curIngredsForm.appendChild(btn);
-    }
 }
 
 function createInput(ingred) {
@@ -302,15 +312,6 @@ function createLabel(element) {
     label.setAttribute('for', element);
     label.innerText = ` ${element}`;
     return label;
-}
-
-function createRemoveBtn() {
-    const btn = document.createElement('input');
-    btn.setAttribute('type', 'submit');
-    btn.setAttribute('value', 'Remove');
-    btn.setAttribute('id', 'remove-button');
-    btn.setAttribute('class', 'btn btn-outline-danger mt-1');
-    return btn;
 }
 
 function createRelatedIngreds(rankedIngreds) {

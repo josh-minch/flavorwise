@@ -92,8 +92,9 @@ h3 {
   line-height: 20px;
 }
 
-.cur-ingred {
-  margin-right: 4px;
+.cur-ingred>input, .cur-ingred>label {
+  margin-top: 5px;
+  cursor: pointer;
 }
 
 label {
