@@ -270,6 +270,7 @@ function updateDisplay(jsonData) {
     createCurIngreds(jsonData.cur_ingreds);
     createRelatedIngreds(jsonData.r_ingreds);
     createRecipes(jsonData.recipes, jsonData.cur_ingreds);
+
     let checkboxes = document.querySelectorAll("input[type='checkbox']");
     setRemoveButtonState()
     checkboxes.forEach(checkbox => {
@@ -293,8 +294,8 @@ function createCurIngreds(curIngreds) {
         const box = createInput(ingred);
         const label = createLabel(ingred);
         curIngredsForm.appendChild(ingredDiv);
+        ingredDiv.appendChild(box);
         ingredDiv.appendChild(label);
-        label.prepend(box);
     });
 }
 

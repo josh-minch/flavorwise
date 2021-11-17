@@ -92,17 +92,56 @@ h3 {
   line-height: 20px;
 }
 
-.cur-ingred>input, .cur-ingred>label {
-  margin-top: 5px;
-  cursor: pointer;
+.cur-ingred>input {
+  width: 15px !important;
+  height: 15px !important;
+  margin: 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  outline: 1px solid black;
+  box-shadow: none;
+  font-size: 1rem;
 }
 
-label {
-  margin-bottom: 0;
+.cur-ingred>input:checked {
+  outline: 2px solid orange;
+  background: orange;
 }
+
+.cur-ingred>label {
+  padding: 4px 4px 4px 4px;
+  border: 1px solid #dee2e6;
+  background: white;
+  cursor: pointer;
+  /* Disable highlight */
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.cur-ingred>input:checked+label {
+  font-weight: 550;
+  border: 1px solid orange;
+  background: lightyellow
+}
+
+/* Hide on initial pageload then set to visible after populated in script.js */
 
 #ingred-table, #recipe-table {
   display: none;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 .lg-view {
@@ -140,6 +179,10 @@ div.dataTables_wrapper div.dataTables_info {
   float: right;
 }
 
+.dataTables_filter>label {
+  margin-bottom: 0px;
+}
+
 /* @media screen and (max-width: 420px) {
   .dataTables_filter {
     float: left;
@@ -160,12 +203,23 @@ div.dataTables_wrapper div.dataTables_filter input {
   margin-left: 0px;
 }
 
-#recipe-table_wrapper thead, .dataTables_scrollHeadInner {
-  display: none;
-}
-
 #ingred-table th:first-child+th, th:first-child+th+th, td:first-child+td, td:first-child+td+td {
   text-align: right;
+}
+
+#ingred-table td {
+  height: 46px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+#ingred-table th {
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+
+#recipe-table_wrapper thead, .dataTables_scrollHeadInner {
+  display: none;
 }
 
 td:first-child+td {
@@ -181,11 +235,13 @@ table.dataTable.table-sm thead tr th:not(.sorting_disabled) {
 }
 
 table.dataTable.table-sm .sorting::before, table.dataTable.table-sm .sorting_asc::before, table.dataTable.table-sm .sorting_desc::before {
-  right: 0.7rem;
+  right: 11px;
+  top: 11px;
 }
 
 table.dataTable.table-sm .sorting::after, table.dataTable.table-sm .sorting_asc::after, table.dataTable.table-sm .sorting_desc::after {
   right: 0rem;
+  top: 11px;
 }
 
 th {
@@ -198,7 +254,7 @@ table.dataTable tbody td {
 }
 
 #recipe-table td {
-  padding-bottom: 10px;
+  padding: 7px 0px 7px 0px;
 }
 
 .media {
