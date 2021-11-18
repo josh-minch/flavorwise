@@ -145,7 +145,7 @@ def write_recipe_data_filtered(infile, outfile):
 
     # Remove duplicate recipes
     df = pd.DataFrame(data)
-    df_unique = df[~df['title'].duplicated()]
+    df_unique = df[~df['url'].duplicated()]
     data = df_unique.to_dict('records')
 
     for recipe in data:
@@ -227,7 +227,7 @@ def clean_approved_ingreds():
 def main():
     clean_approved_ingreds()
     write_recipe_data_filtered(
-        'recipe_data.json', 'recipe_data_filtered.json')
+        'recipe_data_1.json', 'recipe_data_filtered.json')
     write_all_ingreds('recipe_data_filtered.json',
                       'static/all_ingreds_filtered.json')
     write_recipe_matrix()

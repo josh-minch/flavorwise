@@ -8,6 +8,8 @@ import os
 import requests
 from bs4 import BeautifulSoup, SoupStrainer
 
+import helper
+
 
 def get_soup_local(path, strainer):
     with open(path, encoding="utf8") as f:
@@ -138,7 +140,30 @@ def get_recipe_image(html_path):
 
 
 def main():
-    pass
+    recipe_data = helper.get_json('recipe_data.json')
+    empty_recipes_ixs = []
+    for recipe in recipe_data:
+        if recipe['source'] == "Serious Eats":
+            r = requests.get(recipe['url'])
+            soup = BeautifulSoup(r.content, 'html.parser')
+            ingred_section = soup.find(
+                'section', id='section--ingredients_1-0')
+            if ingred_section:
+                ingreds_li = ingred_section.select('.simple-list__item')
+                ingreds = [ingred.get_text(' ', strip=True)
+                           for ingred in ingreds_li]
+            else:
+                empty_recipes_ixs.append(recipe_data.index(recipe))
+            recipe['ingreds'] = ingreds
+
+    recipes_with_ingreds = []
+    for index, recipe in enumerate(recipe_data):
+        if index in set(empty_recipes_ixs):
+            continue
+        recipes_with_ingreds.append(recipe)
+
+    recipe_data = [recipe for recipe in recipe_data if recipe]
+    helper.write_json(recipes_with_ingreds, 'recippe_data_1.json', 'w+')
 
 
 if __name__ == "__main__":
