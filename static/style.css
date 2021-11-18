@@ -10,7 +10,7 @@ body {
   }
 }
 
-body, table, h6 {
+body, table, h6, th, td {
   color: #1d1d1f;
 }
 
@@ -207,19 +207,19 @@ div.dataTables_wrapper div.dataTables_filter input {
   text-align: right;
 }
 
-#ingred-table td {
-  height: 46px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
 #ingred-table th {
-  padding-top: 11px;
-  padding-bottom: 11px;
+  padding-top: 12px;
+  padding-bottom: 6px;
 }
 
 #recipe-table_wrapper thead, .dataTables_scrollHeadInner {
   display: none;
+}
+
+#ingred-table td {
+  height: 46px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 td:first-child+td {
