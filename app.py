@@ -4,7 +4,7 @@ import random
 from flask import Flask, jsonify, render_template, request, session
 
 import matrix
-from helper import get_json
+from helper import get_json, timer
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -35,21 +35,22 @@ def index():
                            cur_ingreds=cur_ingreds)
 
 
-@ app.route("/init_r_ingred_data")
+@ app.route('/init_r_ingred_data', methods=['GET'])
 def init_r_ingred_data():
     cur_ingreds = get_session_var('cur_ingreds')
     r_ingreds = matrix.get_r_ingreds(cur_ingreds)
     return jsonify(r_ingreds)
 
 
-@ app.route("/init_recipe_data")
+@ app.route('/init_recipe_data', methods=['GET'])
 def init_recipe_data():
     cur_ingreds = get_session_var('cur_ingreds')
+    matrix.get_recipes = timer(matrix.get_recipes)
     recipes = matrix.get_recipes(cur_ingreds)
     return jsonify(recipes)
 
 
-@ app.route("/search", methods=["POST"])
+@ app.route('/search', methods=['POST'])
 def search():
     new_ingreds = request.form.get('search', 0, type=str).strip()
 
@@ -60,14 +61,14 @@ def search():
     return get_frontend_json_data()
 
 
-@ app.route("/add_dropdown_ingred", methods=["POST"])
+@ app.route('/add_dropdown_ingred', methods=['POST'])
 def add_dropdown_ingred():
     new_ingred = request.form.get('ingred_to_add')
     add_session_ingreds(new_ingred)
     return get_frontend_json_data()
 
 
-@ app.route("/remove", methods=["POST"])
+@ app.route('/remove', methods=['POST'])
 def remove():
     ingreds_to_remove = request.form.keys()
     remove_session_ingreds(ingreds_to_remove)

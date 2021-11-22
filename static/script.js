@@ -12,7 +12,6 @@ $(document).ready(function () {
         deferRender: true,
         ajax: {
             url: "/init_r_ingred_data",
-            dataType: "json",
             dataSrc: "",
         },
         autoWidth: false,
@@ -51,14 +50,14 @@ $(document).ready(function () {
         }
     });
 
+
     $('#recipe-table').DataTable({
         dom: "<if>t<lp>",
         deferRender: true,
         ajax: {
             url: "/init_recipe_data",
-            dataType: "json",
             dataSrc: "",
-            cache: false
+            cache: true
         },
         autoWidth: false,
         columns: [
