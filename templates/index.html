@@ -42,16 +42,14 @@
                     </form>
                     <form class="" id="cur-ingreds">
                         <div id="cur-ingreds-list">
-                            {%- if cur_ingreds -%}
-                            {%- for cur_ingred in cur_ingreds -%}
-
+                            {% if cur_ingreds %}
+                            {% for cur_ingred in cur_ingreds %}
                             <div class='cur-ingred'>
                                 <input type="checkbox" autocomplete="off" id="{{cur_ingred}}" name="{{cur_ingred}}">
-                                <label for="{{cur_ingred}}">{{- cur_ingred -}}</label>
+                                <label for="{{cur_ingred}}">{{ cur_ingred }}</label>
                             </div>
-
-                            {%- endfor -%}
-                            {%- endif -%}
+                            {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="text-right mt-2 text-secondary" id="selected-ingred-text">0 selected</div>
                         <div class="d-flex justify-content-end mt-1">
