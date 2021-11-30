@@ -46,7 +46,7 @@ def init_r_ingred_data():
 def init_recipe_data():
     cur_ingreds = get_session_var('cur_ingreds')
     matrix.get_recipes = timer(matrix.get_recipes)
-    recipes = matrix.get_recipes(cur_ingreds)
+    recipes = matrix.get_recipes(cur_ingreds)[:1000]
     return jsonify(recipes)
 
 
@@ -81,7 +81,7 @@ def get_frontend_json_data():
 
     return jsonify(cur_ingreds=cur_ingreds,
                    r_ingreds=r_ingreds,
-                   recipes=recipes)
+                   recipes=recipes[:1000])
 
 
 def validate_ingred(ingred):
