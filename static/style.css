@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bitter&display=swap');
 @import url('https://rsms.me/inter/inter.css');
+
 body {
   font-family: 'Inter', sans-serif;
 }
@@ -31,9 +32,11 @@ body, table, h6, th, td {
     padding-left: 0px;
     padding-right: 10px;
   }
+
   #rec-ingred-col {
     padding: 0px 10px;
   }
+
   #recipe-col {
     padding-left: 10px;
     padding-right: 0px;
@@ -44,13 +47,16 @@ body, table, h6, th, td {
   h1 {
     padding-left: 13px;
   }
+
   #my-ingred-col {
     padding-left: 13px;
     padding-right: 20px;
   }
+
   #rec-ingred-col {
     padding: 0px 20px;
   }
+
   #recipe-col {
     padding-left: 20px;
     padding-right: 13px;
@@ -80,8 +86,6 @@ h3 {
   font-weight: 700;
 }
 
-.orange-text {}
-
 @media screen and (min-width: 992px) {
   #my-ingred-col {
     flex: 0 0 250px;
@@ -92,52 +96,78 @@ h3 {
   line-height: 20px;
 }
 
-.cur-ingred>input {
-  width: 15px !important;
-  height: 15px !important;
-  margin: 5px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -o-appearance: none;
-  appearance: none;
-  outline: 1px solid black;
-  box-shadow: none;
-  font-size: 1rem;
+
+.cur-ingred input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  left: -9999px;
 }
 
-.cur-ingred>input:checked {
-  outline: 2px solid orange;
-  background: orange;
-}
-
-.cur-ingred>label {
-  padding: 4px 4px 4px 4px;
-  border: 1px solid #dee2e6;
-  background: white;
+.cur-ingred label {
+  position: relative;
+  display: inline-block;
   cursor: pointer;
-  /* Disable highlight */
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Old versions of Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+
+  /*16px width of fake checkbox + 6px distance between fake checkbox and text*/
+  padding-left: 24px;
+  margin-top: 6px;
+  margin-bottom: 0px;
+
 }
 
-.cur-ingred>input:checked+label {
-  font-weight: 550;
-  border: 1px solid orange;
-  background: lightyellow
+.cur-ingred label::before,
+.cur-ingred label::after {
+  position: absolute;
+  content: "";
+
+  /*Needed for the line-height to take effect*/
+  display: inline-block;
 }
 
-/* Hide on initial pageload then set to visible after populated in script.js */
+/*Outer box of the fake checkbox*/
+.cur-ingred label::before {
+  height: 18px;
+  width: 18px;
 
+  border: 1px solid;
+  border-radius: 3px;
+  left: 0px;
+
+  /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
+     *to vertically center it.
+     */
+  top: 3px;
+}
+
+/*Checkmark of the fake checkbox*/
+.cur-ingred label::after {
+  height: 7px;
+  width: 10px;
+  border-left: 2px solid;
+  border-bottom: 2px solid;
+
+  transform: rotate(-45deg);
+
+  left: 4px;
+  top: 7px;
+}
+
+/*Hide the checkmark by default*/
+.cur-ingred input[type="checkbox"]+label::after {
+  content: none;
+}
+
+/*Unhide on the checked state*/
+.cur-ingred input[type="checkbox"]:checked+label::after {
+  content: "";
+}
+
+/* Adding focus styles on the outer-box of the fake checkbox */
+/* .cur-ingred input[type="checkbox"]:focus+label::before, .cur-ingred input[type="checkbox"]:active+label::before {
+  outline: orange auto 5px;
+} */
+
+/* Hide empty tables initial pageload then set to visible after populated in script.js */
 #ingred-table, #recipe-table {
   display: none;
   margin-top: 0px !important;
@@ -156,6 +186,7 @@ h3 {
   .lg-view {
     display: none;
   }
+
   .xs-view {
     display: inline-block;
   }
@@ -319,12 +350,15 @@ table.dataTable tbody td {
   li.paginate_button.previous {
     display: inline;
   }
+
   li.paginate_button.next {
     display: inline;
   }
+
   li.paginate_button {
     display: none;
   }
+
   li.paginate_button.active {
     display: inline;
   }
