@@ -308,7 +308,7 @@ function createInput(ingred) {
 function createLabel(element) {
     const label = document.createElement('label');
     label.setAttribute('for', element);
-    label.innerText = ` ${element}`;
+    label.innerText = `${element}`;
     return label;
 }
 
