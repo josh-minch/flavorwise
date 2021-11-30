@@ -9,7 +9,7 @@ from helper import get_json, timer
 app = Flask(__name__)
 app.config.from_object('config')
 
-VERSION_STR = '?v=0.68'
+VERSION_STR = '?v=0.69'
 ALL_INGREDS = [ingred.lower()
                for ingred in get_json('./static/all_ingreds_filtered.json')]
 
