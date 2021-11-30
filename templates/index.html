@@ -7,16 +7,31 @@
 
     <title>FlavorSage</title>
 
+    <!-- Favicons -->
+    <!-- Favicon image from https://twemoji.twitter.com/ -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
     <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="{{ url_for('static', filename='browserconfig.xml') }}">
+    <meta name="theme-color" content="#ffffff">
 
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}"> -->
+
+    <!-- Bootstrap 4 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <!-- Datatables with Bootstrap 4 styling, Jquery, and Search Pane -->
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.22/sp-1.2.1/datatables.min.css" />
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}{{ version_str }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='typeahead.css') }}{{ version_str }}">
 
@@ -113,10 +128,6 @@
     <script type="module" src="{{ url_for('static', filename='fastest-levenshtein.1.0.12.min.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='autocomplete.js') }}"></script>
     <script src="{{ url_for('static', filename='script.js') }}{{ version_str }}"></script>
-
-    <script src="https://unpkg.com/whatwg-fetch@2.0.4/fetch.js"></script>
-    <script src="https://unpkg.com/promise-polyfill@7.1.2/dist/polyfill.min.js"></script>
-    <script src="{{ url_for('static', filename='datalist-polyfill.min.js') }}"></script>
 </body>
 
 </html>
