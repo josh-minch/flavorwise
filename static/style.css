@@ -130,8 +130,8 @@ h3 {
   height: 18px;
   width: 18px;
 
-  border: 1px solid;
-  border-radius: 3px;
+  background: white;
+  border: 1px solid #1d1d1f;
   left: 0px;
 
   /*(24px line-height - 16px height of fake checkbox) / 2 - 1px for the border
@@ -146,6 +146,7 @@ h3 {
   width: 10px;
   border-left: 2px solid;
   border-bottom: 2px solid;
+  border-color: #1d1d1f;
 
   transform: rotate(-45deg);
 
@@ -162,6 +163,13 @@ h3 {
 .cur-ingred input[type="checkbox"]:checked+label::after {
   content: "";
 }
+
+/*Unhide on the checked state*/
+.cur-ingred input[type="checkbox"]:checked+label::before {
+  box-shadow: 2px 2px orange;
+}
+
+
 
 /* Adding focus styles on the outer-box of the fake checkbox */
 /* .cur-ingred input[type="checkbox"]:focus+label::before, .cur-ingred input[type="checkbox"]:active+label::before {

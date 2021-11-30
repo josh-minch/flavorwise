@@ -30,7 +30,8 @@
 .tt-input, .tt-hint {
     height: 36px;
     padding-left: 26px;
-    border: 1px solid rgba(0, 0, 0, 0.5);
+    /* border: 1px solid rgba(0, 0, 0, 0.5); */
+    border: 1px solid #1d1d1f;
 }
 
 @media screen and (min-width: 992px) {
