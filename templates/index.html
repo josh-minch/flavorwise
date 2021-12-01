@@ -19,7 +19,6 @@
     <meta name="msapplication-config" content="/static/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
-
     <!-- Bootstrap 4 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -33,11 +32,6 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}{{ version_str }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='typeahead.css') }}{{ version_str }}">
-
-
-    <!--[if lt IE 9]>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-    <![endif]-->
 </head>
 
 <body>
@@ -70,10 +64,8 @@
                         </div>
                     </form>
                 </div>
-
             </div>
             <div class="col-lg mb-4 mb-lg-0" id="rec-ingred-col">
-
                 <h2>Recommended Ingedients</h2>
                 <h3>Scored by unique pairability</h3>
                 <div id="r-ingreds" class="mt-2">
@@ -94,10 +86,8 @@
                         </thead>
                     </table>
                 </div>
-
             </div>
             <div class="col-lg" id="recipe-col">
-
                 <h2>Recipes</h2>
                 <h3>Recipes with all of your ingredients</h3>
                 <div id="recipes" class="mt-2">
@@ -111,17 +101,14 @@
                         </thead>
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
-
     <script type="text/javascript"
         src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.22/sp-1.2.1/datatables.min.js"></script>
     <script src="{{ url_for('static', filename='jquery.unveil.js') }}"></script>
     <script src="{{ url_for('static', filename='typeahead.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bloodhound.min.js') }}"></script>
-
 
     <script type="module" src="{{ url_for('static', filename='fastest-levenshtein.1.0.12.min.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='autocomplete.js') }}"></script>
