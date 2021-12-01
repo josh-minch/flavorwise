@@ -1,11 +1,12 @@
-$.fn.DataTable.ext.pager.numbers_length = 9;
+twemoji.parse(document.body,
+    { folder: 'svg', ext: '.svg' } // This is to specify to Twemoji to use SVGs and not PNGs
+);
 
+$.fn.DataTable.ext.pager.numbers_length = 9;
 const ingredTablePercent = 0.75;
 const ingredTableUsableHeight = ingredTablePercent * window.innerHeight;
 const numIngredTableRows = Math.round(ingredTableUsableHeight / 50);
 const numRecipeTableRows = 4;
-
-
 $('#ingred-table').DataTable({
     dom: "<if>t<lp>",
     deferRender: true,
@@ -344,83 +345,6 @@ function createAddBtn(ingredName) {
 }
 
 function createRecipes(recipes, curIngreds) {
-    const recipesSec = document.querySelector('#recipes');
-    //const recipesTitleDiv = createRecipesTitle(recipes, curIngreds);
-    const recipesBodyDiv = createRecipesBody(recipes);
-
-    //recipesSec.appendChild(recipesTitleDiv);
-    //recipesSec.appendChild(recipesBodyDiv);
-}
-
-function createRecipesTitle(recipes, curIngreds) {
-    const titleSpan = document.createElement('span');
-
-    appendRecipesTitleIntro(titleSpan, recipes, curIngreds);
-    appendRecipesTitleIngreds(titleSpan, recipes, curIngreds);
-
-    return titleSpan;
-}
-
-function appendRecipesTitleIntro(titleSpan, recipes, curIngreds) {
-    /* Append title intro text to titleSpan of the form 'Recipes' or
-    '1 recipe with ' or '5 recipes with 'depending on length of input arrays. */
-    const introSpan = document.createElement('span');
-    introSpan.setAttribute('class', 'recipe-intro');
-    titleSpan.append(introSpan);
-
-    const withSpan = document.createElement('span');
-    withSpan.setAttribute('class', 'recipe-prep');
-    withSpan.innerText = 'with ';
-
-    if (curIngreds.length == 0) {
-        introSpan.innerText = 'Recipes'
-    } else if (curIngreds.length > 0 && recipes.length == 1) {
-        introSpan.innerText = `${recipes.length} recipe `;
-        titleSpan.insertBefore(withSpan, introSpan.nextSibling);
-    } else if (curIngreds.length > 0 && recipes.length != 1) {
-        introSpan.innerText = `${recipes.length} recipes`;
-        titleSpan.insertBefore(withSpan, introSpan.nextSibling);
-    }
-}
-
-function appendRecipesTitleIngreds(titleSpan, recipes, curIngreds) {
-    /* Append ingred text to titleSpan of the form 'butter' or
-    'butter & garlic' or 'butter, garlic, & lemon' depending on
-    length of input arrays. */
-    const ingredSpan = document.createElement('span');
-    ingredSpan.setAttribute('class', 'recipe-ingred');
-    titleSpan.appendChild(ingredSpan);
-
-    if (curIngreds.length == 1) {
-        ingredSpan.innerText = curIngreds;
-    } else if (curIngreds.length > 1) {
-        const ampersandSpan = document.createElement('span');
-        ampersandSpan.setAttribute('class', 'recipe-prep');
-        const finalIngredSpan = document.createElement('span');
-        finalIngredSpan.setAttribute('class', 'recipe-ingred');
-
-        // Get all but last ingred and separate with commas
-        ingredSpan.innerText = curIngreds.slice(0, curIngreds.length - 1).join(', ');
-        if (curIngreds.length == 2) {
-            ampersandSpan.innerText = ' & ';
-        } else {
-            ampersandSpan.innerText = ', & ';
-        }
-        finalIngredSpan.innerText = curIngreds.slice(curIngreds.length - 1);
-
-        titleSpan.insertBefore(ampersandSpan, ingredSpan.nextSibling);
-        titleSpan.insertBefore(finalIngredSpan, ampersandSpan.nextSibling);
-
-        if (recipes.length == 0) {
-            const noRecipesSpan = document.createElement('span');
-            noRecipesSpan.setAttribute('class', 'recipe-prep');
-            noRecipesSpan.innerText = '. Bummer dude!'
-            titleSpan.insertBefore(noRecipesSpan, finalIngredSpan.nextSibling);
-        }
-    }
-}
-
-function createRecipesBody(recipes) {
     recipesTable.clear();
     var tableData = [];
 

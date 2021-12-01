@@ -11,6 +11,14 @@ body {
   }
 }
 
+h1 img.emoji {
+  pointer-events: none;
+  width: 30px;
+  height: 30px;
+  vertical-align: -7px;
+  margin-right: 5px;
+}
+
 body, table, h6, th, td {
   color: #1d1d1f;
 }
