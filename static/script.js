@@ -1,7 +1,3 @@
-twemoji.parse(document.body,
-    { folder: 'svg', ext: '.svg' } // This is to specify to Twemoji to use SVGs and not PNGs
-);
-
 $.fn.DataTable.ext.pager.numbers_length = 9;
 const ingredTablePercent = 0.75;
 const ingredTableUsableHeight = ingredTablePercent * window.innerHeight;
@@ -167,11 +163,11 @@ function setRemoveButtonState() {
     let removeBtn = document.getElementById('remove-button');
     if (removeBtn) {
         if (numChecked == 0) {
-            selectedIngredText.classList.add('text-secondary');
+            selectedIngredText.classList.add('disabled-text');
             removeBtn.disabled = true;
         }
         else {
-            selectedIngredText.classList.remove('text-secondary');
+            selectedIngredText.classList.remove('disabled-text');
             removeBtn.disabled = false;
         }
     }

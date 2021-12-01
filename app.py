@@ -13,12 +13,10 @@ VERSION_STR = '?v=0.70'
 ALL_INGREDS = [ingred.lower()
                for ingred in get_json('./static/all_ingreds_filtered.json')]
 
-
 # TODO:
 #     - Get seperate JQuery source seperate from datatables bundle.
 #       load JQuery first, then typeahead, then datatables
 #       for faster load time.
-#       Emojis, anyone?
 
 
 @ app.route("/")
