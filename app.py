@@ -25,11 +25,11 @@ def index():
     remove_invalid_session_ingreds()
     cur_ingreds = get_session_var('cur_ingreds')
 
-    random_ingred = random.choice(ALL_INGREDS)
+    random_ingreds = random.choices(ALL_INGREDS, k=3)
     pattern = create_search_pattern()
 
     return render_template('index.html', version_str=VERSION_STR,
-                           random_ingred=random_ingred, pattern=pattern,
+                           random_ingreds=random_ingreds, pattern=pattern,
                            cur_ingreds=cur_ingreds)
 
 

@@ -46,7 +46,6 @@ $('#ingred-table').DataTable({
     }
 });
 
-console.time("recipes")
 let recipesTable = $('#recipe-table').DataTable({
     dom: "<if>t<lp>",
     deferRender: true,
@@ -114,7 +113,12 @@ let recipesTable = $('#recipe-table').DataTable({
         hideTableIfEmpty($('#recipe-table'));
     }
 });
-console.timeEnd("recipes")
+
+// Remove bootstrap class from datatable filters for easier custom styling
+const tableFilters = document.querySelectorAll('.dataTables_filter label input');
+tableFilters.forEach(filter => {
+    filter.classList.remove("form-control", "form-control-sm")
+});
 
 function setRecipeHover() {
     $(".recipe-link").hover(
@@ -136,12 +140,6 @@ function setRecipeHover() {
     );
 }
 
-// Remove bootstrap class from datatable filters for easier custom styling
-const tableFilters = document.querySelectorAll('.dataTables_filter label input');
-tableFilters.forEach(filter => {
-    filter.classList.remove("form-control", "form-control-sm")
-});
-
 let checkboxes = document.querySelectorAll("input[type='checkbox']");
 setRemoveButtonState()
 checkboxes.forEach(checkbox => {
@@ -149,6 +147,7 @@ checkboxes.forEach(checkbox => {
 });
 
 function setRemoveButtonState() {
+    // Change ingreds selected text to reflect ui state
     let checkboxes = document.querySelectorAll("input[type='checkbox']");
     let numChecked = 0;
     checkboxes.forEach(checkbox => {
@@ -158,8 +157,9 @@ function setRemoveButtonState() {
     });
 
     let selectedIngredText = document.getElementById('selected-ingred-text');
-    selectedIngredText.textContent = numChecked + " selected"
+    selectedIngredText.textContent = `${numChecked} selected`;
 
+    // Set button style disabled if no ingreds selected
     let removeBtn = document.getElementById('remove-button');
     if (removeBtn) {
         if (numChecked == 0) {
@@ -203,6 +203,9 @@ $('.typeahead').on('typeahead:selected', function (ev, ingred) {
     $('.typeahead').typeahead('close');
     $('.typeahead').typeahead('val', '');
 })
+
+const randomIngreds = document.getElementById('random-ingreds');
+randomIngreds.addEventListener('click', addRelatedIngred);
 
 const relatedIngreds = document.getElementById('r-ingreds');
 relatedIngreds.addEventListener('click', addRelatedIngred);
@@ -260,6 +263,9 @@ function parseJSON(response) {
 }
 
 function updateDisplay(jsonData) {
+    toggleRemoveDisplay(jsonData.cur_ingreds);
+    toggleRandomIngredDisplay(jsonData.cur_ingreds);
+
     removeCurIngreds();
     createCurIngreds(jsonData.cur_ingreds);
     createRelatedIngreds(jsonData.r_ingreds);
@@ -270,6 +276,24 @@ function updateDisplay(jsonData) {
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', setRemoveButtonState)
     });
+}
+
+function toggleRemoveDisplay(curIngreds) {
+    if (curIngreds.length == 0) {
+        $("#remove-ingred-sec").hide();
+    }
+    else {
+        $("#remove-ingred-sec").show();
+    }
+}
+
+function toggleRandomIngredDisplay(curIngreds) {
+    if (curIngreds.length == 0) {
+        $("#random-ingreds").show();
+    }
+    else {
+        $("#random-ingreds").hide();
+    }
 }
 
 function removeCurIngreds() {
