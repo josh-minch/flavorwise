@@ -1,5 +1,6 @@
 import { distance } from "./fastest-levenshtein.1.0.12.min.js";
 
+
 let all_ingreds = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.whitespace,
     queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -9,6 +10,9 @@ let all_ingreds = new Bloodhound({
         return distance(a, input_string) - distance(b, input_string);
     }
 });
+
+all_ingreds.clearPrefetchCache();
+all_ingreds.initialize();
 
 $('#bloodhound .typeahead').typeahead({
     hint: true,
@@ -21,6 +25,7 @@ $('#bloodhound .typeahead').typeahead({
         source: all_ingreds,
         limit: Infinity
     });
+
 
 // Autofocus on typeahead search field
 $('.typeahead').focus();

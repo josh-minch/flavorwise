@@ -128,7 +128,7 @@
     <script src="{{ url_for('static', filename='bloodhound.min.js') }}"></script>
 
     <script type="module" src="{{ url_for('static', filename='fastest-levenshtein.1.0.12.min.js') }}"></script>
-    <script type="module" src="{{ url_for('static', filename='autocomplete.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='autocomplete.js') }}{{ version_str }}"></script>
     <script src="{{ url_for('static', filename='script.js') }}{{ version_str }}"></script>
 </body>
 

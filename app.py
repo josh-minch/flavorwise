@@ -9,9 +9,9 @@ from helper import get_json, timer
 app = Flask(__name__)
 app.config.from_object('config')
 
-VERSION_STR = '?v=0.71'
-ALL_INGREDS = [ingred.lower()
-               for ingred in get_json('./static/all_ingreds_filtered.json')]
+VERSION_STR = '?v=0.73'
+ALL_INGREDS_FILENAME = './static/all_ingreds_filtered.json'
+ALL_INGREDS = get_json(ALL_INGREDS_FILENAME)
 
 ''' Max number of recipes returned to users client '''
 NUM_RECIPES = 40
