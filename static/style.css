@@ -20,7 +20,6 @@ h1 img.logo {
 
 body, table, h6, th, td {
   color: black;
-  /* color: #1d1d1f; */
 }
 
 @media screen and (max-width: 320px) {
@@ -242,10 +241,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 
-#ingred-table th {
-  padding-top: 12px;
-  padding-bottom: 6px;
-}
+
 
 #recipe-table_wrapper thead, .dataTables_scrollHeadInner {
   display: none;
@@ -257,29 +253,31 @@ div.dataTables_wrapper div.dataTables_filter input {
   padding-bottom: 0px;
 }
 
-th {
+#ingred-table th {
+  padding-top: 12px;
+  padding-bottom: 8px;
   font-size: 16px;
-  font-weight: 425;
-  color: rgba(0, 0, 0, 0.80)
+  font-weight: 400;
+
 }
 
 .ingred-name {
   font-size: 16px;
-  font-weight: 450;
+  font-weight: 500;
 }
 
 .num-recipes {
   font-size: 14px;
-  line-height: 16px;
   font-weight: 400;
-  color: rgba(0, 0, 0, 0.80)
+
+  line-height: 19px;
 }
 
 
 #ingred-table td:first-child+td {
   font-size: 16px;
   font-weight: 400;
-  color: rgba(0, 0, 0, 0.85)
+  /* color: rgba(0, 0, 0, 0.85) */
 }
 
 
