@@ -9,14 +9,12 @@ from helper import get_json, timer
 app = Flask(__name__)
 app.config.from_object('config')
 
-VERSION_STR = '?v=0.70'
+VERSION_STR = '?v=0.71'
 ALL_INGREDS = [ingred.lower()
                for ingred in get_json('./static/all_ingreds_filtered.json')]
 
-# TODO:
-#     - Get seperate JQuery source seperate from datatables bundle.
-#       load JQuery first, then typeahead, then datatables
-#       for faster load time.
+''' Max number of recipes returned to users client '''
+NUM_RECIPES = 40
 
 
 @ app.route("/")
@@ -44,7 +42,7 @@ def init_r_ingred_data():
 def init_recipe_data():
     cur_ingreds = get_session_var('cur_ingreds')
     matrix.get_recipes = timer(matrix.get_recipes)
-    recipes = matrix.get_recipes(cur_ingreds)[:1000]
+    recipes = matrix.get_recipes(cur_ingreds)[:NUM_RECIPES]
     return jsonify(recipes)
 
 
@@ -79,7 +77,7 @@ def get_frontend_json_data():
 
     return jsonify(cur_ingreds=cur_ingreds,
                    r_ingreds=r_ingreds,
-                   recipes=recipes[:1000])
+                   recipes=recipes[:NUM_RECIPES])
 
 
 def validate_ingred(ingred):
