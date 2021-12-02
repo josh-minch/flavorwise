@@ -280,10 +280,12 @@ function updateDisplay(jsonData) {
 
 function toggleRemoveDisplay(curIngreds) {
     if (curIngreds.length == 0) {
-        $("#remove-ingred-sec").hide();
+        $("#remove-ingred-sec").addClass('d-none');
+        $("#remove-ingred-sec").removeClass('d-block');
     }
     else {
-        $("#remove-ingred-sec").show();
+        $("#remove-ingred-sec").addClass('d-block');
+        $("#remove-ingred-sec").removeClass('d-none');
     }
 }
 
