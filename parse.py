@@ -165,6 +165,9 @@ def write_all_ingreds(recipe_file_name, ingred_file_name):
     ingreds = [ingred for sublist in ingreds for ingred in sublist]
     ingreds = list(set(ingreds))
     ingreds.sort()
+    # Worcestershire is a proper noun, and I respect that
+    # ingreds = [ingred.replace('worcestershire', 'Worcestershire')
+    #            for ingred in ingreds]
 
     helper.write_json(ingreds, ingred_file_name, 'w')
     return ingreds
@@ -217,6 +220,7 @@ def clean_approved_ingreds():
         # Remove duplicates
         ingreds = set(ingreds)
         ingreds.discard('')
+        ingreds = [ingred.lower() for ingred in ingreds]
         ingreds = list(ingreds)
         ingreds.sort()
 

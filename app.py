@@ -5,7 +5,7 @@ from flask import Flask, jsonify, render_template, request, session
 from flask_talisman import Talisman
 
 import matrix
-from helper import get_json, timer
+from helper import get_json
 
 VERSION_STR = '?v=0.73'
 ALL_INGREDS_FILENAME = './static/all_ingreds_filtered.json'

@@ -234,8 +234,6 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 
-
-
 #recipe-table_wrapper thead, .dataTables_scrollHeadInner {
   display: none;
 }
@@ -251,7 +249,6 @@ div.dataTables_wrapper div.dataTables_filter input {
   padding-bottom: 8px;
   font-size: 16px;
   font-weight: 400;
-
 }
 
 .ingred-name {
