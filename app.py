@@ -2,19 +2,20 @@ import http
 import random
 
 from flask import Flask, jsonify, render_template, request, session
+from flask_talisman import Talisman
 
 import matrix
 from helper import get_json, timer
 
-app = Flask(__name__)
-app.config.from_object('config')
-
 VERSION_STR = '?v=0.73'
 ALL_INGREDS_FILENAME = './static/all_ingreds_filtered.json'
 ALL_INGREDS = get_json(ALL_INGREDS_FILENAME)
-
 ''' Max number of recipes returned to users client '''
 NUM_RECIPES = 40
+
+app = Flask(__name__)
+app.config.from_object('config')
+Talisman(app, content_security_policy=None)
 
 
 @ app.route("/")
@@ -41,7 +42,6 @@ def init_r_ingred_data():
 @ app.route('/init_recipe_data', methods=['GET'])
 def init_recipe_data():
     cur_ingreds = get_session_var('cur_ingreds')
-    matrix.get_recipes = timer(matrix.get_recipes)
     recipes = matrix.get_recipes(cur_ingreds)[:NUM_RECIPES]
     return jsonify(recipes)
 
