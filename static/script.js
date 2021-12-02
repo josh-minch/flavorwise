@@ -1,7 +1,7 @@
 $.fn.DataTable.ext.pager.numbers_length = 9;
 const ingredTablePercent = 0.75;
 const ingredTableUsableHeight = ingredTablePercent * window.innerHeight;
-const numIngredTableRows = Math.round(ingredTableUsableHeight / 50);
+const numIngredTableRows = Math.round(ingredTableUsableHeight / 70);
 const numRecipeTableRows = 4;
 $('#ingred-table').DataTable({
     dom: "<if>t<lp>",
@@ -12,12 +12,23 @@ $('#ingred-table').DataTable({
     },
     autoWidth: false,
     columnDefs: [
-        { width: '19%', targets: 2 },
-        { width: '14%', targets: 3 },
+        { visible: false, targets: 2 },
+        { width: '15%', targets: 3 },
         { className: "pl-0", "targets": [0] },
         { className: "text-right pr-0", "targets": [3] },
         { orderable: false, targets: [0, 3] },
-        { orderSequence: ["desc", "asc"], targets: [1, 2] },
+        { orderSequence: ["desc", "asc"], targets: [1] },
+        {
+            targets: 0,
+            render: function (data, type, row) {
+                // Add s to end of "recipe" if recipe != 1
+                const recipeEndingChar = row[2] != 1 ? 's' : '';
+                const numRecipesText = `${row[2]} recipe${recipeEndingChar}`
+                let ingred = `<div class="ingred-name">${row[0]}</div>
+                <div class="num-recipes"><span class="with">with</span> ${numRecipesText}</div>`;
+                return ingred;
+            }
+        },
         {
             targets: -1,
             render: function (data, type, row) {
@@ -291,10 +302,12 @@ function toggleRemoveDisplay(curIngreds) {
 
 function toggleRandomIngredDisplay(curIngreds) {
     if (curIngreds.length == 0) {
-        $("#random-ingreds").show();
+        $("#random-ingreds").addClass('d-block');
+        $("#random-ingreds").removeClass('d-none');
     }
     else {
-        $("#random-ingreds").hide();
+        $("#random-ingreds").addClass('d-none');
+        $("#random-ingreds").removeClass('d-block');
     }
 }
 

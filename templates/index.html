@@ -70,7 +70,7 @@
                             </div>
                         </div>
                     </form>
-                    <div id="random-ingreds">
+                    <div id="random-ingreds" class='{{"d-block" if cur_ingreds|length == 0 else "d-none"}}'>
                         <div class="mt-3 mb-1">
                             Or try
                         </div>
@@ -97,8 +97,6 @@
                                 </th>
                                 <th class="border-0" scope="col">Score</th>
                                 <th class="border-0" scope="col">
-                                    <span class="lg-view">Recipes</span>
-                                    <span class="xs-view">Rcps.</span>
                                 </th>
                                 <th class="border-0" scope="col"></th>
                             </tr>
