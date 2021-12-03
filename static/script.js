@@ -52,6 +52,7 @@ $('#ingred-table').DataTable({
             previous: "Prev"
         }
     },
+    processing: true,
     initComplete: function () {
         hideTableIfEmpty($('#ingred-table'));
     }
@@ -113,6 +114,7 @@ let recipesTable = $('#recipe-table').DataTable({
             previous: "Prev"
         }
     },
+    processing: true,
     rowCallback: function (row, data) {
         setRecipeHover()
     },
