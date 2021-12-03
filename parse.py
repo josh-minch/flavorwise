@@ -147,6 +147,9 @@ def write_recipe_data_filtered(infile, outfile):
     df = pd.DataFrame(data)
     df_unique = df[~df['url'].duplicated()]
     data = df_unique.to_dict('records')
+    data = [d for d in data if d['source'] ==
+            'Saveur' or d['source'] == 'Serious Eats']
+    data = data[-9000:]
 
     for recipe in data:
         filtered_ingreds = filter_naive(recipe['ingreds'], ingred_filters)
