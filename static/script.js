@@ -1,163 +1,9 @@
-$.fn.DataTable.ext.pager.numbers_length = 9;
-const ingredTablePercent = 0.75;
-const ingredTableUsableHeight = ingredTablePercent * window.innerHeight;
-const numIngredTableRows = Math.round(ingredTableUsableHeight / 70);
-const numRecipeTableRows = 4;
-$('#ingred-table').DataTable({
-    dom: "<if>t<lp>",
-    deferRender: true,
-    ajax: {
-        url: "/init_r_ingred_data",
-        dataSrc: "",
-    },
-    autoWidth: false,
-    columnDefs: [
-        { visible: false, targets: 2 },
-        { width: '15%', targets: 3 },
-        { className: "pl-0", "targets": [0] },
-        { className: "text-right pr-0", "targets": [3] },
-        { orderable: false, targets: [0, 3] },
-        { orderSequence: ["desc", "asc"], targets: [1] },
-        {
-            targets: 0,
-            render: function (data, type, row) {
-                // Add s to end of "recipe" if recipe != 1
-                const recipeEndingChar = row[2] != 1 ? 's' : '';
-                const numRecipesText = `${row[2]} recipe${recipeEndingChar}`
-                let ingred = `<div class="ingred-name">${row[0]}</div>
-                <div class="num-recipes"><span class="with">with</span> ${numRecipesText}</div>`;
-                return ingred;
-            }
-        },
-        {
-            targets: -1,
-            render: function (data, type, row) {
-                let btn = '<button type="button" class="r-ingred-btn btn btn-outline-primary" name="r_ingred" value="' + row[0] + '">Add</button>';
-                return btn;
-            }
-        }
-    ],
-    order: [[1, "desc"]],
-    pageLength: numIngredTableRows,
-    lengthChange: false,
-    language: {
-        emptyTable: " ",
-        info: "_TOTAL_ results",
-        infoEmpty: "0 results",
-        search: "_INPUT_",
-        searchPlaceholder: 'Filter results',
-        infoFiltered: "(filtered)",
-        zeroRecords: "No recommendations match your search filter. Bummer dude!",
-        paginate: {
-            previous: "Prev"
-        }
-    },
-    processing: true,
-    initComplete: function () {
-        hideTableIfEmpty($('#ingred-table'));
-    }
-});
-
-let recipesTable = $('#recipe-table').DataTable({
-    dom: "<if>t<lp>",
-    deferRender: true,
-    ajax: {
-        url: "/init_recipe_data",
-        dataSrc: "",
-        cache: true
-    },
-    autoWidth: false,
-    columns: [
-        { width: '100%' }
-    ],
-    columnDefs: [
-        {
-            visible: false,
-            targets: [1, 2],
-            searchable: false
-        },
-        { className: "pl-0", "targets": [0] },
-        {
-            targets: 0,
-            render: function (data, type, row) {
-                if (data) {
-                    const recipe_card = `
-                        <div class="media position-relative">
-                            <img src="" data-src="${row[2]}" class="recipe-image">
-                            <div class="media-body">
-                                <h6 class="recipe-title"><span class="">${row[0]}</span></h6>
-                                <span class="recipe-link-row">
-                                    <i class="link-icon bi bi-arrow-up-right-square"></i>
-                                    <a href="${row[1]}" class="stretched-link recipe-link text-primary">
-                                        Recipe at ${row[3]}
-                                    </a>
-                                </span>
-                            </div>
-                        </div>
-                        `;
-                    return recipe_card;
-                }
-            }
-        }
-    ],
-    pageLength: numRecipeTableRows,
-    lengthChange: false,
-    language: {
-        emptyTable: "Add ingredients to see recipes",
-        info: "_TOTAL_ results",
-        infoEmpty: "0 results",
-        infoFiltered: "(filtered)",
-        search: "_INPUT_",
-        searchPlaceholder: 'Filter results',
-        zeroRecords: "No recipes match your search filter. Bummer dude!",
-        paginate: {
-            previous: "Prev"
-        }
-    },
-    processing: true,
-    rowCallback: function (row, data) {
-        setRecipeHover()
-    },
-    drawCallback: function (settings) {
-        $("#recipe-table img:visible").unveil();
-        setRecipeHover()
-    },
-    initComplete: function () {
-        hideTableIfEmpty($('#recipe-table'));
-    }
-});
-
-// Remove bootstrap class from datatable filters for easier custom styling
-const tableFilters = document.querySelectorAll('.dataTables_filter label input');
-tableFilters.forEach(filter => {
-    filter.classList.remove("form-control", "form-control-sm")
-});
-
-function setRecipeHover() {
-    $(".recipe-link").hover(
-        function () {
-            const hoverBorderColor = 'rgb(77, 77, 77)';
-            $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'underline');
-            $(this).siblings(".link-icon").css('color', 'rgb(0, 86, 179)');
-            $(this).parent().parent().siblings(".recipe-image").css('border-color', hoverBorderColor);
-            $(this).parent().parent().parent().css('border-color', hoverBorderColor);
-            $(this).parent().parent().parent().toggleClass('drop-shadow');
-        }, function () {
-            const borderColor = '#dee2e6';
-            $(this).parent().siblings(".recipe-title").children().css('text-decoration', 'none');
-            $(this).siblings(".link-icon").css('color', '#007bff');
-            $(this).parent().parent().siblings(".recipe-image").css('border-color', borderColor);
-            $(this).parent().parent().parent().css('border-color', borderColor);
-            $(this).parent().parent().parent().toggleClass('drop-shadow');
-        }
-    );
-}
-
-let checkboxes = document.querySelectorAll("input[type='checkbox']");
 setRemoveButtonState()
-checkboxes.forEach(checkbox => {
+
+document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
     checkbox.addEventListener('change', setRemoveButtonState)
 });
+
 
 function setRemoveButtonState() {
     // Change ingreds selected text to reflect ui state
@@ -186,36 +32,8 @@ function setRemoveButtonState() {
     }
 }
 
-function hideTableIfEmpty(table) {
-    if (table.find('tbody tr td').first().hasClass('dataTables_empty')) {
-        table.hide();
-        // hide table's pagination also
-        table.parent().find('div.dataTables_paginate').hide();
-    } else {
-        table.show();
-        table.parent().find('div.dataTables_paginate').show();
-    }
-}
-
-function toggleTableOnDataChange(table) {
-    table.on('DOMNodeInserted DOMNodeRemoved', function () {
-        hideTableIfEmpty(table);
-    });
-}
-
-toggleTableOnDataChange($('#ingred-table'));
-toggleTableOnDataChange($('#recipe-table'));
-
 const search = document.getElementById('search');
 search.addEventListener('submit', searchAddIngred);
-
-/* When selecting a dropdown ingredient, add ingredient to current ingredients,
-close dropdown, and clear search field. */
-$('.typeahead').on('typeahead:selected', function (ev, ingred) {
-    addDropdownIngred(ingred);
-    $('.typeahead').typeahead('close');
-    $('.typeahead').typeahead('val', '');
-})
 
 const randomIngreds = document.getElementById('random-ingreds');
 randomIngreds.addEventListener('click', addRelatedIngred);
@@ -226,8 +44,16 @@ relatedIngreds.addEventListener('click', addRelatedIngred);
 const remove = document.getElementById('cur-ingreds');
 remove.addEventListener('submit', removeIngred);
 
+/* When selecting a dropdown ingredient, add ingredient to current ingredients,
+close dropdown, and clear search field. */
+$('.typeahead').on('typeahead:selected', function (ev, ingred) {
+    addDropdownIngred(ingred);
+    $('.typeahead').typeahead('close');
+    $('.typeahead').typeahead('val', '');
+})
+
 function searchAddIngred(ev) {
-    fetchPathEvent(new FormData(this), ev, '/search')
+    handleUserInput(new FormData(this), ev, '/search')
     // Clear search field after adding ingred
     this.reset();
 }
@@ -241,7 +67,7 @@ function addDropdownIngred(ingred) {
         body: formData
     })
         .then(parseJSON)
-        .then(updateDisplay);
+        .then(updateView);
 }
 
 function addRelatedIngred(ev) {
@@ -251,31 +77,31 @@ function addRelatedIngred(ev) {
     }
     var formData = new FormData();
     formData.append('search', String(ev.target.value))
-    fetchPathEvent(formData, ev, '/search');
+    handleUserInput(formData, ev, '/search');
     // Clear table filters
-    $('#ingred-table').DataTable().search('').draw();
-    $('#recipe-table').DataTable().search('').draw();
+    ingredTable.search('').draw();
+    recipeTable.search('').draw();
 }
 
 function removeIngred(ev) {
-    fetchPathEvent(new FormData(this), ev, '/remove')
+    handleUserInput(new FormData(this), ev, '/remove')
 }
 
-function fetchPathEvent(formData, ev, path) {
+function handleUserInput(formData, ev, path) {
     ev.preventDefault();
     fetch(path, {
         method: 'POST',
         body: formData
     })
         .then(parseJSON)
-        .then(updateDisplay);
+        .then(updateView);
 }
 
 function parseJSON(response) {
     return response.json();
 }
 
-function updateDisplay(jsonData) {
+function updateView(jsonData) {
     toggleRemoveDisplay(jsonData.cur_ingreds);
     toggleRandomIngredDisplay(jsonData.cur_ingreds);
 
@@ -292,29 +118,33 @@ function updateDisplay(jsonData) {
 }
 
 function toggleRemoveDisplay(curIngreds) {
+    let removeIngredSec = document.getElementById('remove-ingred-sec');
+
     if (curIngreds.length == 0) {
-        $("#remove-ingred-sec").addClass('d-none');
-        $("#remove-ingred-sec").removeClass('d-block');
+        removeIngredSec.classList.add('d-none');
+        removeIngredSec.classList.remove('d-block');
     }
     else {
-        $("#remove-ingred-sec").addClass('d-block');
-        $("#remove-ingred-sec").removeClass('d-none');
+        removeIngredSec.classList.add('d-block');
+        removeIngredSec.classList.remove('d-none');
     }
 }
 
 function toggleRandomIngredDisplay(curIngreds) {
+    let randomIngreds = document.getElementById('random-ingreds');
+
     if (curIngreds.length == 0) {
-        $("#random-ingreds").addClass('d-block');
-        $("#random-ingreds").removeClass('d-none');
+        randomIngreds.classList.add('d-block');
+        randomIngreds.classList.remove('d-none');
     }
     else {
-        $("#random-ingreds").addClass('d-none');
-        $("#random-ingreds").removeClass('d-block');
+        randomIngreds.classList.add('d-none');
+        randomIngreds.classList.remove('d-block');
     }
 }
 
 function removeCurIngreds() {
-    curIngreds = document.querySelectorAll('.cur-ingred');
+    let curIngreds = document.querySelectorAll('.cur-ingred');
     for (const curIngred of curIngreds) {
         curIngred.remove()
     }
@@ -382,7 +212,7 @@ function createAddBtn(ingredName) {
 }
 
 function createRecipes(recipes, curIngreds) {
-    recipesTable.clear();
+    recipeTable.clear();
     var tableData = [];
 
     recipes.forEach(recipe => {
@@ -394,10 +224,10 @@ function createRecipes(recipes, curIngreds) {
         tableData.push(rowData);
     });
     console.time("add");
-    recipesTable.rows.add(tableData);
+    recipeTable.rows.add(tableData);
     console.timeEnd("add");
 
     console.time('draw');
-    recipesTable.draw(false);
+    recipeTable.draw(false);
     console.timeEnd('draw');
 }
