@@ -71,14 +71,13 @@
                         </div>
                     </form>
                     <div id="random-ingreds" class='{{"d-block" if cur_ingreds|length == 0 else "d-none"}}'>
-                        <div class="mt-3 mb-1">
+                        <div class="mt-3 mb-2">
                             Or try
                         </div>
                         {% for random_ingred in random_ingreds %}
                         <div class="mb-2">
                             <button type="button" class="btn btn-outline-primary" name="r_ingred"
-                                value="{{random_ingred}}">+
-                                {{random_ingred}}</button>
+                                value="{{random_ingred}}">{{random_ingred}}</button>
                         </div>
                         {% endfor %}
                     </div>

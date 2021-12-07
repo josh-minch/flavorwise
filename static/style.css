@@ -78,7 +78,7 @@ body, table, h6, th, td {
 
 h1 {
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 450;
 }
 
 h2 {
@@ -259,7 +259,6 @@ div.dataTables_wrapper div.dataTables_filter input {
 .num-recipes {
   font-size: 14px;
   font-weight: 400;
-
   line-height: 19px;
 }
 
@@ -267,7 +266,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 #ingred-table td:first-child+td {
   font-size: 16px;
   font-weight: 400;
-  /* color: rgba(0, 0, 0, 0.85) */
+  font-variant-numeric: tabular-nums;
 }
 
 
@@ -292,8 +291,6 @@ table.dataTable.table-sm .sorting::after, table.dataTable.table-sm .sorting_asc:
   right: 0rem;
   top: 11px;
 }
-
-
 
 table.dataTable tbody td {
   vertical-align: middle;
