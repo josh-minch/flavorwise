@@ -181,12 +181,11 @@ function createLabel(element) {
 }
 
 function createRelatedIngreds(rankedIngreds) {
-    let table = $('#ingred-table').DataTable();
-
-    table.clear();
+    ingredTable.clear();
+    document.getElementById('ingred-loading-icon').classList.toggle('d-none');
 
     if (rankedIngreds == undefined || rankedIngreds.length == 0) {
-        table.draw();
+        ingredTable.draw();
         return;
     }
 
@@ -199,7 +198,8 @@ function createRelatedIngreds(rankedIngreds) {
         tableData.push(rowData);
     });
 
-    table.rows.add(tableData).draw();
+    ingredTable.rows.add(tableData).draw();
+    document.getElementById('ingred-loading-icon').classList.toggle('d-none');
 }
 
 function createAddBtn(ingredName) {
@@ -212,6 +212,8 @@ function createAddBtn(ingredName) {
 }
 
 function createRecipes(recipes, curIngreds) {
+    document.getElementById('recipe-loading-icon').classList.toggle('d-none');
+
     recipeTable.clear();
     var tableData = [];
 
@@ -230,4 +232,6 @@ function createRecipes(recipes, curIngreds) {
     console.time('draw');
     recipeTable.draw(false);
     console.timeEnd('draw');
+
+    document.getElementById('recipe-loading-icon').classList.toggle('d-none');
 }

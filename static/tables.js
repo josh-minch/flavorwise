@@ -3,6 +3,7 @@ const ingredTablePercent = 0.75;
 const ingredTableUsableHeight = ingredTablePercent * window.innerHeight;
 const numIngredTableRows = Math.round(ingredTableUsableHeight / 70);
 const numRecipeTableRows = 4;
+
 let ingredTable = $('#ingred-table').DataTable({
     dom: "<if>t<lp>",
     deferRender: true,

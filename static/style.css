@@ -165,7 +165,7 @@ h3 {
 
 /*Unhide on the checked state*/
 .cur-ingred input[type="checkbox"]:checked+label::before {
-  box-shadow: 2px 2px orange;
+  box-shadow: 2px 2px rgb(255, 166, 0);
 }
 
 /* Adding focus styles on the outer-box of the fake checkbox */
@@ -381,4 +381,14 @@ table.dataTable tbody td {
     flex-wrap: wrap;
     justify-content: center;
   }
+}
+
+#r-ingreds, #recipes {
+  position: relative;
+}
+
+.loading-icon {
+  position: absolute;
+  top: 25%;
+  left: 50%;
 }
