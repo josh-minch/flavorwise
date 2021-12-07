@@ -59,6 +59,8 @@ function searchAddIngred(ev) {
 }
 
 function addDropdownIngred(ingred) {
+    document.getElementById('recipe-loading-icon').classList.remove('d-none');
+    document.getElementById('ingred-loading-icon').classList.remove('d-none');
     var formData = new FormData();
     formData.append('ingred_to_add', ingred)
 
@@ -88,6 +90,9 @@ function removeIngred(ev) {
 }
 
 function handleUserInput(formData, ev, path) {
+    document.getElementById('recipe-loading-icon').classList.remove('d-none');
+    document.getElementById('ingred-loading-icon').classList.remove('d-none');
+
     ev.preventDefault();
     fetch(path, {
         method: 'POST',
@@ -199,7 +204,7 @@ function createRelatedIngreds(rankedIngreds) {
     });
 
     ingredTable.rows.add(tableData).draw();
-    document.getElementById('ingred-loading-icon').classList.toggle('d-none');
+    document.getElementById('ingred-loading-icon').classList.add('d-none');
 }
 
 function createAddBtn(ingredName) {
@@ -212,8 +217,6 @@ function createAddBtn(ingredName) {
 }
 
 function createRecipes(recipes, curIngreds) {
-    document.getElementById('recipe-loading-icon').classList.toggle('d-none');
-
     recipeTable.clear();
     var tableData = [];
 
@@ -233,5 +236,5 @@ function createRecipes(recipes, curIngreds) {
     recipeTable.draw(false);
     console.timeEnd('draw');
 
-    document.getElementById('recipe-loading-icon').classList.toggle('d-none');
+    document.getElementById('recipe-loading-icon').classList.add('d-none');
 }
