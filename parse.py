@@ -107,6 +107,11 @@ def lemmatize(ingred):
     elif ingred[-1:] == 's':
         ingred = ingred[:-1]
 
+    szechuan_variations = {'szechuan peppercorn',
+                           'sichuan peppercorn', 'sichuan pepper'}
+    if ingred in szechuan_variations:
+        ingred = 'szechuan pepper'
+
     return ingred
 
 
@@ -147,9 +152,9 @@ def write_recipe_data_filtered(infile, outfile):
     df = pd.DataFrame(data)
     df_unique = df[~df['url'].duplicated()]
     data = df_unique.to_dict('records')
-    data = [d for d in data if d['source'] ==
-            'Saveur' or d['source'] == 'Serious Eats']
-    data = data[-9000:]
+    # data = [d for d in data if d['source'] ==
+    #         'Saveur' or d['source'] == 'Serious Eats']
+    # data = data[-9000:]
 
     for recipe in data:
         filtered_ingreds = filter_naive(recipe['ingreds'], ingred_filters)
