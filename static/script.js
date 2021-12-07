@@ -47,29 +47,26 @@ remove.addEventListener('submit', removeIngred);
 /* When selecting a dropdown ingredient, add ingredient to current ingredients,
 close dropdown, and clear search field. */
 $('.typeahead').on('typeahead:selected', function (ev, ingred) {
-    addDropdownIngred(ingred);
+    addDropdownIngred(ingred, ev);
     $('.typeahead').typeahead('close');
     $('.typeahead').typeahead('val', '');
 })
 
 function searchAddIngred(ev) {
-    handleUserInput(new FormData(this), ev, '/search')
+    let ingredForm = new FormData(this);
+    let formData = new FormData();
+    for (let ingred of ingredForm.keys()) {
+        formData.append('add', ingred)
+    }
+    handleUserInput(formData, ev, '/get_table_data');
     // Clear search field after adding ingred
     this.reset();
 }
 
-function addDropdownIngred(ingred) {
-    document.getElementById('recipe-loading-icon').classList.remove('d-none');
-    document.getElementById('ingred-loading-icon').classList.remove('d-none');
-    var formData = new FormData();
-    formData.append('ingred_to_add', ingred)
-
-    fetch('/add_dropdown_ingred', {
-        method: 'POST',
-        body: formData
-    })
-        .then(parseJSON)
-        .then(updateView);
+function addDropdownIngred(ingred, ev) {
+    let formData = new FormData();
+    formData.append('add', ingred)
+    handleUserInput(formData, ev, '/get_table_data');
 }
 
 function addRelatedIngred(ev) {
@@ -77,49 +74,96 @@ function addRelatedIngred(ev) {
     if (!isButton) {
         return;
     }
-    var formData = new FormData();
-    formData.append('search', String(ev.target.value))
-    handleUserInput(formData, ev, '/search');
+    let formData = new FormData();
+    formData.append('add', String(ev.target.value))
+    handleUserInput(formData, ev, '/get_table_data');
     // Clear table filters
     ingredTable.search('').draw();
     recipeTable.search('').draw();
 }
 
 function removeIngred(ev) {
-    handleUserInput(new FormData(this), ev, '/remove')
+    ev.preventDefault();
+    // Show loading icon
+    document.getElementById('ingred-loading-icon').classList.remove('d-none');
+
+    let formData = new FormData(this);
+    async function fetchIngreds() {
+        let res = await fetch('/remove', {
+            method: 'POST',
+            body: formData
+        });
+        let curIngreds = await res.json();
+        updateCurIngredsView(curIngreds);
+        return await curIngreds;
+    }
+
+    fetchIngreds().then((curIngreds) => {
+        let ingredFormData = new FormData();
+        curIngreds.forEach(curIngred =>
+            ingredFormData.append('add', curIngred)
+        );
+
+        fetch('/get_table_data', {
+            method: 'POST',
+            body: ingredFormData
+        })
+            .then(parseJSON)
+            .then(updateTableView);
+    });
 }
 
 function handleUserInput(formData, ev, path) {
-    document.getElementById('recipe-loading-icon').classList.remove('d-none');
+    ev.preventDefault();
+
+    // Show loading icon
     document.getElementById('ingred-loading-icon').classList.remove('d-none');
 
-    ev.preventDefault();
-    fetch(path, {
-        method: 'POST',
-        body: formData
-    })
-        .then(parseJSON)
-        .then(updateView);
+    async function fetchIngreds() {
+        let res = await fetch('/add', {
+            method: 'POST',
+            body: formData
+        });
+        let curIngreds = await res.json();
+        updateCurIngredsView(curIngreds);
+        return await curIngreds;
+    }
+
+    fetchIngreds().then((curIngreds) => {
+        let ingredFormData = new FormData();
+        curIngreds.forEach(curIngred =>
+            ingredFormData.append('add', curIngred)
+        );
+        fetch(path, {
+            method: 'POST',
+            body: ingredFormData
+        })
+            .then(parseJSON)
+            .then(updateTableView);
+    });
 }
 
 function parseJSON(response) {
     return response.json();
 }
 
-function updateView(jsonData) {
-    toggleRemoveDisplay(jsonData.cur_ingreds);
-    toggleRandomIngredDisplay(jsonData.cur_ingreds);
+function updateCurIngredsView(curIngreds) {
+    toggleRemoveDisplay(curIngreds);
+    toggleRandomIngredDisplay(curIngreds);
 
     removeCurIngreds();
-    createCurIngreds(jsonData.cur_ingreds);
-    createRelatedIngreds(jsonData.r_ingreds);
-    createRecipes(jsonData.recipes, jsonData.cur_ingreds);
+    createCurIngreds(curIngreds);
 
     let checkboxes = document.querySelectorAll("input[type='checkbox']");
     setRemoveButtonState()
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', setRemoveButtonState)
     });
+}
+
+function updateTableView(jsonData) {
+    createRelatedIngreds(jsonData.r_ingreds);
+    createRecipes(jsonData.recipes);
 }
 
 function toggleRemoveDisplay(curIngreds) {
@@ -161,7 +205,7 @@ function createCurIngreds(curIngreds) {
     curIngreds.forEach(ingred => {
         const ingredDiv = document.createElement('div');
         ingredDiv.setAttribute('class', 'cur-ingred')
-        const box = createInput(ingred);
+        const box = createCheckbox(ingred);
         const label = createLabel(ingred);
         curIngredsForm.appendChild(ingredDiv);
         ingredDiv.appendChild(box);
@@ -169,7 +213,7 @@ function createCurIngreds(curIngreds) {
     });
 }
 
-function createInput(ingred) {
+function createCheckbox(ingred) {
     const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
     input.setAttribute('autocomplete', 'off');
@@ -194,7 +238,7 @@ function createRelatedIngreds(rankedIngreds) {
         return;
     }
 
-    var tableData = [];
+    let tableData = [];
     rankedIngreds.forEach(ingred => {
         const ingredName = ingred[0];
         const score = ingred[1];
@@ -216,7 +260,7 @@ function createAddBtn(ingredName) {
     return btn;
 }
 
-function createRecipes(recipes, curIngreds) {
+function createRecipes(recipes) {
     recipeTable.clear();
     var tableData = [];
 
@@ -235,6 +279,4 @@ function createRecipes(recipes, curIngreds) {
     console.time('draw');
     recipeTable.draw(false);
     console.timeEnd('draw');
-
-    document.getElementById('recipe-loading-icon').classList.add('d-none');
 }

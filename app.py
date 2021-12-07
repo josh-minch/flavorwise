@@ -46,37 +46,31 @@ def init_recipe_data():
     return jsonify(recipes)
 
 
-@ app.route('/search', methods=['POST'])
-def search():
-    new_ingreds = request.form.get('search', 0, type=str).strip()
+@ app.route('/add', methods=['POST'])
+def get_cur_ingreds():
+    cur_ingreds = get_session_var('cur_ingreds')
+    ingred_to_add = request.form.get('add')
 
-    if not validate_ingred(new_ingreds):
-        return '', http.HTTPStatus.NO_CONTENT
+    if ingred_to_add:
+        add_session_ingreds(ingred_to_add)
 
-    add_session_ingreds(new_ingreds)
-    return get_frontend_json_data()
-
-
-@ app.route('/add_dropdown_ingred', methods=['POST'])
-def add_dropdown_ingred():
-    new_ingred = request.form.get('ingred_to_add')
-    add_session_ingreds(new_ingred)
-    return get_frontend_json_data()
+    return jsonify(cur_ingreds)
 
 
 @ app.route('/remove', methods=['POST'])
 def remove():
     ingreds_to_remove = request.form.keys()
     remove_session_ingreds(ingreds_to_remove)
-    return get_frontend_json_data()
+    cur_ingreds = get_session_var('cur_ingreds')
+    return jsonify(cur_ingreds)
 
 
-def get_frontend_json_data():
+@ app.route('/get_table_data', methods=['POST'])
+def search():
     cur_ingreds = get_session_var('cur_ingreds')
     r_ingreds, recipes = matrix.get_recommended(cur_ingreds)
 
-    return jsonify(cur_ingreds=cur_ingreds,
-                   r_ingreds=r_ingreds,
+    return jsonify(r_ingreds=r_ingreds,
                    recipes=recipes[:NUM_RECIPES])
 
 
