@@ -32,9 +32,6 @@ function setRemoveButtonState() {
     }
 }
 
-const search = document.getElementById('search');
-search.addEventListener('submit', searchAddIngred);
-
 const randomIngreds = document.getElementById('random-ingreds');
 randomIngreds.addEventListener('click', addRelatedIngred);
 
@@ -52,17 +49,6 @@ $('.typeahead').on('typeahead:selected', function (ev, ingred) {
     $('.typeahead').typeahead('val', '');
 })
 
-function searchAddIngred(ev) {
-    let ingredForm = new FormData(this);
-    let formData = new FormData();
-    for (let ingred of ingredForm.keys()) {
-        formData.append('add', ingred)
-    }
-    handleUserInput(formData, ev, '/add');
-    // Clear search field after adding ingred
-    this.reset();
-}
-
 function addDropdownIngred(ingred, ev) {
     let formData = new FormData();
     formData.append('add', ingred)
@@ -74,9 +60,11 @@ function addRelatedIngred(ev) {
     if (!isButton) {
         return;
     }
+
     let formData = new FormData();
     formData.append('add', String(ev.target.value))
     handleUserInput(formData, ev, '/add');
+
     // Clear table filters
     ingredTable.search('').draw();
     recipeTable.search('').draw();
