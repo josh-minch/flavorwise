@@ -1,4 +1,3 @@
-import http
 import random
 
 from flask import Flask, jsonify, render_template, request, session

@@ -58,7 +58,7 @@ function searchAddIngred(ev) {
     for (let ingred of ingredForm.keys()) {
         formData.append('add', ingred)
     }
-    handleUserInput(formData, ev, '/get_table_data');
+    handleUserInput(formData, ev, '/add');
     // Clear search field after adding ingred
     this.reset();
 }
@@ -66,7 +66,7 @@ function searchAddIngred(ev) {
 function addDropdownIngred(ingred, ev) {
     let formData = new FormData();
     formData.append('add', ingred)
-    handleUserInput(formData, ev, '/get_table_data');
+    handleUserInput(formData, ev, '/add');
 }
 
 function addRelatedIngred(ev) {
@@ -76,41 +76,15 @@ function addRelatedIngred(ev) {
     }
     let formData = new FormData();
     formData.append('add', String(ev.target.value))
-    handleUserInput(formData, ev, '/get_table_data');
+    handleUserInput(formData, ev, '/add');
     // Clear table filters
     ingredTable.search('').draw();
     recipeTable.search('').draw();
 }
 
 function removeIngred(ev) {
-    ev.preventDefault();
-    // Show loading icon
-    document.getElementById('ingred-loading-icon').classList.remove('d-none');
-
     let formData = new FormData(this);
-    async function fetchIngreds() {
-        let res = await fetch('/remove', {
-            method: 'POST',
-            body: formData
-        });
-        let curIngreds = await res.json();
-        updateCurIngredsView(curIngreds);
-        return await curIngreds;
-    }
-
-    fetchIngreds().then((curIngreds) => {
-        let ingredFormData = new FormData();
-        curIngreds.forEach(curIngred =>
-            ingredFormData.append('add', curIngred)
-        );
-
-        fetch('/get_table_data', {
-            method: 'POST',
-            body: ingredFormData
-        })
-            .then(parseJSON)
-            .then(updateTableView);
-    });
+    handleUserInput(formData, ev, '/remove');
 }
 
 function handleUserInput(formData, ev, path) {
@@ -120,7 +94,7 @@ function handleUserInput(formData, ev, path) {
     document.getElementById('ingred-loading-icon').classList.remove('d-none');
 
     async function fetchIngreds() {
-        let res = await fetch('/add', {
+        let res = await fetch(path, {
             method: 'POST',
             body: formData
         });
@@ -134,12 +108,13 @@ function handleUserInput(formData, ev, path) {
         curIngreds.forEach(curIngred =>
             ingredFormData.append('add', curIngred)
         );
-        fetch(path, {
+        fetch('/get_table_data', {
             method: 'POST',
             body: ingredFormData
         })
             .then(parseJSON)
-            .then(updateTableView);
+            .then(updateTableView)
+            .finally(hideLoadingIcon);
     });
 }
 
@@ -248,7 +223,6 @@ function createRelatedIngreds(rankedIngreds) {
     });
 
     ingredTable.rows.add(tableData).draw();
-    document.getElementById('ingred-loading-icon').classList.add('d-none');
 }
 
 function createAddBtn(ingredName) {
@@ -279,4 +253,8 @@ function createRecipes(recipes) {
     console.time('draw');
     recipeTable.draw(false);
     console.timeEnd('draw');
+}
+
+function hideLoadingIcon() {
+    document.getElementById('ingred-loading-icon').classList.add('d-none');
 }
