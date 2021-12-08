@@ -112,6 +112,10 @@ class TestParse(unittest.TestCase):
         self.assertEqual(lemmatize('sichuan pepper'), 'szechuan pepper')
         self.assertEqual(lemmatize('sichuan peppercorns'), 'szechuan pepper')
 
+        self.assertEqual(lemmatize('filo'), 'phyllo')
+        self.assertEqual(lemmatize('filo dough'), 'phyllo')
+        self.assertEqual(lemmatize('phyllo dough'), 'phyllo')
+
         self.assertNotEqual(lemmatize('sichuan pepper'), 'pepper')
 
 

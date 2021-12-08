@@ -112,6 +112,9 @@ def lemmatize(ingred):
     if ingred in szechuan_variations:
         ingred = 'szechuan pepper'
 
+    if ingred in {'filo', 'phyllo', 'filo dough', 'phyllo dough'}:
+        ingred = 'phyllo'
+
     return ingred
 
 
