@@ -88,17 +88,11 @@ function handleUserInput(formData, ev, path) {
         });
         let curIngreds = await res.json();
         updateCurIngredsView(curIngreds);
-        return await curIngreds;
     }
 
-    fetchIngreds().then((curIngreds) => {
-        let ingredFormData = new FormData();
-        curIngreds.forEach(curIngred =>
-            ingredFormData.append('add', curIngred)
-        );
+    fetchIngreds().then(() => {
         fetch('/get_table_data', {
             method: 'POST',
-            body: ingredFormData
         })
             .then(parseJSON)
             .then(updateTableView)
