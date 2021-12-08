@@ -1,8 +1,9 @@
-import numpy as np
+import random
 
+import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity as cs
 
-from helper import get_json, timer
+from helper import get_json
 
 '''2D matrix whose rows are ingredients and cols are recipes.
 A 1 denotes the occurence of an ingredient in a given recipe.'''
@@ -28,6 +29,17 @@ def get_recommended(input_ingreds):
     match_recipes = get_match_recipes(match_recipe_ixs)
 
     return ranked_ingreds, match_recipes
+
+
+def get_random_ingreds(num_ingreds):
+    return random.choices(ALL_INGREDS, k=num_ingreds)
+
+
+def validate_ingred(ingred):
+    if ingred.lower() in ALL_INGREDS:
+        return True
+    else:
+        return False
 
 
 def get_recipes(input_ingreds):
@@ -70,8 +82,7 @@ def calculate_ranked_ingreds(input_ingreds, match_recipe_ixs):
     cooc_ingred_vec = RECIPE_MATRIX[cooc_ingred_ix]
     ingred_vec = RECIPE_MATRIX[input_ixs]
 
-    cosine_similarity = timer(cs)
-    similarity_score = cosine_similarity(ingred_vec, cooc_ingred_vec)
+    similarity_score = cs(ingred_vec, cooc_ingred_vec)
     similarity_score = np.mean(similarity_score, axis=0)
 
     # Sort ingredients by similarity score in descending order

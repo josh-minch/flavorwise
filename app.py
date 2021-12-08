@@ -1,14 +1,9 @@
-import random
-
 from flask import Flask, jsonify, render_template, request, session
 from flask_talisman import Talisman
 
-import matrix
-from helper import get_json
+import backend
 
 VERSION_STR = '?v=0.75'
-ALL_INGREDS_FILENAME = './static/all_ingreds_filtered.json'
-ALL_INGREDS = get_json(ALL_INGREDS_FILENAME)
 ''' Max number of recipes returned to users client '''
 NUM_RECIPES = 40
 
@@ -23,25 +18,24 @@ def index():
     remove_invalid_session_ingreds()
     cur_ingreds = get_session_var('cur_ingreds')
 
-    random_ingreds = random.choices(ALL_INGREDS, k=3)
-    pattern = create_search_pattern()
+    random_ingreds = backend.get_random_ingreds(3)
 
     return render_template('index.html', version_str=VERSION_STR,
-                           random_ingreds=random_ingreds, pattern=pattern,
+                           random_ingreds=random_ingreds,
                            cur_ingreds=cur_ingreds)
 
 
 @ app.route('/init_r_ingred_data', methods=['GET'])
 def init_r_ingred_data():
     cur_ingreds = get_session_var('cur_ingreds')
-    r_ingreds = matrix.get_r_ingreds(cur_ingreds)
+    r_ingreds = backend.get_r_ingreds(cur_ingreds)
     return jsonify(r_ingreds)
 
 
 @ app.route('/init_recipe_data', methods=['GET'])
 def init_recipe_data():
     cur_ingreds = get_session_var('cur_ingreds')
-    recipes = matrix.get_recipes(cur_ingreds)[:NUM_RECIPES]
+    recipes = backend.get_recipes(cur_ingreds)[:NUM_RECIPES]
     return jsonify(recipes)
 
 
@@ -67,30 +61,10 @@ def remove():
 @ app.route('/get_table_data', methods=['POST'])
 def search():
     cur_ingreds = get_session_var('cur_ingreds')
-    r_ingreds, recipes = matrix.get_recommended(cur_ingreds)
+    r_ingreds, recipes = backend.get_recommended(cur_ingreds)
 
     return jsonify(r_ingreds=r_ingreds,
                    recipes=recipes[:NUM_RECIPES])
-
-
-def validate_ingred(ingred):
-    if ingred.lower() in ALL_INGREDS:
-        return True
-    else:
-        return False
-
-
-def create_search_pattern():
-    """Return regex search string that matches any ingredient."""
-    ingreds_regex = []
-    for ingred in ALL_INGREDS:
-        # Acount for upper or lower case of each letter
-        ingred_regex = ''.join(
-            ['[{}{}]'.format(c.upper(), c.lower()) for c in ingred])
-        ingreds_regex.append(ingred_regex)
-
-    pattern = '|'.join(ingreds_regex)
-    return pattern
 
 
 def get_session_var(var_name):
@@ -131,6 +105,6 @@ def remove_invalid_session_ingreds():
     # Create a copy, otherwise removing elements in a loop will skip elements
     session_ingreds = session['cur_ingreds'].copy()
     for ingred in session_ingreds:
-        if not validate_ingred(ingred):
+        if not backend.validate_ingred(ingred):
             session['cur_ingreds'].remove(ingred)
             session.modified = True
