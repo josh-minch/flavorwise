@@ -6,7 +6,7 @@ from flask_talisman import Talisman
 import matrix
 from helper import get_json
 
-VERSION_STR = '?v=0.73'
+VERSION_STR = '?v=0.74'
 ALL_INGREDS_FILENAME = './static/all_ingreds_filtered.json'
 ALL_INGREDS = get_json(ALL_INGREDS_FILENAME)
 ''' Max number of recipes returned to users client '''
