@@ -128,20 +128,11 @@ let recipeTable = $('#recipe-table').DataTable({
     }
 });
 
-toggleTableOnDataChange($('#ingred-table'));
-toggleTableOnDataChange($('#recipe-table'));
-
 // Remove bootstrap class from datatable filters for easier custom styling
 const tableFilters = document.querySelectorAll('.dataTables_filter label input');
 tableFilters.forEach(filter => {
     filter.classList.remove("form-control", "form-control-sm")
 });
-
-function toggleTableOnDataChange(table) {
-    table.on('DOMNodeInserted DOMNodeRemoved', function () {
-        hideTablesIfCurIngredsEmpty();
-    });
-}
 
 function hideTablesIfCurIngredsEmpty() {
     /* Show tables and related info and hide empty table descriptions based
