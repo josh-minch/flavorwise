@@ -55,7 +55,7 @@ let ingredTable = $('#ingred-table').DataTable({
     },
     processing: true,
     initComplete: function () {
-        hideTablesIfCurIngredsEmpty($('#ingred-table'));
+        hideTablesIfCurIngredsEmpty();
     }
 });
 
@@ -124,7 +124,7 @@ let recipeTable = $('#recipe-table').DataTable({
         setRecipeHover()
     },
     initComplete: function () {
-        hideTablesIfCurIngredsEmpty($('#recipe-table'));
+        hideTablesIfCurIngredsEmpty();
     }
 });
 
