@@ -178,9 +178,7 @@ h3 {
 }
 
 
-/* Hide empty tables initial pageload then set to visible after populated in script.js */
 #ingred-table, #recipe-table {
-  display: none;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
 }

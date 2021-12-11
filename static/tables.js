@@ -55,7 +55,7 @@ let ingredTable = $('#ingred-table').DataTable({
     },
     processing: true,
     initComplete: function () {
-        hideTableIfEmpty($('#ingred-table'));
+        hideTablesIfCurIngredsEmpty($('#ingred-table'));
     }
 });
 
@@ -124,7 +124,7 @@ let recipeTable = $('#recipe-table').DataTable({
         setRecipeHover()
     },
     initComplete: function () {
-        hideTableIfEmpty($('#recipe-table'));
+        hideTablesIfCurIngredsEmpty($('#recipe-table'));
     }
 });
 
@@ -139,19 +139,59 @@ tableFilters.forEach(filter => {
 
 function toggleTableOnDataChange(table) {
     table.on('DOMNodeInserted DOMNodeRemoved', function () {
-        hideTableIfEmpty(table);
+        hideTablesIfCurIngredsEmpty();
     });
 }
 
-function hideTableIfEmpty(table) {
-    if (table.find('tbody tr td').first().hasClass('dataTables_empty')) {
-        table.hide();
-        // hide table's pagination also
-        table.parent().find('div.dataTables_paginate').hide();
+function hideTablesIfCurIngredsEmpty() {
+    /* Show tables and related info and hide empty table descriptions based
+    if user has selected ingredients. Check current ingreds list length to
+    see this  */
+    if (document.getElementById('cur-ingreds-list').children.length > 0) {
+        displayElementsByClassName('dataTable', 'd-table');
+        displayElementsByClassName('dataTables_info', 'd-block');
+        displayElementsByClassName('dataTables_paginate', 'd-block');
+        displayElementById('r-ingreds', 'd-block');
+        displayElementById('recipes', 'd-block');
+        displayElementsByClassName('table-description', 'd-block');
+        hideElementsByClassName('empty-table-description', 'd-block');
     } else {
-        table.show();
-        table.parent().find('div.dataTables_paginate').show();
+        hideElementsByClassName('dataTable', 'd-table');
+        hideElementsByClassName('dataTables_info', 'd-block');
+        hideElementsByClassName('dataTables_paginate', 'd-block');
+        hideElementById('r-ingreds', 'd-block');
+        hideElementById('recipes', 'd-block');
+        hideElementsByClassName('table-description', 'd-block');
+        displayElementsByClassName('empty-table-description', 'd-block');
     }
+}
+
+function hideElementById(id, type) {
+    element = document.getElementById(id);
+    element.classList.add('d-none');
+    element.classList.remove(type);
+}
+
+function displayElementById(id, type) {
+    element = document.getElementById(id);
+    element.classList.remove('d-none');
+    element.classList.add(type);
+}
+
+function hideElementsByClassName(className, type) {
+    elements = document.getElementsByClassName(className);
+    Array.from(elements).forEach(element => {
+        element.classList.add('d-none');
+        element.classList.remove(type);
+    });
+}
+
+function displayElementsByClassName(className, type) {
+    elements = document.getElementsByClassName(className);
+    Array.from(elements).forEach(element => {
+        element.classList.remove('d-none');
+        element.classList.add(type);
+    });
 }
 
 function setRecipeHover() {
