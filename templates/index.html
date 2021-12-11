@@ -87,6 +87,8 @@
                 <h2>Recommended Ingedients</h2>
                 <h3 class="table-description d-none">Scored by unique pairability with your ingredients</h3>
                 <h3 class="empty-table-description d-none">Add some ingredients to see what goes good with them</h3>
+                <img id="ingred-loading-icon" class="loading-icon d-none"
+                    src="{{ url_for('static', filename='loading.svg')}}" alt="loading icon" />
                 <div id="r-ingreds" class="mt-2 d-none">
                     <table id="ingred-table" class="table table-sm table-hover">
                         <thead>
@@ -102,8 +104,7 @@
                             </tr>
                         </thead>
                     </table>
-                    <img id="ingred-loading-icon" class="loading-icon d-none"
-                        src="{{ url_for('static', filename='loading.svg')}}" alt="loading icon" />
+
                 </div>
             </div>
             <div class="col-lg" id="recipe-col">
