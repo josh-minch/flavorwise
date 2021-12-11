@@ -55,7 +55,10 @@ let ingredTable = $('#ingred-table').DataTable({
     },
     processing: true,
     initComplete: function () {
-        hideTablesIfCurIngredsEmpty($('#ingred-table'));
+        hideTablesIfCurIngredsEmpty();
+    },
+    drawCallback: () => {
+        hideTablesIfCurIngredsEmpty();
     }
 });
 
@@ -120,11 +123,12 @@ let recipeTable = $('#recipe-table').DataTable({
         setRecipeHover()
     },
     drawCallback: function (settings) {
+        hideTablesIfCurIngredsEmpty();
         $("#recipe-table img:visible").unveil();
         setRecipeHover()
     },
     initComplete: function () {
-        hideTablesIfCurIngredsEmpty($('#recipe-table'));
+        hideTablesIfCurIngredsEmpty();
     }
 });
 
@@ -139,7 +143,7 @@ function hideTablesIfCurIngredsEmpty() {
     if user has selected ingredients. Check current ingreds list length to
     see this  */
     if (document.getElementById('cur-ingreds-list').children.length > 0) {
-        displayElementsByClassName('dataTable', 'd-table');
+        // displayElementsByClassName('dataTable', 'd-table');
         displayElementsByClassName('dataTables_info', 'd-block');
         displayElementsByClassName('dataTables_paginate', 'd-block');
         displayElementById('r-ingreds', 'd-block');
@@ -147,7 +151,7 @@ function hideTablesIfCurIngredsEmpty() {
         displayElementsByClassName('table-description', 'd-block');
         hideElementsByClassName('empty-table-description', 'd-block');
     } else {
-        hideElementsByClassName('dataTable', 'd-table');
+        // hideElementsByClassName('dataTable', 'd-table');
         hideElementsByClassName('dataTables_info', 'd-block');
         hideElementsByClassName('dataTables_paginate', 'd-block');
         hideElementById('r-ingreds', 'd-block');

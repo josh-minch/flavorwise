@@ -3,7 +3,7 @@ from flask_talisman import Talisman
 
 import backend
 
-VERSION_STR = '?v=0.75'
+VERSION_STR = '?v=0.77'
 ''' Max number of recipes returned to users client '''
 NUM_RECIPES = 40
 
