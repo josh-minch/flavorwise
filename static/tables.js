@@ -138,26 +138,27 @@ tableFilters.forEach(filter => {
     filter.classList.remove("form-control", "form-control-sm")
 });
 
+$('#recipe-table').on('DOMNodeInserted DOMNodeRemoved', function () {
+    hideTablesIfCurIngredsEmpty();
+});
+
+$('#ingred-table').on('DOMNodeInserted DOMNodeRemoved', function () {
+    hideTablesIfCurIngredsEmpty();
+});
+
 function hideTablesIfCurIngredsEmpty() {
-    /* Show tables and related info and hide empty table descriptions based
-    if user has selected ingredients. Check current ingreds list length to
-    see this  */
-    if (document.getElementById('cur-ingreds-list').children.length > 0) {
-        // displayElementsByClassName('dataTable', 'd-table');
-        displayElementsByClassName('dataTables_info', 'd-block');
-        displayElementsByClassName('dataTables_paginate', 'd-block');
-        displayElementById('r-ingreds', 'd-block');
-        displayElementById('recipes', 'd-block');
-        displayElementsByClassName('table-description', 'd-block');
-        hideElementsByClassName('empty-table-description', 'd-block');
-    } else {
-        // hideElementsByClassName('dataTable', 'd-table');
-        hideElementsByClassName('dataTables_info', 'd-block');
-        hideElementsByClassName('dataTables_paginate', 'd-block');
+    ingredTableEmpty = document.querySelector('#ingred-table tbody tr td').classList.contains('dataTables_empty');
+    ingredTableFilterEmpty = document.querySelector('#ingred-table_filter label input').value.length == 0;
+    if (ingredTableEmpty && ingredTableFilterEmpty) {
         hideElementById('r-ingreds', 'd-block');
         hideElementById('recipes', 'd-block');
         hideElementsByClassName('table-description', 'd-block');
         displayElementsByClassName('empty-table-description', 'd-block');
+    } else {
+        displayElementById('r-ingreds', 'd-block');
+        displayElementById('recipes', 'd-block');
+        displayElementsByClassName('table-description', 'd-block');
+        hideElementsByClassName('empty-table-description', 'd-block');
     }
 }
 
